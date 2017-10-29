@@ -5,10 +5,13 @@
 #ifndef ELFGE_MESHGROUP_H
 #define ELFGE_MESHGROUP_H
 
+#include "Common.h"
+#include "Mesh.h"
+
 
 class Model {
 public:
-
+    virtual void __render(Shader * shader) = 0;
 };
 
 

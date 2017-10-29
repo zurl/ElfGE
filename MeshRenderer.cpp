@@ -15,5 +15,7 @@ void MeshRenderer::update() {
             throw Exception("GameObject contains no Model");
         }
     }
-    shader->__render(getParent(), material, meshGroup);
+    shader->__use();
+    material->__use(shader);
+    model->__render(shader);
 }

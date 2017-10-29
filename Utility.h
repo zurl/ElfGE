@@ -12,7 +12,7 @@ public:
     static const std::string ASSETS_PREFIX = ".";
 
     static const char * readFile(const char * filePath){
-        FILE * fp = fopen(fileName, "r");
+        FILE * fp = fopen(filePath, "r");
         if( fp == nullptr ) return nullptr;
         fseek(fp, 0L, SEEK_END);
         long flen = ftell(fp);
@@ -23,7 +23,8 @@ public:
         *now = 0;
         return result;
     }
-    static unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false){
+
+    static unsigned int getTextureFromFile(const char *path, const std::string &directory, bool gamma = false){
         std::string filename = std::string(path);
         filename = directory + '/' + filename;
 
