@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.6)
+project(elfge)
+set(CMAKE_CXX_STANDARD 11)
+
+set(SOURCE_FILES GameObject.cpp GameObject.h Common.h Main.cpp Component.cpp Component.h)
+find_library(OPENGL OpenGL)
+find_library(GLFW glfw)
+find_library(GLEW glew)
+find_library(ASSIMP assimp)
+link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP})
+add_executable(elfge ${SOURCE_FILES})
