@@ -6,6 +6,7 @@
 #define ELFGE_GAMEOBJECT_H
 #include "Common.h"
 #include "Component.h"
+#include "Transform.h"
 
 class GameObject {
 private:
@@ -13,6 +14,7 @@ private:
     GameObject * parent;
     std::list<GameObject *> children;
 public:
+    Transform transform;
     virtual void __update(){
         for(auto &x : componentsList){
             x->update();
@@ -20,9 +22,9 @@ public:
     }
 
     template <typename T>
-    T getComponent(){
+    T * getComponent(){
         for(auto & x: componentsList){
-            if(typeid(x) == typeid(T)){
+            if(typeid(x) == typeid(T*)){
                 return x;
             }
         }
@@ -34,6 +36,7 @@ public:
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
         componentsList.push_back(component);
+        if( typeid() )
         return component;
     }
 };

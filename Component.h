@@ -6,9 +6,16 @@
 #define ELFGE_COMPONENT_H
 
 
+#include "GameObject.h"
+
 class Component {
+    GameObject * parent;
 public:
     virtual void update() = 0;
+
+    GameObject *getParent() const;
+
+    void __setParent(GameObject *parent);
 };
 
 
