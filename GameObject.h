@@ -5,8 +5,8 @@
 #ifndef ELFGE_GAMEOBJECT_H
 #define ELFGE_GAMEOBJECT_H
 #include "Common.h"
-#include "Component.h"
 #include "Transform.h"
+#include "Component.h"
 
 class GameObject {
 private:
@@ -15,6 +15,12 @@ private:
     std::list<GameObject *> children;
 public:
     Transform transform;
+
+    glm::mat4 getModelMatrix(){
+        if(parent == nullptr) return transform.getModelMatrix(glm::mat4());
+        else return transform.getModelMatrix(parent->getModelMatrix());
+    }
+
     virtual void __update(){
         for(auto &x : componentsList){
             x->update();
@@ -25,9 +31,10 @@ public:
     T * getComponent(){
         for(auto & x: componentsList){
             if(typeid(x) == typeid(T*)){
-                return x;
+                return dynamic_cast<T*>(x);
             }
         }
+        throw Exception("Component does not exists");
     }
 
     template <typename T>
@@ -36,9 +43,40 @@ public:
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
         componentsList.push_back(component);
-        if( typeid() )
         return component;
     }
+
+    GameObject *getParent() const {
+        return parent;
+    }
+
+    void setParent(GameObject *parent) {
+        if( parent == this->parent ) return;
+        if( parent != nullptr ){
+            parent->__detachChildren(this);
+        }
+        this->parent = parent;
+        this->parent->__attachChildren(this);
+    }
+
+    void __attachChildren(GameObject * gameObject){
+        children.emplace_back(gameObject);
+    }
+
+    void __detachChildren(GameObject * gameObject){
+        children.remove(gameObject);
+    }
+
+    static void destroy(GameObject * gameObject){
+        if(gameObject->parent != nullptr){
+            gameObject->parent->__detachChildren(gameObject);
+        }
+        while(!gameObject->children.empty()){
+            destroy(gameObject->children.front());
+        }
+        delete gameObject;
+    }
+    
 };
 
 

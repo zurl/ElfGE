@@ -5,8 +5,7 @@
 #ifndef ELFGE_COMPONENT_H
 #define ELFGE_COMPONENT_H
 
-
-#include "GameObject.h"
+class GameObject;
 
 class Component {
     GameObject * parent;

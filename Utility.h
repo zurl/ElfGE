@@ -9,9 +9,11 @@
 
 class Utility {
 public:
-    static const std::string ASSETS_PREFIX = ".";
-    static const int SCREEN_WIDTH = 1024;
-    static const int SCREEN_HEIGHT = 1024;
+    static std::string WINDOW_NAME;
+    static std::string ASSETS_PREFIX;
+
+    static int SCREEN_WIDTH;
+    static int SCREEN_HEIGHT;
 
     static const char * getTextFromFile(const char * filePath){
         FILE * fp = fopen(filePath, "r");
@@ -63,6 +65,45 @@ public:
         return textureID;
     }
 
+    static GLFWwindow* __glfwWindow;
+
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+        glViewport(0, 0, width, height);
+        SCREEN_HEIGHT = height;
+        SCREEN_WIDTH = width;
+    }
+
+
+    static int __initialOpenGL(){
+        glfwInit();
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+        __glfwWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME.c_str(), NULL, NULL);
+        glfwSetInputMode(__glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        if (__glfwWindow == NULL) {
+            std::cout << "Failed to create GLFW window" << std::endl;
+            glfwTerminate();
+            return -1;
+        }
+        glfwMakeContextCurrent(__glfwWindow);
+        GLenum err = glewInit();
+        if(err != GLEW_OK) {
+            std::cout << "glewInit failed: " << glewGetErrorString(err) << std::endl;
+            exit(1);
+        }
+        glViewport(0, 0, 800, 600);
+        glfwSetFramebufferSizeCallback(__glfwWindow, framebuffer_size_callback);
+        glEnable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_STENCIL_TEST);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+        return 0;
+    }
 
 };
 

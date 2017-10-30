@@ -7,10 +7,11 @@
 
 #include "Common.h"
 #include "Model.h"
+#include "DefaultMesh.h"
 
 class DefaultModel: public Model {
 
-    std::vector<Mesh> meshes;
+    std::vector<Mesh *> meshes;
     std::string directory;
 public:
     DefaultModel(const std::string & path){
@@ -27,7 +28,7 @@ public:
     void processNode(aiNode *node, const aiScene *scene){
         for(unsigned int i = 0; i < node->mNumMeshes; i++) {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.emplace_back(mesh, scene);
+            meshes.emplace_back(new DefaultMesh(mesh, scene, directory));
         }
         for(unsigned int i = 0; i < node->mNumChildren; i++) {
             processNode(node->mChildren[i], scene);
@@ -36,7 +37,7 @@ public:
 
     void __render(Shader *shader) override {
         for(auto & x: meshes){
-            x.__render(shader);
+            x->__render(shader);
         }
     }
 };

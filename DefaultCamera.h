@@ -18,7 +18,6 @@ const float ZOOM        =  45.0f;
 
 class DefaultCamera : public Camera{
     // Vectors
-    glm::vec3 position;
     glm::vec3 front;
     glm::vec3 up;
     glm::vec3 right;
@@ -30,6 +29,8 @@ class DefaultCamera : public Camera{
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
+
+    GLboolean constrainPitch = 1;
 public:
 
     // Constructor with vectors
@@ -48,7 +49,7 @@ public:
 
     virtual void processKeyboard(Direction direction, float deltaTime);
 
-    virtual void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
+    virtual void processMouseMovement(float xoffset, float yoffset);
 
     virtual void processMouseScroll(float yoffset);
 

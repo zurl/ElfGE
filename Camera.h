@@ -6,8 +6,9 @@
 #define ELFGE_CAMERA_H
 
 #include "Common.h"
+#include "GameObject.h"
 
-class Camera {
+class Camera: public GameObject{
 public:
     enum class Direction{
         FORWARD,
@@ -22,7 +23,7 @@ public:
 
     virtual void processKeyboard(Direction direction, float deltaTime) = 0;
 
-    virtual void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch) = 0;
+    virtual void processMouseMovement(float xoffset, float yoffset) = 0;
 
     virtual void processMouseScroll(float yoffset) = 0;
 };

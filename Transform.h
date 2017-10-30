@@ -12,13 +12,15 @@ class Transform {
     glm::mat4 rotation;
     glm::vec3 scale;
 public:
-    glm::mat4 transform() const;
+    glm::mat4 getModelMatrix(glm::mat4 model) const;
 
     const glm::vec3 &getPosition() const;
 
     void setPosition(const glm::vec3 &position);
 
-    const glm::vec3 &getRotation() const;
+    void translate(const glm::vec3 &position);
+
+    glm::vec3 getRotation() const;
 
     void setRotation(const glm::vec3 &eularAngle);
 

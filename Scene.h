@@ -11,9 +11,13 @@
 
 class Scene {
     Camera * camera;
-    std::list<GameObject *> gameObjectList;
-
-
+    GameObject * rootGameObject;
+public:
+    Scene();
+    virtual ~Scene();
+    Camera *getCamera() const;
+    void setCamera(Camera *camera);
+    void addGameObject(GameObject * gameObject);
 };
 
 

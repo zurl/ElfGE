@@ -9,13 +9,6 @@
 #include "Mesh.h"
 
 class DefaultMesh: public Mesh{
-    std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
-    std::string directory;
-    unsigned int VAO, VBO, EBO;
-
-    void loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 
 public:
 
@@ -36,6 +29,15 @@ public:
     DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string & directory);
 
     void __render(Shader * shader);
+
+private:
+    std::vector<Vertex> vertices;
+    std::vector<unsigned int> indices;
+    std::vector<Texture> textures;
+    std::string directory;
+    unsigned int VAO, VBO, EBO;
+
+    void loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 
 
 };

@@ -3,6 +3,7 @@
 //
 
 #include "MeshRenderer.h"
+#include "Runtime.h"
 
 MeshRenderer::MeshRenderer(Material *material, Shader *shader) : material(material), shader(shader) {}
 
@@ -16,7 +17,9 @@ void MeshRenderer::update() {
         }
     }
     shader->__use();
-    shader->setMat4("model", getParent()->transform.transform());
+    shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
+    shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
+    shader->setMat4("model", getParent()->getModelMatrix());
     material->__use(shader);
     model->__render(shader);
 }

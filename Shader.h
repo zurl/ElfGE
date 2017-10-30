@@ -7,9 +7,6 @@
 
 #include "Common.h"
 #include "Utility.h"
-#include "GameObject.h"
-#include "Material.h"
-#include "Mesh.h"
 
 class Shader {
 protected:

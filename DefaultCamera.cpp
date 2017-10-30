@@ -7,16 +7,16 @@
 void DefaultCamera::processKeyboard(Camera::Direction direction, float deltaTime) {
     float velocity = movementSpeed * deltaTime;
     if (direction == Direction::FORWARD)
-        position += front * velocity;
+        transform.translate(front * velocity);
     if (direction == Direction::BACKWARD)
-        position -= front * velocity;
+        transform.translate(front * velocity);
     if (direction == Direction::LEFT)
-        position -= right * velocity;
+        transform.translate(right * velocity);
     if (direction == Direction::RIGHT)
-        position += right * velocity;
+        transform.translate(right * velocity);
 }
 
-void DefaultCamera::processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch) {
+void DefaultCamera::processMouseMovement(float xoffset, float yoffset) {
     xoffset *= mouseSensitivity;
     yoffset *= mouseSensitivity;
 
