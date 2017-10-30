@@ -14,6 +14,11 @@ class DefaultModel: public Model {
     std::vector<Mesh *> meshes;
     std::string directory;
 public:
+
+    DefaultModel(Mesh * mesh){
+        meshes.emplace_back(mesh);
+    }
+
     DefaultModel(const std::string & path){
         Assimp::Importer import;
         const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -25,6 +30,14 @@ public:
         directory = path.substr(0, path.find_last_of('/'));
         processNode(scene->mRootNode, scene);
     }
+
+    void __render(Shader *shader) override {
+        for(auto & x: meshes){
+            x->__render(shader);
+        }
+    }
+
+private:
     void processNode(aiNode *node, const aiScene *scene){
         for(unsigned int i = 0; i < node->mNumMeshes; i++) {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
@@ -35,11 +48,6 @@ public:
         }
     }
 
-    void __render(Shader *shader) override {
-        for(auto & x: meshes){
-            x->__render(shader);
-        }
-    }
 };
 
 

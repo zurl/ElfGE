@@ -12,6 +12,8 @@ class Transform {
     glm::mat4 rotation;
     glm::vec3 scale;
 public:
+    Transform();
+
     glm::mat4 getModelMatrix(glm::mat4 model) const;
 
     const glm::vec3 &getPosition() const;
@@ -26,11 +28,20 @@ public:
 
     glm::mat4 getQuatMatrix() const;
 
+    glm::quat getQuaternion() const;
+
     const glm::vec3 &getScale() const;
 
     void setScale(const glm::vec3 &scale);
 
-    static glm::vec3 up, forward, left;
+    static glm::vec3 up, forward, right;
+
+    glm::vec3 getForward() const;
+
+    glm::vec3 getRight() const;
+
+    glm::vec3 getUp() const;
+
 };
 
 

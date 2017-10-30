@@ -36,7 +36,7 @@ set(SOURCE_FILES
         DefaultCamera.cpp
         DefaultCamera.h
         Runtime.cpp
-        Runtime.h Input.cpp Input.h GameScript.cpp GameScript.h)
+        Runtime.h Input.cpp Input.h GameScript.cpp GameScript.h Meshs/CubeMesh.cpp Meshs/CubeMesh.h Assets/Scenes/DemoScene.cpp Assets/Scenes/DemoScene.h Assets/Entry.cpp Assets/Entry.h ELFGE.h DefaultMaterial.cpp DefaultMaterial.h ShaderManager.cpp ShaderManager.h)
 
 find_library(OPENGL OpenGL)
 find_library(GLFW glfw)

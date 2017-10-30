@@ -17,25 +17,39 @@ public:
     Transform transform;
 
     glm::mat4 getModelMatrix(){
-        if(parent == nullptr) return transform.getModelMatrix(glm::mat4());
+        if(parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
         else return transform.getModelMatrix(parent->getModelMatrix());
     }
 
-    virtual void __update(){
+    virtual void start(){
         for(auto &x : components){
+            x->start();
+        }
+        for(auto &x : children){
+            x->start();
+        }
+    }
+
+    virtual void update(){
+        for(auto &x : components){
+            x->update();
+        }
+        for(auto &x : children){
             x->update();
         }
     }
 
     template <typename T>
-    T * getComponent(){
+    T * getComponent(
+            typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
+    ) {
         for(auto & x: components){
-            if(typeid(x) == typeid(T*)){
-                return dynamic_cast<T*>(x);
-            }
+            auto ptr = dynamic_cast<T*>(x);
+            if(ptr != nullptr) return ptr;
         }
         throw Exception("Component does not exists");
     }
+
 
     template <typename T>
     GameObject * addComponent(
@@ -43,6 +57,7 @@ public:
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
         components.push_back(component);
+        component->__setParent(this);
         return this;
     }
 
@@ -55,22 +70,11 @@ public:
         return parent;
     }
 
-    void setParent(GameObject *parent) {
-        if( parent == this->parent ) return;
-        if( parent != nullptr ){
-            parent->__detachChildren(this);
-        }
-        this->parent = parent;
-        this->parent->__attachChildren(this);
-    }
+    void setParent(GameObject *parent);
 
-    void __attachChildren(GameObject * gameObject){
-        children.emplace_back(gameObject);
-    }
+    void __attachChildren(GameObject * gameObject);
 
-    void __detachChildren(GameObject * gameObject){
-        children.remove(gameObject);
-    }
+    void __detachChildren(GameObject * gameObject);
 
     void __detachComponent(Component * component){
         components.remove(component);

@@ -3,3 +3,7 @@
 //
 
 #include "Input.h"
+
+
+std::list<std::function<void(double)>* > Input::scrollEventHandlers;
+std::list<std::function<void(double, double)>* > Input::mouseEventHandlers;

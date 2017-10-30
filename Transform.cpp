@@ -5,8 +5,8 @@
 #include "Transform.h"
 
 glm::vec3 Transform::up(0, 1, 0);
-glm::vec3 Transform::forward(0, 0, 1);
-glm::vec3 Transform::left(1, 0, 0);
+glm::vec3 Transform::forward(1, 0, 0);
+glm::vec3 Transform::right(0, 0, 1);
 
 
 glm::mat4 Transform::getModelMatrix(glm::mat4 model) const {
@@ -46,5 +46,23 @@ void Transform::translate(const glm::vec3 &position) {
 
 glm::mat4 Transform::getQuatMatrix() const {
     return rotation;
+}
+
+glm::quat Transform::getQuaternion() const {
+    return glm::quat_cast(rotation);
+}
+
+Transform::Transform():position(0.0f), rotation(1.0f), scale(1.0f){}
+
+glm::vec3 Transform::getUp() const {
+    return glm::rotate(getQuaternion(), Transform::up);
+}
+
+glm::vec3 Transform::getRight() const {
+    return glm::rotate(getQuaternion(), Transform::right);
+}
+
+glm::vec3 Transform::getForward() const {
+    return glm::rotate(getQuaternion(), Transform::forward);
 }
 

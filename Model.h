@@ -7,11 +7,16 @@
 
 #include "Common.h"
 #include "Mesh.h"
+#include "Component.h"
 
 
-class Model {
+class Model: public Component{
 public:
     virtual void __render(Shader * shader) = 0;
+
+    void start() override;
+
+    void update() override;
 };
 
 

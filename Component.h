@@ -18,7 +18,7 @@ public:
 
     void __setParent(GameObject *parent);
 
-
+    virtual ~Component();
 };
 
 

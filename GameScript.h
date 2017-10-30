@@ -8,16 +8,23 @@
 #include "Component.h"
 #include "Input.h"
 
+
 class GameScript: public Component {
-    std::function<void(double, double)> mouseHandler = nullptr;
-    std::function<void(double)> scrollHandler = nullptr;
+    std::function<void(double, double)> mouseHandler;
+    std::function<void(double)> scrollHandler;
 protected:
     void enableMouseInput(){
-        mouseHandler = std::bind(&GameScript::onMouseMove, this);
+        mouseHandler = std::bind(&GameScript::onMouseMove,
+                                 this,
+                                 std::placeholders::_1,
+                                 std::placeholders::_2
+        );
         Input::attachOnMouseMove(&mouseHandler);
     }
     void enableScrollInput(){
-        scrollHandler = std::bind(&GameScript::onScrollMove, this);
+        scrollHandler = std::bind(&GameScript::onScrollMove,
+                                  this,
+                                  std::placeholders::_1);
         Input::attachOnScrollMove(&scrollHandler);
     }
 public:

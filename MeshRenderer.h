@@ -18,6 +18,8 @@ class MeshRenderer: public Component {
 public:
     MeshRenderer(Material *material, Shader *shader);
     void update() override;
+
+    void start() override;
 };
 
 

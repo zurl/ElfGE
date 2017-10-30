@@ -8,6 +8,7 @@
 
 #include "Scene.h"
 #include "Utility.h"
+#include "Assets/Entry.h"
 
 class Runtime {
     static Scene * scene;
@@ -33,10 +34,23 @@ public:
 
     static void __start(){
         Utility::__initialOpenGL();
-    }
+        Input::initialize();
+        Entry::start();
+        setScene(Entry::getDefaultScene());
+        getScene()->start();
+        double lastFrame = glfwGetTime();
+        while(!glfwWindowShouldClose(Utility::window)) {
+            double currentFrame = glfwGetTime();
+            Utility::deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    static void __runRenderLoop(){
+            getScene()->update();   // EntryPoint
 
+            glfwSwapBuffers(Utility::window);
+            glfwPollEvents();
+        }
     }
 
 };

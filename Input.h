@@ -27,8 +27,8 @@ class Input {
 public:
 
     static void initialize(){
-        glfwSetCursorPosCallback(Utility::__glfwWindow, mouseCallback);
-        glfwSetScrollCallback(Utility::__glfwWindow, scrollCallback);
+        glfwSetCursorPosCallback(Utility::window, mouseCallback);
+        glfwSetScrollCallback(Utility::window, scrollCallback);
     }
 
     static void attachOnMouseMove(std::function<void(double, double)> * callback){
@@ -39,13 +39,15 @@ public:
         scrollEventHandlers.emplace_back(callback);
     }
 
-    static void detachOnMouseMove(std::function<void(double, double)> * callback){
+
+    static void detachOnMouseMove(std::function<void(double, double)> *callback) {
         mouseEventHandlers.remove(callback);
     }
 
-    static void detachOnScrollMove(std::function<void(double)> * callback){
+    static void detachOnScrollMove(std::function<void(double)> *callback) {
         scrollEventHandlers.remove(callback);
     }
+
 
 };
 

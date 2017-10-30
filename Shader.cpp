@@ -11,6 +11,9 @@ Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentS
     const char * fragmentShaderSource = Utility::getTextFromFile(
             (Utility::ASSETS_PREFIX + "Shaders/" + vertexShaderPath + ".frag").c_str()
     );
+    if( vertexShaderSource == nullptr || fragmentShaderSource == nullptr){
+        throw Exception("Illegal Shader Position");
+    }
     GLuint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);

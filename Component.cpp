@@ -11,3 +11,7 @@ GameObject *Component::getParent() const {
 void Component::__setParent(GameObject *parent) {
     Component::parent = parent;
 }
+
+Component::~Component() {
+
+}

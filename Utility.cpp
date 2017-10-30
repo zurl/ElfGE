@@ -8,6 +8,8 @@
 
 int Utility::SCREEN_WIDTH = 1024;
 int Utility::SCREEN_HEIGHT = 768;
+double Utility::deltaTime = 0.0;
+GLFWwindow* Utility::window = nullptr;
 
 std::string Utility::WINDOW_NAME = "ElfGameEngine";
-std::string Utility::ASSETS_PREFIX = ".";
+std::string Utility::ASSETS_PREFIX = "../Assets/";

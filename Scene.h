@@ -14,10 +14,19 @@ class Scene {
     GameObject * rootGameObject;
 public:
     Scene();
+    virtual void start(){
+        rootGameObject->start();
+    }
+    virtual void update(){
+        rootGameObject->update();
+    }
     virtual ~Scene();
     Camera *getCamera() const;
     void setCamera(Camera *camera);
     void addGameObject(GameObject * gameObject);
+    GameObject * createGameObject();
+
+
 };
 
 

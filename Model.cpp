@@ -3,3 +3,11 @@
 //
 
 #include "Model.h"
+
+void Model::start() {
+
+}
+
+void Model::update() {
+
+}

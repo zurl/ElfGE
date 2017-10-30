@@ -11,13 +11,11 @@
 #include "GameScript.h"
 
 // Default camera values
-const float YAW         = -90.0f;
-const float PITCH       =  0.0f;
 const float SPEED       =  2.5f;
-const float SENSITIVITY =  0.1f;
+const float SENSITIVITY =  0.002f;
 const float ZOOM        =  45.0f;
 
-class DefaultCamera : public Camera, GameScript{
+class DefaultCamera : public Camera{
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
@@ -38,47 +36,25 @@ public:
     // Constructor with vectors
     DefaultCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
                   glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f),
-                  glm::vec3 front = glm::vec3(0.0f, 1.0f, 0.0f),
+                  glm::vec3 front = glm::vec3(1.0f, 1.0f, 1.0f),
                   float zoom = ZOOM,
                   float sensitivity = SENSITIVITY,
                   float speed = SPEED
     );
 
-    virtual glm::mat4 getViewMatrix();
+    virtual glm::mat4 getViewMatrix() override ;
 
-    virtual glm::mat4 getProjectionMatrix();
+    virtual glm::mat4 getProjectionMatrix() override ;
 
 private:
 
-    void onMouseMove(double xoffset, double yoffset) override {
+    void onMouseMove(double xoffset, double yoffset) override;
 
-        glm::vec3 rotation = getParent()->transform.getRotation();
+    void onScrollMove(double x) override;
 
-        xoffset *= mouseSensitivity;
-        yoffset *= mouseSensitivity;
+    void start() override;
 
-        rotation.y   += xoffset;
-        rotation.x += yoffset;
-
-        // Make sure that when pitch is out of bounds, screen doesn't get flipped
-        if (constrainPitch) {
-            if (rotation.x > 89.0f)
-                rotation.x = 89.0f;
-            if (rotation.x < -89.0f)
-                rotation.x = -89.0f;
-        }
-
-        getParent()->transform.setRotation(rotation);
-    }
-
-    void onScrollMove(double x) override {
-        if (zoom >= 1.0f && zoom <= 45.0f)
-            zoom -= x;
-        if (zoom <= 1.0f)
-            zoom = 1.0f;
-        if (zoom >= 45.0f)
-            zoom = 45.0f;
-    }
+    void update() override;
 
 };
 

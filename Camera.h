@@ -6,9 +6,10 @@
 #define ELFGE_CAMERA_H
 
 #include "Common.h"
+#include "GameScript.h"
 #include "GameObject.h"
 
-class Camera{
+class Camera: public GameScript{
 public:
     virtual glm::mat4 getViewMatrix() = 0;
 
