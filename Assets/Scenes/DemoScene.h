@@ -8,18 +8,31 @@
 
 #include "../../GameEngine/ELFGE.h"
 #include "../../StandardAssets/Meshs/CubeMesh.h"
+#include "../Prefabs.h"
+
 
 class DemoScene: public Scene {
 
-    DefaultMaterial material;
-
 public:
 
-    DemoScene();
+    DemoScene(){}
 
-    void start() override;
+    void start() override {
 
-    void update() override;
+        ShaderManager::loadShader("simple", "simple", "simple");
+
+        auto camera = Prefabs::camera(this);
+
+        auto cube1 = Prefabs::cube(this, glm::vec3(1,1,1));
+        auto cube2 = Prefabs::cube(this, glm::vec3(1,1,3));
+        auto cube3 = Prefabs::cube(this, glm::vec3(1,3,1));
+
+        Scene::start();
+    }
+
+    void update() override {
+        Scene::update();
+    }
 };
 
 

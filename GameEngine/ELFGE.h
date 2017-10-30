@@ -26,4 +26,7 @@
 
 #include "Shader/Shader.h"
 #include "Shader/ShaderManager.h"
+#include "Components/Lighting.h"
+#include "Shader/LightingManager.h"
+
 #endif //ELFGE_ELFGE_H

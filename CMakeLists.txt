@@ -36,7 +36,22 @@ set(SOURCE_FILES
         GameEngine/DefaultComponents/DefaultCamera.cpp
         GameEngine/DefaultComponents/DefaultCamera.h
         GameEngine/Core/Runtime.cpp
-        GameEngine/Core/Runtime.h GameEngine/Core/Input.cpp GameEngine/Core/Input.h GameEngine/Components/GameScript.cpp GameEngine/Components/GameScript.h StandardAssets/Meshs/CubeMesh.cpp StandardAssets/Meshs/CubeMesh.h Assets/Scenes/DemoScene.cpp Assets/Scenes/DemoScene.h Assets/Entry.cpp Assets/Entry.h GameEngine/ELFGE.h GameEngine/DefaultComponents/DefaultMaterial.cpp GameEngine/DefaultComponents/DefaultMaterial.h GameEngine/Shader/ShaderManager.cpp GameEngine/Shader/ShaderManager.h)
+        GameEngine/Core/Runtime.h
+        GameEngine/Core/Input.cpp
+        GameEngine/Core/Input.h
+        GameEngine/Components/GameScript.cpp
+        GameEngine/Components/GameScript.h
+        StandardAssets/Meshs/CubeMesh.cpp
+        StandardAssets/Meshs/CubeMesh.h
+        Assets/Scenes/DemoScene.h
+        Assets/Entry.cpp
+        Assets/Entry.h
+        GameEngine/ELFGE.h
+        GameEngine/DefaultComponents/DefaultMaterial.cpp
+        GameEngine/DefaultComponents/DefaultMaterial.h
+        GameEngine/Shader/ShaderManager.cpp
+        GameEngine/Shader/ShaderManager.h
+        Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h)
 
 find_library(OPENGL OpenGL)
 find_library(GLFW glfw)

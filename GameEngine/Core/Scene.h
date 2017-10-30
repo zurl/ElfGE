@@ -8,6 +8,7 @@
 #include "../Common.h"
 #include "../Components/Camera.h"
 #include "GameObject.h"
+#include "../Shader/ShaderManager.h"
 
 class Scene {
     Camera * camera;
@@ -18,6 +19,7 @@ public:
         rootGameObject->start();
     }
     virtual void update(){
+        ShaderManager::useShader(nullptr);
         rootGameObject->update();
     }
     virtual ~Scene();

@@ -5,3 +5,4 @@
 #include "ShaderManager.h"
 
 std::map<std::string, Shader> ShaderManager::shaders;
+Shader * ShaderManager::lastShader;

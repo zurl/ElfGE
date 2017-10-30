@@ -10,6 +10,8 @@
 
 class ShaderManager {
     static std::map<std::string, Shader> shaders;
+
+    static Shader * lastShader;
 public:
     static void loadShader(const std::string & name, const std::string & vertex, const std::string & fragment){
         Shader shader(vertex, fragment);
@@ -22,6 +24,12 @@ public:
         auto iter = shaders.find(name);
         if( iter == shaders.end()) throw Exception("No Shader Found");
         return &iter->second;
+    }
+
+    static bool useShader(Shader * shader){
+        bool result = shader == lastShader;
+        lastShader = shader;
+        return result;
     }
 
 };

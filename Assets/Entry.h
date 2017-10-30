@@ -6,22 +6,15 @@
 #define ELFGE_ENTRY_H
 
 
-#include "../GameEngine/ELFGE.h"
-#include "Scenes/DemoScene.h"
+class Scene;
 
 class Entry {
 
 public:
 
-    static void start(){
-        // TODO:: Write the Global Bootstrap Code here
-        ShaderManager::loadShader("simple", "simple", "simple");
-    }
+    static void start();
 
-    static Scene * getDefaultScene(){
-        // TODO:: Return your Default Scene
-        return new DemoScene();
-    }
+    static Scene * getDefaultScene();
 
 };
 

@@ -40,6 +40,7 @@ public:
         getScene()->start();
         double lastFrame = glfwGetTime();
         while(!glfwWindowShouldClose(Utility::window)) {
+
             double currentFrame = glfwGetTime();
             Utility::deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
