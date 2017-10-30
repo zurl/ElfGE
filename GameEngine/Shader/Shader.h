@@ -5,8 +5,8 @@
 #ifndef ELFGE_SHADER_H
 #define ELFGE_SHADER_H
 
-#include "Common.h"
-#include "Utility.h"
+#include "../Common.h"
+#include "../Utility.h"
 
 class Shader {
 protected:

@@ -5,7 +5,7 @@
 #ifndef ELFGE_SHADERMANAGER_H
 #define ELFGE_SHADERMANAGER_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "Shader.h"
 
 class ShaderManager {

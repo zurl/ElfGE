@@ -5,8 +5,8 @@
 #ifndef ELFGE_MESH_H
 #define ELFGE_MESH_H
 
-#include "Common.h"
-#include "Shader.h"
+#include "../Common.h"
+#include "../Shader/Shader.h"
 
 class Mesh {
 public:

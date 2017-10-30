@@ -5,7 +5,7 @@
 #ifndef ELFGE_TRANSFORM_H
 #define ELFGE_TRANSFORM_H
 
-#include "Common.h"
+#include "../Common.h"
 
 class Transform {
     glm::vec3 position;

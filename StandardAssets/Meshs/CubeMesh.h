@@ -6,7 +6,7 @@
 #define ELFGE_CUBEMESH_H
 
 
-#include "../DefaultMesh.h"
+#include "../../GameEngine/DefaultComponents/DefaultMesh.h"
 
 class CubeMesh: public DefaultMesh {
 public:

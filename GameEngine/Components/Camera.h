@@ -5,9 +5,9 @@
 #ifndef ELFGE_CAMERA_H
 #define ELFGE_CAMERA_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "GameScript.h"
-#include "GameObject.h"
+#include "../Core/GameObject.h"
 
 class Camera: public GameScript{
 public:

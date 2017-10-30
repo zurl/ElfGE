@@ -5,8 +5,8 @@
 #ifndef ELFGE_SCENE_H
 #define ELFGE_SCENE_H
 
-#include "Common.h"
-#include "Camera.h"
+#include "../Common.h"
+#include "../Components/Camera.h"
 #include "GameObject.h"
 
 class Scene {

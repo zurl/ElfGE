@@ -4,9 +4,9 @@
 
 #ifndef ELFGE_GAMEOBJECT_H
 #define ELFGE_GAMEOBJECT_H
-#include "Common.h"
+#include "../Common.h"
 #include "Transform.h"
-#include "Component.h"
+#include "../Components/Component.h"
 
 class GameObject {
 private:

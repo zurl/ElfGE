@@ -7,8 +7,8 @@
 
 
 #include "Scene.h"
-#include "Utility.h"
-#include "Assets/Entry.h"
+#include "../Utility.h"
+#include "../../Assets/Entry.h"
 
 class Runtime {
     static Scene * scene;

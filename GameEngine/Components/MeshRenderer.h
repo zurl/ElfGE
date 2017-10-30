@@ -7,8 +7,8 @@
 
 
 #include "Component.h"
-#include "Material.h"
-#include "Shader.h"
+#include "../Shader/Material.h"
+#include "../Shader/Shader.h"
 #include "Model.h"
 
 class MeshRenderer: public Component {

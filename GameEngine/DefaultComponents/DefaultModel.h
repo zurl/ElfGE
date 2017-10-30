@@ -5,8 +5,8 @@
 #ifndef ELFGE_DEFAULTMODEL_H
 #define ELFGE_DEFAULTMODEL_H
 
-#include "Common.h"
-#include "Model.h"
+#include "../Common.h"
+#include "../Components/Model.h"
 #include "DefaultMesh.h"
 
 class DefaultModel: public Model {

@@ -3,7 +3,7 @@
 //
 
 #include "MeshRenderer.h"
-#include "Runtime.h"
+#include "../Core/Runtime.h"
 
 
 MeshRenderer::MeshRenderer(Material *material, Shader *shader) : material(material), shader(shader) {}

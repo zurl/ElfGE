@@ -5,7 +5,7 @@
 #ifndef ELFGE_MESHGROUP_H
 #define ELFGE_MESHGROUP_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "Mesh.h"
 #include "Component.h"
 

@@ -6,7 +6,7 @@
 #define ELFGE_DEFAULTMATERIAL_H
 
 
-#include "Material.h"
+#include "../Shader/Material.h"
 
 class DefaultMaterial: public Material {
 public:

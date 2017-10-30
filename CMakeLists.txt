@@ -3,40 +3,40 @@ project(elfge)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        GameObject.cpp
-        GameObject.h
-        Common.h
+        GameEngine/Core/GameObject.cpp
+        GameEngine/Core/GameObject.h
+        GameEngine/Common.h
         Main.cpp
-        Component.cpp
-        Component.h
-        MeshRenderer.cpp
-        MeshRenderer.h
-        Material.cpp
-        Material.h
-        Shader.cpp
-        Shader.h
-        Scene.cpp
-        Scene.h
-        Transform.cpp
-        Transform.h
-        Utility.cpp
-        Utility.h
-        Mesh.cpp
-        Mesh.h
-        Exception.cpp
-        Exception.h
-        Model.cpp
-        Model.h
-        DefaultModel.cpp
-        DefaultModel.h
-        DefaultMesh.cpp
-        DefaultMesh.h
-        Camera.cpp
-        Camera.h
-        DefaultCamera.cpp
-        DefaultCamera.h
-        Runtime.cpp
-        Runtime.h Input.cpp Input.h GameScript.cpp GameScript.h Meshs/CubeMesh.cpp Meshs/CubeMesh.h Assets/Scenes/DemoScene.cpp Assets/Scenes/DemoScene.h Assets/Entry.cpp Assets/Entry.h ELFGE.h DefaultMaterial.cpp DefaultMaterial.h ShaderManager.cpp ShaderManager.h)
+        GameEngine/Components/Component.cpp
+        GameEngine/Components/Component.h
+        GameEngine/Components/MeshRenderer.cpp
+        GameEngine/Components/MeshRenderer.h
+        GameEngine/Shader/Material.cpp
+        GameEngine/Shader/Material.h
+        GameEngine/Shader/Shader.cpp
+        GameEngine/Shader/Shader.h
+        GameEngine/Core/Scene.cpp
+        GameEngine/Core/Scene.h
+        GameEngine/Core/Transform.cpp
+        GameEngine/Core/Transform.h
+        GameEngine/Utility.cpp
+        GameEngine/Utility.h
+        GameEngine/Components/Mesh.cpp
+        GameEngine/Components/Mesh.h
+        GameEngine/Exception.cpp
+        GameEngine/Exception.h
+        GameEngine/Components/Model.cpp
+        GameEngine/Components/Model.h
+        GameEngine/DefaultComponents/DefaultModel.cpp
+        GameEngine/DefaultComponents/DefaultModel.h
+        GameEngine/DefaultComponents/DefaultMesh.cpp
+        GameEngine/DefaultComponents/DefaultMesh.h
+        GameEngine/Components/Camera.cpp
+        GameEngine/Components/Camera.h
+        GameEngine/DefaultComponents/DefaultCamera.cpp
+        GameEngine/DefaultComponents/DefaultCamera.h
+        GameEngine/Core/Runtime.cpp
+        GameEngine/Core/Runtime.h GameEngine/Core/Input.cpp GameEngine/Core/Input.h GameEngine/Components/GameScript.cpp GameEngine/Components/GameScript.h StandardAssets/Meshs/CubeMesh.cpp StandardAssets/Meshs/CubeMesh.h Assets/Scenes/DemoScene.cpp Assets/Scenes/DemoScene.h Assets/Entry.cpp Assets/Entry.h GameEngine/ELFGE.h GameEngine/DefaultComponents/DefaultMaterial.cpp GameEngine/DefaultComponents/DefaultMaterial.h GameEngine/Shader/ShaderManager.cpp GameEngine/Shader/ShaderManager.h)
 
 find_library(OPENGL OpenGL)
 find_library(GLFW glfw)

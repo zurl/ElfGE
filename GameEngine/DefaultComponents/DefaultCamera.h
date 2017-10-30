@@ -5,10 +5,10 @@
 #ifndef ELFGE_DEFAULTCAMERA_H
 #define ELFGE_DEFAULTCAMERA_H
 
-#include "Common.h"
-#include "Utility.h"
-#include "Camera.h"
-#include "GameScript.h"
+#include "../Common.h"
+#include "../Utility.h"
+#include "../Components/Camera.h"
+#include "../Components/GameScript.h"
 
 // Default camera values
 const float SPEED       =  2.5f;

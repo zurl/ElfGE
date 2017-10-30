@@ -6,10 +6,8 @@
 #define ELFGE_DEMOSCENE_H
 
 
-#include "../../Scene.h"
-#include "../../ELFGE.h"
-#include "../../Meshs/CubeMesh.h"
-#include "../../DefaultMaterial.h"
+#include "../../GameEngine/ELFGE.h"
+#include "../../StandardAssets/Meshs/CubeMesh.h"
 
 class DemoScene: public Scene {
 

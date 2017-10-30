@@ -4,8 +4,8 @@
 
 #ifndef ELFGE_INPUT_H
 #define ELFGE_INPUT_H
-#include "Common.h"
-#include "Utility.h"
+#include "../Common.h"
+#include "../Utility.h"
 
 class Input {
 

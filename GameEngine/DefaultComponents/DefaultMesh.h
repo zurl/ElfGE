@@ -5,8 +5,8 @@
 #ifndef ELFGE_DEFAULTMESH_H
 #define ELFGE_DEFAULTMESH_H
 
-#include "Common.h"
-#include "Mesh.h"
+#include "../Common.h"
+#include "../Components/Mesh.h"
 
 class DefaultMesh: public Mesh{
 

@@ -6,7 +6,7 @@
 #define ELFGE_ENTRY_H
 
 
-#include "../ELFGE.h"
+#include "../GameEngine/ELFGE.h"
 #include "Scenes/DemoScene.h"
 
 class Entry {

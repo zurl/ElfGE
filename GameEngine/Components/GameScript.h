@@ -6,7 +6,7 @@
 #define ELFGE_GAMESCRIPT_H
 
 #include "Component.h"
-#include "Input.h"
+#include "../Core/Input.h"
 
 
 class GameScript: public Component {
