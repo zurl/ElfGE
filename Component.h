@@ -10,11 +10,15 @@ class GameObject;
 class Component {
     GameObject * parent;
 public:
+    virtual void start() = 0;
     virtual void update() = 0;
+
 
     GameObject *getParent() const;
 
     void __setParent(GameObject *parent);
+
+
 };
 
 

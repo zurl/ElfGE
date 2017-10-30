@@ -24,10 +24,13 @@ public:
 
     void setRotation(const glm::vec3 &eularAngle);
 
+    glm::mat4 getQuatMatrix() const;
+
     const glm::vec3 &getScale() const;
 
     void setScale(const glm::vec3 &scale);
 
+    static glm::vec3 up, forward, left;
 };
 
 

@@ -10,7 +10,7 @@
 
 class GameObject {
 private:
-    std::list<Component *> componentsList;
+    std::list<Component *> components;
     GameObject * parent;
     std::list<GameObject *> children;
 public:
@@ -22,14 +22,14 @@ public:
     }
 
     virtual void __update(){
-        for(auto &x : componentsList){
+        for(auto &x : components){
             x->update();
         }
     }
 
     template <typename T>
     T * getComponent(){
-        for(auto & x: componentsList){
+        for(auto & x: components){
             if(typeid(x) == typeid(T*)){
                 return dynamic_cast<T*>(x);
             }
@@ -38,13 +38,18 @@ public:
     }
 
     template <typename T>
-    T * addComponent(
+    GameObject * addComponent(
             T * component,
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
-        componentsList.push_back(component);
-        return component;
+        components.push_back(component);
+        return this;
     }
+
+    template<typename T, typename... Args>
+    GameObject * createComponent(Args&&... args){
+        return addComponent(new T(std::forward<Args>(args)...));
+    };
 
     GameObject *getParent() const {
         return parent;
@@ -67,6 +72,10 @@ public:
         children.remove(gameObject);
     }
 
+    void __detachComponent(Component * component){
+        components.remove(component);
+    }
+
     static void destroy(GameObject * gameObject){
         if(gameObject->parent != nullptr){
             gameObject->parent->__detachChildren(gameObject);
@@ -76,7 +85,13 @@ public:
         }
         delete gameObject;
     }
-    
+
+    static void destroy(Component * component){
+        if(component->getParent() != nullptr){
+            component->getParent()->__detachComponent(component);
+        }
+        delete component;
+    }
 };
 
 

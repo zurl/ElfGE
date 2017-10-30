@@ -8,24 +8,11 @@
 #include "Common.h"
 #include "GameObject.h"
 
-class Camera: public GameObject{
+class Camera{
 public:
-    enum class Direction{
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT
-    };
-
     virtual glm::mat4 getViewMatrix() = 0;
 
     virtual glm::mat4 getProjectionMatrix() = 0;
-
-    virtual void processKeyboard(Direction direction, float deltaTime) = 0;
-
-    virtual void processMouseMovement(float xoffset, float yoffset) = 0;
-
-    virtual void processMouseScroll(float yoffset) = 0;
 };
 
 
