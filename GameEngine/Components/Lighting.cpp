@@ -3,15 +3,17 @@
 //
 
 #include "Lighting.h"
+#include "../Shader/LightingManager.h"
+
 
 void Lighting::start() {
     LightingManager::attachLighting(getName(), this);
 }
 
-void Lighting::update() {
-
+void Lighting::destroy() {
+    LightingManager::detachLighting(getName(), this);
 }
 
-Lighting::~Lighting() {
-    LightingManager::detachLighting(getName(), this);
+void Lighting::update() {
+
 }

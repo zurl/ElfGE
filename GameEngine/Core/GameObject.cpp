@@ -20,3 +20,16 @@ void GameObject::__attachChildren(GameObject *gameObject) {
 void GameObject::__detachChildren(GameObject *gameObject) {
     children.remove(gameObject);
 }
+
+void GameObject::__detachComponent(Component *component) {
+    components.remove(component);
+}
+
+GameObject::~GameObject() {
+    for(auto &x : components){
+        delete x;
+    }
+    for(auto &x : children){
+        delete x;
+    }
+}

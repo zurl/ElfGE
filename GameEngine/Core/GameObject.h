@@ -6,7 +6,7 @@
 #define ELFGE_GAMEOBJECT_H
 #include "../Common.h"
 #include "Transform.h"
-#include "../Components/Component.h"
+#include "Component.h"
 
 class GameObject {
 private:
@@ -36,6 +36,19 @@ public:
         }
         for(auto &x : children){
             x->update();
+        }
+    }
+
+    virtual void destroy(){
+        for(auto &x : components){
+            x->destroy();
+            __detachComponent(x);
+        }
+        for(auto &x : children){
+            x->destroy();
+        }
+        if(parent != nullptr){
+            parent->__detachChildren(this);
         }
     }
 
@@ -76,26 +89,20 @@ public:
 
     void __detachChildren(GameObject * gameObject);
 
-    void __detachComponent(Component * component){
-        components.remove(component);
-    }
+    void __detachComponent(Component * component);
 
     static void destroy(GameObject * gameObject){
-        if(gameObject->parent != nullptr){
-            gameObject->parent->__detachChildren(gameObject);
-        }
-        while(!gameObject->children.empty()){
-            destroy(gameObject->children.front());
-        }
+        gameObject->destroy();
         delete gameObject;
     }
 
     static void destroy(Component * component){
-        if(component->getParent() != nullptr){
-            component->getParent()->__detachComponent(component);
-        }
+        component->destroy();
         delete component;
     }
+
+    virtual ~GameObject();
+
 };
 
 

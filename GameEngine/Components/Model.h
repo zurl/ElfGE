@@ -7,17 +7,12 @@
 
 #include "../Common.h"
 #include "Mesh.h"
-#include "Component.h"
+#include "../Core/Component.h"
 
 
 class Model: public Component{
 public:
     virtual void __render(Shader * shader) = 0;
-
-    void start() override;
-
-    void update() override;
 };
-
 
 #endif //ELFGE_MESHGROUP_H

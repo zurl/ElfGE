@@ -13,7 +13,8 @@ void Scene::setCamera(Camera *camera) {
 }
 
 Scene::~Scene() {
-    GameObject::destroy(rootGameObject);
+    destroy();
+    delete rootGameObject;
 }
 
 void Scene::addGameObject(GameObject *gameObject) {
@@ -28,4 +29,17 @@ GameObject *Scene::createGameObject() {
     GameObject * gameObject = new GameObject();
     addGameObject(gameObject);
     return gameObject;
+}
+
+void Scene::destroy() {
+    rootGameObject->destroy();
+}
+
+void Scene::update() {
+    ShaderManager::useShader(nullptr);
+    rootGameObject->update();
+}
+
+void Scene::start() {
+    rootGameObject->start();
 }

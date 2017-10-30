@@ -12,6 +12,17 @@ void Component::__setParent(GameObject *parent) {
     Component::parent = parent;
 }
 
+void Component::start() {
+
+}
+
+void Component::destroy() {
+}
+
+void Component::update() {
+
+}
+
 Component::~Component() {
 
 }

@@ -37,6 +37,14 @@ public:
         }
     }
 
+    void start() override;
+
+    void update() override;
+
+    void destroy() override;
+
+    virtual ~DefaultModel();
+
 private:
     void processNode(aiNode *node, const aiScene *scene){
         for(unsigned int i = 0; i < node->mNumMeshes; i++) {

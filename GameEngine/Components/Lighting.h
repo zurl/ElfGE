@@ -7,21 +7,21 @@
 
 
 #include "../Shader/Shader.h"
-#include "Component.h"
-#include "../Shader/LightingManager.h"
+#include "../Core/Component.h"
 
 class Lighting: public Component {
 public:
 
     virtual std::string getName() = 0;
 
-    virtual void update(const std::string &prefix, Shader * shader) = 0;
-
     void start() override;
 
     void update() override;
 
-    virtual ~Lighting();
+    void destroy() override;
+
+    virtual void update(const std::string &prefix, Shader * shader) = 0;
+
 };
 
 

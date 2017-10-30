@@ -111,3 +111,7 @@ void DefaultMesh::bindVertice() {
 DefaultMesh::DefaultMesh() {
 
 }
+
+DefaultMesh::~DefaultMesh() {
+
+}

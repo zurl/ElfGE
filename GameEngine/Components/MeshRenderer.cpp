@@ -35,3 +35,7 @@ void MeshRenderer::start() {
         throw Exception("GameObject contains no Model");
     }
 }
+
+void MeshRenderer::destroy() {
+
+}

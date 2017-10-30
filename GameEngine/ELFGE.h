@@ -13,7 +13,7 @@
 #include "Core/Transform.h"
 #include "Core/Runtime.h"
 
-#include "Components/Component.h"
+#include "Core/Component.h"
 #include "Components/Mesh.h"
 #include "Components/Model.h"
 #include "Components/Camera.h"

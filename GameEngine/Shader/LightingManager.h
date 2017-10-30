@@ -14,7 +14,10 @@ public:
     static void attachLighting(const std::string & name, Lighting * lighting){
         auto iter = lightings.find(name);
         if(iter == lightings.end()){
-            lightings.emplace(std::piecewise_construct, name);
+            lightings.emplace(std::piecewise_construct,
+                              std::forward_as_tuple(name),
+                              std::forward_as_tuple()
+            );
             iter = lightings.find(name);
         }
         iter->second.emplace_back(lighting);

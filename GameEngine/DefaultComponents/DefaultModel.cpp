@@ -3,3 +3,21 @@
 //
 
 #include "DefaultModel.h"
+
+void DefaultModel::start() {
+
+}
+
+void DefaultModel::update() {
+
+}
+
+void DefaultModel::destroy() {
+
+}
+
+DefaultModel::~DefaultModel() {
+    for(auto &x : meshes){
+        delete x;
+    }
+}

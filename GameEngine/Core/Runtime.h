@@ -19,6 +19,10 @@ public:
     }
 
     static void setScene(Scene *scene) {
+        if(Runtime::scene != nullptr){
+            Runtime::scene->destroy();
+            delete Runtime::scene;
+        }
         Runtime::scene = scene;
     }
 

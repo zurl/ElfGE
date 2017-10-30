@@ -6,7 +6,7 @@
 #define ELFGE_MESHRENDER_H
 
 
-#include "Component.h"
+#include "../Core/Component.h"
 #include "../Shader/Material.h"
 #include "../Shader/Shader.h"
 #include "Model.h"
@@ -17,9 +17,9 @@ class MeshRenderer: public Component {
     Model * model;
 public:
     MeshRenderer(Material *material, Shader *shader);
-    void update() override;
-
     void start() override;
+    void update() override;
+    void destroy() override;
 };
 
 

@@ -32,6 +32,8 @@ public:
 
     void __render(Shader * shader);
 
+    virtual ~DefaultMesh();
+
 protected:
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;

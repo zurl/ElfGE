@@ -11,6 +11,9 @@
 class Mesh {
 public:
     virtual void __render(Shader * shader) = 0;
+    virtual ~Mesh() {
+
+    }
 };
 
 

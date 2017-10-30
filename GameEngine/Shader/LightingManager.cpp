@@ -3,3 +3,5 @@
 //
 
 #include "LightingManager.h"
+
+std::map<std::string, std::list<Lighting *>> LightingManager::lightings;

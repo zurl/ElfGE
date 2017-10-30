@@ -7,8 +7,8 @@ set(SOURCE_FILES
         GameEngine/Core/GameObject.h
         GameEngine/Common.h
         Main.cpp
-        GameEngine/Components/Component.cpp
-        GameEngine/Components/Component.h
+        GameEngine/Core/Component.cpp
+        GameEngine/Core/Component.h
         GameEngine/Components/MeshRenderer.cpp
         GameEngine/Components/MeshRenderer.h
         GameEngine/Shader/Material.cpp
@@ -21,17 +21,14 @@ set(SOURCE_FILES
         GameEngine/Core/Transform.h
         GameEngine/Utility.cpp
         GameEngine/Utility.h
-        GameEngine/Components/Mesh.cpp
         GameEngine/Components/Mesh.h
         GameEngine/Exception.cpp
         GameEngine/Exception.h
-        GameEngine/Components/Model.cpp
         GameEngine/Components/Model.h
         GameEngine/DefaultComponents/DefaultModel.cpp
         GameEngine/DefaultComponents/DefaultModel.h
         GameEngine/DefaultComponents/DefaultMesh.cpp
         GameEngine/DefaultComponents/DefaultMesh.h
-        GameEngine/Components/Camera.cpp
         GameEngine/Components/Camera.h
         GameEngine/DefaultComponents/DefaultCamera.cpp
         GameEngine/DefaultComponents/DefaultCamera.h
