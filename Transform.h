@@ -12,7 +12,7 @@ class Transform {
     glm::mat4 rotation;
     glm::vec3 scale;
 public:
-    glm::mat4 transform(glm::mat4 trans) const;
+    glm::mat4 transform() const;
 
     const glm::vec3 &getPosition() const;
 

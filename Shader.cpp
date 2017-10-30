@@ -5,10 +5,10 @@
 #include "Shader.h"
 
 Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) {
-    const char * vertexShaderSource = Utility::readFile(
+    const char * vertexShaderSource = Utility::getTextFromFile(
             (Utility::ASSETS_PREFIX + "Shaders/" + vertexShaderPath + ".vert").c_str()
     );
-    const char * fragmentShaderSource = Utility::readFile(
+    const char * fragmentShaderSource = Utility::getTextFromFile(
             (Utility::ASSETS_PREFIX + "Shaders/" + vertexShaderPath + ".frag").c_str()
     );
     GLuint vertexShader;

@@ -4,11 +4,12 @@
 
 #include "Transform.h"
 
-glm::mat4 Transform::transform(glm::mat4 trans) const {
-    trans = glm::translate(trans, position);
-    trans = trans * rotation;
-    trans = glm::scale(trans, scale);
-    return trans;
+glm::mat4 Transform::transform() const {
+    glm::mat4 model;
+    model = glm::translate(model, position);
+    model = model * rotation;
+    model = glm::scale(model, scale);
+    return model;
 }
 
 const glm::vec3 &Transform::getPosition() const {

@@ -16,6 +16,7 @@ void MeshRenderer::update() {
         }
     }
     shader->__use();
+    shader->setMat4("model", getParent()->transform.transform());
     material->__use(shader);
     model->__render(shader);
 }

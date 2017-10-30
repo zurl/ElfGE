@@ -10,8 +10,10 @@
 class Utility {
 public:
     static const std::string ASSETS_PREFIX = ".";
+    static const int SCREEN_WIDTH = 1024;
+    static const int SCREEN_HEIGHT = 1024;
 
-    static const char * readFile(const char * filePath){
+    static const char * getTextFromFile(const char * filePath){
         FILE * fp = fopen(filePath, "r");
         if( fp == nullptr ) return nullptr;
         fseek(fp, 0L, SEEK_END);
