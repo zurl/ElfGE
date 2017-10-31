@@ -3,6 +3,7 @@
 //
 
 #include "DefaultMesh.h"
+#include "../../GameEngine/Shader/TextureManager.h"
 
 DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) {
     this->directory = directory;
@@ -43,10 +44,10 @@ DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-    loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-    loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-    loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-    loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+    loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
+    loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
+    loadMaterialTextures(material, aiTextureType_HEIGHT, "normal");
+    loadMaterialTextures(material, aiTextureType_AMBIENT, "height");
 
     bindVertice();
 }
@@ -62,16 +63,15 @@ void DefaultMesh::render(Shader * shader) {
         std::stringstream ss;
         std::string number;
         std::string name = textures[i].type;
-        if(name == "texture_diffuse")
+        if(name == "diffuse")
             ss << diffuseNr++;
-        else if(name == "texture_specular")
+        else if(name == "specular")
             ss << specularNr++;
         number = ss.str();
 
-        shader->setFloat(("material." + name + number).c_str(), i);
+        shader->setInt(("material." + name).c_str(), i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
-    glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
@@ -82,9 +82,9 @@ void DefaultMesh::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std:
         aiString str;
         mat->GetTexture(type, i, &str);
         Texture texture;
-        texture.id = Utility::getTextureFromFile(str.C_Str(), directory);
+        texture.id = TextureManager::loadTexture(directory + str.C_Str());
         texture.type = typeName;
-        texture.path = str.C_Str();
+        //texture.path = str.C_Str();
         textures.push_back(texture);
     }
 }

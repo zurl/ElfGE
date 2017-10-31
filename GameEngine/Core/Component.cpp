@@ -8,7 +8,7 @@ GameObject *Component::getGameObject() const {
     return gameObject;
 }
 
-void Component::__setGameObject(GameObject *parent) {
+void Component::setGameObject(GameObject *parent) {
     Component::gameObject = parent;
 }
 

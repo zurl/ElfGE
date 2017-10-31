@@ -13,6 +13,12 @@ private:
     std::list<Component *> components;
     GameObject * parent;
     std::list<GameObject *> children;
+
+    void attachChildren(GameObject * gameObject);
+
+    void detachChildren(GameObject * gameObject);
+
+    void detachComponent(Component * component);
 public:
     Transform transform;
 
@@ -42,13 +48,13 @@ public:
     virtual void destroy(){
         for(auto &x : components){
             x->destroy();
-            __detachComponent(x);
+            detachComponent(x);
         }
         for(auto &x : children){
             x->destroy();
         }
         if(parent != nullptr){
-            parent->__detachChildren(this);
+            parent->detachChildren(this);
         }
     }
 
@@ -70,7 +76,7 @@ public:
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
         components.push_back(component);
-        component->__setGameObject(this);
+        component->setGameObject(this);
         return this;
     }
 
@@ -84,12 +90,6 @@ public:
     }
 
     void setParent(GameObject *parent);
-
-    void __attachChildren(GameObject * gameObject);
-
-    void __detachChildren(GameObject * gameObject);
-
-    void __detachComponent(Component * component);
 
     static void destroy(GameObject * gameObject){
         gameObject->destroy();

@@ -7,21 +7,21 @@
 void GameObject::setParent(GameObject *parent) {
     if( parent == this->parent ) return;
     if( this->parent != nullptr ){
-        this->parent->__detachChildren(this);
+        this->parent->detachChildren(this);
     }
     this->parent = parent;
-    this->parent->__attachChildren(this);
+    this->parent->attachChildren(this);
 }
 
-void GameObject::__attachChildren(GameObject *gameObject) {
+void GameObject::attachChildren(GameObject *gameObject) {
     children.emplace_back(gameObject);
 }
 
-void GameObject::__detachChildren(GameObject *gameObject) {
+void GameObject::detachChildren(GameObject *gameObject) {
     children.remove(gameObject);
 }
 
-void GameObject::__detachComponent(Component *component) {
+void GameObject::detachComponent(Component *component) {
     components.remove(component);
 }
 

@@ -11,5 +11,7 @@
 #include "Materials/BlankMaterial.h"
 #include "Materials/StandardMaterial.h"
 #include "Meshs/CubeMesh.h"
+#include "Meshs/DefaultMesh.h"
+#include "Models/DefaultModel.h"
 
 #endif //ELFGE_STANDARDASSETS_H

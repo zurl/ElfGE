@@ -6,11 +6,13 @@
 #define ELFGE_CUBEMESH_H
 
 
-#include "../../GameEngine/DefaultComponents/DefaultMesh.h"
+#include "DefaultMesh.h"
+#include "../../GameEngine/GameEngine.h"
 
 class CubeMesh: public DefaultMesh {
 public:
     CubeMesh();
+    CubeMesh(const std::string specularName, const std::string diffuseName);
 };
 
 

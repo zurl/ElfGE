@@ -9,10 +9,10 @@ std::string DirectLighting::getName() {
 }
 
 void DirectLighting::update(const std::string &prefix, Shader *shader) {
-    shader->setVec3("dirLight.direction", getGameObject()->transform.getForward());
-    shader->setVec3("dirLight.ambient", ambient);
-    shader->setVec3("dirLight.diffuse", diffuse);
-    shader->setVec3("dirLight.specular", specular);
+    shader->setVec3(prefix + "direction", getGameObject()->transform.getForward());
+    shader->setVec3(prefix + "ambient", ambient);
+    shader->setVec3(prefix + "diffuse", diffuse);
+    shader->setVec3(prefix + "specular", specular);
 }
 
 DirectLighting::DirectLighting(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular) : ambient(

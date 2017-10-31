@@ -5,8 +5,8 @@
 #ifndef ELFGE_DEFAULTMESH_H
 #define ELFGE_DEFAULTMESH_H
 
-#include "../Common.h"
-#include "../Components/Mesh.h"
+#include "../../GameEngine/Common.h"
+#include "../../GameEngine/Components/Mesh.h"
 
 class DefaultMesh: public Mesh{
 
@@ -23,7 +23,6 @@ public:
     struct Texture {
         unsigned int id;
         std::string type;
-        std::string path;
     };
 
     DefaultMesh();

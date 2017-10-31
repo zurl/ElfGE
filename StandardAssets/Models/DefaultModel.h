@@ -5,9 +5,9 @@
 #ifndef ELFGE_DEFAULTMODEL_H
 #define ELFGE_DEFAULTMODEL_H
 
-#include "../Common.h"
-#include "../Components/Model.h"
-#include "DefaultMesh.h"
+#include "../../GameEngine/Common.h"
+#include "../../GameEngine/Components/Model.h"
+#include "../Meshs/DefaultMesh.h"
 
 class DefaultModel: public Model {
 

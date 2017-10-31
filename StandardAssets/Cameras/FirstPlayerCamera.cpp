@@ -5,7 +5,7 @@
 #include "FirstPlayerCamera.h"
 
 
-void FPSCamera::update() {
+void FirstPlayerCamera::update() {
     float cameraSpeed = (float)(2.5f * Utility::deltaTime);
     if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS)
         getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getForward());
@@ -17,7 +17,7 @@ void FPSCamera::update() {
         getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getRight());
 }
 
-void FPSCamera::onMouseMove(double xpos, double ypos) {
+void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
 
     static double lastX = Utility::SCREEN_HEIGHT / 2, lastY = Utility::SCREEN_WIDTH / 2;
 
@@ -38,7 +38,7 @@ void FPSCamera::onMouseMove(double xpos, double ypos) {
     getGameObject()->transform.setRotation(rotation);
 }
 
-void FPSCamera::onScrollMove(double x) {
+void FirstPlayerCamera::onScrollMove(double x) {
     if (zoom >= 1.0f && zoom <= 45.0f)
         zoom -= x;
     if (zoom <= 1.0f)

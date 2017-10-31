@@ -62,11 +62,12 @@ void main(){
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 result = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < NR_POINT_LIGHTS; i++){
-        result += CalcDirLight(dirLight[i], norm, viewDir);
+        //result += CalcDirLight(dirLight[i], norm, viewDir);
         result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
-        result += CalcSpotLight(spotLight[i], norm, FragPos, viewDir);
+        //result += CalcSpotLight(spotLight[i], norm, FragPos, viewDir);
     }
 
+    //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
 }
 
@@ -100,9 +101,9 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
-    ambient *= attenuation;
-    diffuse *= attenuation;
-    specular *= attenuation;
+    //ambient *= attenuation;
+    //diffuse *= attenuation;
+    //specular *= attenuation;
     return (ambient + diffuse + specular);
 }
 

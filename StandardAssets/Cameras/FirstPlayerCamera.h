@@ -8,7 +8,7 @@
 #include "DefaultCamera.h"
 
 
-class FPSCamera : public DefaultCamera{
+class FirstPlayerCamera : public DefaultCamera{
 
 public:
     enum class Direction{

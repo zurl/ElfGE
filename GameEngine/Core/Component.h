@@ -9,9 +9,12 @@ class GameObject;
 
 class Component {
     GameObject * gameObject;
-public:
-    void __setGameObject(GameObject *parent);
 
+    void setGameObject(GameObject *parent);
+
+    friend class GameObject;
+
+public:
     virtual void start() = 0;
 
     virtual void update() = 0;

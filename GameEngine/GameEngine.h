@@ -7,6 +7,8 @@
 
 #include "Exception.h"
 #include "Common.h"
+#include "Utility.h"
+
 #include "Core/GameObject.h"
 #include "Core/Scene.h"
 #include "Core/Input.h"
@@ -20,10 +22,9 @@
 #include "Components/MeshRenderer.h"
 #include "Components/Lighting.h"
 
-#include "DefaultComponents/DefaultMesh.h"
-#include "DefaultComponents/DefaultModel.h"
 #include "Shader/Shader.h"
 #include "Shader/ShaderManager.h"
 #include "Shader/LightingManager.h"
+#include "Shader/TextureManager.h"
 
 #endif //ELFGE_ELFGE_H

@@ -42,6 +42,8 @@ public:
 
     glm::vec3 getUp() const;
 
+    void rotate(glm::vec3 axis, float angle);
+
 };
 
 

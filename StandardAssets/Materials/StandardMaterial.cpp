@@ -5,5 +5,5 @@
 #include "StandardMaterial.h"
 
 void StandardMaterial::use(Shader *shader) {
-
+    shader->setFloat("material.shininess", 32.0f);
 }
