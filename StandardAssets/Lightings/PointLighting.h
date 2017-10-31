@@ -5,11 +5,20 @@
 #ifndef ELFGE_POINTLIGHTING_H
 #define ELFGE_POINTLIGHTING_H
 
-#include "../../GameEngine/ELFGE.h"
+#include "../../GameEngine/GameEngine.h"
 
 class PointLighting: public Lighting{
 
+    glm::vec3 ambient, diffuse, specular;
+    float constant, linear, quadratic;
+
 public:
+    PointLighting(const glm::vec3 &ambient = glm::vec3(0.05f, 0.05f, 0.05f),
+                  const glm::vec3 &diffuse = glm::vec3(0.8f, 0.8f, 0.8f),
+                  const glm::vec3 &specular =glm::vec3(1.0f, 1.0f, 1.0f),
+                  float constant = 1.0f,
+                  float linear = 0.09f,
+                  float quadratic = 0.032f);
 
     std::string getName() override;
 

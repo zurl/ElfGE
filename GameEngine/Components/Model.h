@@ -12,7 +12,7 @@
 
 class Model: public Component{
 public:
-    virtual void __render(Shader * shader) = 0;
+    virtual void render(Shader * shader) = 0;
 };
 
 #endif //ELFGE_MESHGROUP_H

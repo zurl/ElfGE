@@ -11,7 +11,6 @@
 class CubeMesh: public DefaultMesh {
 public:
     CubeMesh();
-
 };
 
 

@@ -6,8 +6,8 @@
 #define ELFGE_DEMOSCENE_H
 
 
-#include "../../GameEngine/ELFGE.h"
-#include "../../StandardAssets/Meshs/CubeMesh.h"
+#include "../../GameEngine/GameEngine.h"
+#include "../../StandardAssets/StandardAssets.h"
 #include "../Prefabs.h"
 
 
@@ -19,7 +19,7 @@ public:
 
     void start() override {
 
-        ShaderManager::loadShader("simple", "simple", "simple");
+        ShaderManager::loadShader("light", "light", "light");
 
         auto camera = Prefabs::camera(this);
 

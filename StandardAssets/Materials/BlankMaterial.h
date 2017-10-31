@@ -6,11 +6,11 @@
 #define ELFGE_DEFAULTMATERIAL_H
 
 
-#include "../Shader/Material.h"
+#include "../../GameEngine/Shader/Material.h"
 
-class DefaultMaterial: public Material {
+class BlankMaterial: public Material {
 public:
-    void __use(Shader *shader) override;
+    void use(Shader *shader) override;
 };
 
 

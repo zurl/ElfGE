@@ -8,9 +8,9 @@
 class GameObject;
 
 class Component {
-    GameObject * parent;
+    GameObject * gameObject;
 public:
-    void __setParent(GameObject *parent);
+    void __setGameObject(GameObject *parent);
 
     virtual void start() = 0;
 
@@ -18,7 +18,7 @@ public:
 
     virtual void destroy() = 0;
 
-    GameObject *getParent() const;
+    GameObject * getGameObject() const;
 
     virtual ~Component();
 };

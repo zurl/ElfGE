@@ -51,7 +51,7 @@ DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &
     bindVertice();
 }
 
-void DefaultMesh::__render(Shader * shader) {
+void DefaultMesh::render(Shader * shader) {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
 

@@ -14,22 +14,23 @@ void MeshRenderer::update() {
         throw Exception("No Camera");
     }
     if(!ShaderManager::useShader(shader)){
-        shader->__use();
+        shader->use();
         shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
         shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
         LightingManager::update(shader);
+        shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->transform.getPosition());
     }
-    shader->setMat4("model", getParent()->getModelMatrix());
-    material->__use(shader);
-    model->__render(shader);
+    shader->setMat4("model", getGameObject()->getModelMatrix());
+    material->use(shader);
+    model->render(shader);
 }
 
 void MeshRenderer::start() {
-    if( getParent() == nullptr){
+    if( getGameObject() == nullptr){
         throw Exception("A MeshRender Without Parents");
     }
-    if( getParent() != nullptr ){
-        model = getParent()->getComponent<Model>();
+    if( getGameObject() != nullptr ){
+        model = getGameObject()->getComponent<Model>();
     }
     if( model == nullptr ){
         throw Exception("GameObject contains no Model");

@@ -70,7 +70,7 @@ public:
             typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
     ){
         components.push_back(component);
-        component->__setParent(this);
+        component->__setGameObject(this);
         return this;
     }
 

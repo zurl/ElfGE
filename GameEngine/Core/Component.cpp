@@ -4,12 +4,12 @@
 
 #include "Component.h"
 
-GameObject *Component::getParent() const {
-    return parent;
+GameObject *Component::getGameObject() const {
+    return gameObject;
 }
 
-void Component::__setParent(GameObject *parent) {
-    Component::parent = parent;
+void Component::__setGameObject(GameObject *parent) {
+    Component::gameObject = parent;
 }
 
 void Component::start() {

@@ -31,9 +31,9 @@ public:
         processNode(scene->mRootNode, scene);
     }
 
-    void __render(Shader *shader) override {
+    void render(Shader *shader) override {
         for(auto & x: meshes){
-            x->__render(shader);
+            x->render(shader);
         }
     }
 

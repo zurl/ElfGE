@@ -5,10 +5,10 @@
 #ifndef ELFGE_PREFABS_H
 #define ELFGE_PREFABS_H
 
-#include "../GameEngine/ELFGE.h"
-#include "../StandardAssets/Meshs/CubeMesh.h"
+#include "../GameEngine/GameEngine.h"
+#include "../StandardAssets/StandardAssets.h"
 
-DefaultMaterial material;
+BlankMaterial material;
 
 class Prefabs{
 
@@ -17,9 +17,9 @@ public:
     static GameObject * camera(Scene * scene) {
         auto camera =
                 scene->createGameObject()
-                ->createComponent<DefaultCamera>();
+                ->createComponent<FPSCamera>();
 
-        scene->setCamera(camera->getComponent<DefaultCamera>());
+        scene->setCamera(camera->getComponent<FPSCamera>());
 
         return camera;
     }
@@ -28,7 +28,7 @@ public:
         auto cube = scene->createGameObject()
                 ->createComponent<DefaultModel>(new CubeMesh())
                 ->createComponent<MeshRenderer>(
-                        &material, ShaderManager::getShader("simple"));
+                        &material, ShaderManager::getShader("light"));
 
         cube->transform.translate(position);
 

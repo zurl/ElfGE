@@ -30,8 +30,8 @@ set(SOURCE_FILES
         GameEngine/DefaultComponents/DefaultMesh.cpp
         GameEngine/DefaultComponents/DefaultMesh.h
         GameEngine/Components/Camera.h
-        GameEngine/DefaultComponents/DefaultCamera.cpp
-        GameEngine/DefaultComponents/DefaultCamera.h
+        StandardAssets/Cameras/FirstPlayerCamera.cpp
+        StandardAssets/Cameras/FirstPlayerCamera.h
         GameEngine/Core/Runtime.cpp
         GameEngine/Core/Runtime.h
         GameEngine/Core/Input.cpp
@@ -43,12 +43,12 @@ set(SOURCE_FILES
         Assets/Scenes/DemoScene.h
         Assets/Entry.cpp
         Assets/Entry.h
-        GameEngine/ELFGE.h
-        GameEngine/DefaultComponents/DefaultMaterial.cpp
-        GameEngine/DefaultComponents/DefaultMaterial.h
+        GameEngine/GameEngine.h
+        StandardAssets/Materials/BlankMaterial.cpp
+        StandardAssets/Materials/BlankMaterial.h
         GameEngine/Shader/ShaderManager.cpp
         GameEngine/Shader/ShaderManager.h
-        Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h)
+        Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h StandardAssets/Lightings/DirectLighting.cpp StandardAssets/Lightings/DirectLighting.h StandardAssets/Materials/StandardMaterial.cpp StandardAssets/Materials/StandardMaterial.h StandardAssets/Cameras/DefaultCamera.cpp StandardAssets/Cameras/DefaultCamera.h StandardAssets/StandardAssets.h)
 
 find_library(OPENGL OpenGL)
 find_library(GLFW glfw)

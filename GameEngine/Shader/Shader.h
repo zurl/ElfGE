@@ -13,7 +13,7 @@ protected:
     GLuint shaderID;
 public:
     Shader(const std::string & vertexShaderPath, const std::string & fragmentShaderPath);
-    void __use(){
+    void use(){
         glUseProgram(this->shaderID);
     }
     inline void setBool(const std::string &name, bool value) const{
