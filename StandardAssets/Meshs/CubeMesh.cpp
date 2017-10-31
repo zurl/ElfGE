@@ -69,7 +69,7 @@ CubeMesh::CubeMesh(const std::string specularName, const std::string diffuseName
             Utility::ASSETS_PREFIX + "Resources/Textures/" + specularName
     );
     specular.type = "specular";
-    diffuse.type = "diffuse";
+    diffuse.type = "diffuse"; 
     textures.emplace_back(diffuse);
     textures.emplace_back(specular);
 }
