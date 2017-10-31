@@ -5,6 +5,7 @@
 #ifndef ELFGE_STANDARDASSETS_H
 #define ELFGE_STANDARDASSETS_H
 
+#include "Colliders/AABBCollider.h"
 #include "Cameras/FirstPlayerCamera.h"
 #include "Lightings/DirectLighting.h"
 #include "Lightings/PointLighting.h"

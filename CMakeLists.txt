@@ -48,7 +48,7 @@ set(SOURCE_FILES
         StandardAssets/Materials/BlankMaterial.h
         GameEngine/Shader/ShaderManager.cpp
         GameEngine/Shader/ShaderManager.h
-        Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h StandardAssets/Lightings/DirectLighting.cpp StandardAssets/Lightings/DirectLighting.h StandardAssets/Materials/StandardMaterial.cpp StandardAssets/Materials/StandardMaterial.h StandardAssets/Cameras/DefaultCamera.cpp StandardAssets/Cameras/DefaultCamera.h StandardAssets/StandardAssets.h GameEngine/Shader/TextureManager.cpp GameEngine/Shader/TextureManager.h GameEngine/Shader/Texture.h)
+        Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h StandardAssets/Lightings/DirectLighting.cpp StandardAssets/Lightings/DirectLighting.h StandardAssets/Materials/StandardMaterial.cpp StandardAssets/Materials/StandardMaterial.h StandardAssets/Cameras/DefaultCamera.cpp StandardAssets/Cameras/DefaultCamera.h StandardAssets/StandardAssets.h GameEngine/Shader/TextureManager.cpp GameEngine/Shader/TextureManager.h GameEngine/Shader/Texture.h Assets/FuckScript.cpp Assets/FuckScript.h StandardAssets/Colliders/AABBCollider.cpp StandardAssets/Colliders/AABBCollider.h GameEngine/Components/Collider.h GameEngine/Components/RigidBody.cpp GameEngine/Components/RigidBody.h)
 
 find_library(OPENGL OpenGL)
 find_library(GLFW glfw)

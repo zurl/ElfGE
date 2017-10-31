@@ -7,6 +7,7 @@
 
 #include "../Core/Component.h"
 #include "../Core/Input.h"
+#include "Collider.h"
 
 
 class GameScript: public Component {
@@ -18,6 +19,8 @@ protected:
 public:
     virtual void onMouseMove(double x, double y){ }
     virtual void onScrollMove(double x){ }
+    virtual void onCollisionEnter(Collider * collider){ }
+    virtual void onCollisionExit(Collider * collider){ }
     void destroy() override;
 };
 

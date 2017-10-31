@@ -67,6 +67,7 @@ glm::vec3 Transform::getForward() const {
 }
 
 void Transform::rotate(glm::vec3 axis, float angle) {
-    rotation = glm::toMat4(glm::angleAxis(angle, axis) * getQuaternion());
+    rotation = glm::toMat4(glm::rotate(getQuaternion(), angle, axis));
+    //glm::toMat4(glm::angleAxis(angle, axis) * );
 }
 

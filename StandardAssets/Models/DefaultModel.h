@@ -11,11 +11,13 @@
 
 class DefaultModel: public Model {
 
-    std::vector<Mesh *> meshes;
     std::string directory;
+
 public:
 
-    DefaultModel(Mesh * mesh){
+    std::vector<DefaultMesh *> meshes;
+
+    DefaultModel(DefaultMesh * mesh){
         meshes.emplace_back(mesh);
     }
 

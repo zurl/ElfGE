@@ -66,7 +66,19 @@ public:
             auto ptr = dynamic_cast<T*>(x);
             if(ptr != nullptr) return ptr;
         }
-        throw Exception("Component does not exists");
+        return nullptr;
+    }
+
+    template <typename T>
+    std::vector<T*> getComponents(
+            typename std::enable_if<std::is_base_of<Component, T>::value>::type* = 0
+    ) {
+        std::vector<T*> result;
+        for(auto & x: components){
+            auto ptr = dynamic_cast<T*>(x);
+            if(ptr != nullptr) result.emplace_back(ptr);
+        }
+        return result;
     }
 
 

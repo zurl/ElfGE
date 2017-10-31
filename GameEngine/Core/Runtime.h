@@ -48,10 +48,12 @@ public:
             double currentFrame = glfwGetTime();
             Utility::deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
+
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
             getScene()->update();   // EntryPoint
+            //UI::drawUI();
 
             glfwSwapBuffers(Utility::window);
             glfwPollEvents();

@@ -14,7 +14,8 @@ class ShaderManager {
     static Shader * lastShader;
 public:
     static void loadShader(const std::string & name, const std::string & vertex, const std::string & fragment){
-        Shader shader(vertex, fragment);
+        auto iter = shaders.find(name);
+        if( iter != shaders.end() ) return;
         shaders.emplace(std::piecewise_construct,
                         std::forward_as_tuple(name),
                         std::forward_as_tuple(vertex, fragment));

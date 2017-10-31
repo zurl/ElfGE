@@ -13,6 +13,7 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <set>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
