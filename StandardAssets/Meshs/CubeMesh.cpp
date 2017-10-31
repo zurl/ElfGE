@@ -63,10 +63,10 @@ CubeMesh::CubeMesh(){
 CubeMesh::CubeMesh(const std::string specularName, const std::string diffuseName) :CubeMesh(){
     Texture specular, diffuse;
     diffuse.id = TextureManager::loadTexture(
-            Utility::ASSETS_PREFIX + "Textures/" + diffuseName
+            Utility::ASSETS_PREFIX + "Resources/Textures/" + diffuseName
     );
     specular.id = TextureManager::loadTexture(
-            Utility::ASSETS_PREFIX + "Textures/" + specularName
+            Utility::ASSETS_PREFIX + "Resources/Textures/" + specularName
     );
     specular.type = "specular";
     diffuse.type = "diffuse";
