@@ -29,7 +29,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../Dependency/stb_image.h"
+#include "stb_image.h"
+#include "ft2build.h"
+#include FT_FREETYPE_H
 #include "Exception.h"
 
 #endif //ELFGE_COMMON_H
