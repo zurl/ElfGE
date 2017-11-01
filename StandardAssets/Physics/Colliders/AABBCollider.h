@@ -5,7 +5,7 @@
 #ifndef ELFGE_AABBCOLLIDER_H
 #define ELFGE_AABBCOLLIDER_H
 
-#include "../../GameEngine/GameEngine.h"
+#include "../../../GameEngine/GameEngine.h"
 
 class AABBCollider: public Collider {
 
@@ -21,7 +21,7 @@ class AABBCollider: public Collider {
     std::vector<glm::vec3> vertices;
     glm::vec3 min, max;
 
-    void computerBox();
+    void computeBox();
 
     bool checkAxis(float minA, float maxA, float minB, float maxB);
 

@@ -7,6 +7,7 @@
 
 #include "Common.h"
 
+
 class Utility {
 public:
 
@@ -41,6 +42,8 @@ public:
         SCREEN_WIDTH = width;
     }
 
+    static int initialFreeType();
+
 
     static int __initialOpenGL(){
         glfwInit();
@@ -48,7 +51,6 @@ public:
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
         window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_NAME.c_str(), NULL, NULL);
         //glfwSetInputMode(__glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         if (window == NULL) {

@@ -3,7 +3,7 @@
 //
 
 #include "AABBCollider.h"
-#include "../Models/DefaultModel.h"
+#include "../../Models/DefaultModel.h"
 
 std::list<AABBCollider *> AABBCollider::allColliders;
 
@@ -23,8 +23,6 @@ void AABBCollider::start() {
         }
         offset = (min + max) * 0.5f * getGameObject()->transform.getScale();
         size = (max - min) * 0.5f * getGameObject()->transform.getScale();
-        printf("of=%f %f %f\n", offset.x, offset.y, offset.z);
-        printf("sz=%f %f %f\n", size.x, size.y, size.z);
     }
     allColliders.emplace_back(this);
     vertices.emplace_back(offset.x + size.x, offset.y + size.y, offset.z + size.z);
@@ -35,11 +33,11 @@ void AABBCollider::start() {
     vertices.emplace_back(offset.x - size.x, offset.y + size.y, offset.z - size.z);
     vertices.emplace_back(offset.x + size.x, offset.y - size.y, offset.z - size.z);
     vertices.emplace_back(offset.x - size.x, offset.y - size.y, offset.z - size.z);
-    computerBox();
+    computeBox();
 }
 
 void AABBCollider::update() {
-    computerBox();
+    computeBox();
     if( ! passive ){
         for(auto & x : allColliders ){
             if( x != this ){
@@ -85,7 +83,7 @@ bool AABBCollider::checkAxis(float minA, float maxA, float minB, float maxB) {
     return (minA >= minB && minA <= maxB) || (minB >= minA && minB <= maxA);
 }
 
-void AABBCollider::computerBox() {
+void AABBCollider::computeBox() {
     min = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
     for(auto & x: vertices){

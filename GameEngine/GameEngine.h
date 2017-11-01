@@ -21,7 +21,7 @@
 #include "Components/Camera.h"
 #include "Components/MeshRenderer.h"
 #include "Components/Lighting.h"
-#include "Components/RigidBody.h"
+#include "../StandardAssets/Physics/RigidBody.h"
 
 #include "Shader/Shader.h"
 #include "Shader/ShaderManager.h"

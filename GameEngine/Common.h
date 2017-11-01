@@ -29,7 +29,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "stb_image.h"
+#include "../Dependency/stb_image.h"
 #include "Exception.h"
 
 #endif //ELFGE_COMMON_H
