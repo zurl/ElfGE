@@ -14,51 +14,15 @@ class Runtime {
     static Scene * scene;
 public:
 
-    static Scene *getScene() {
-        return scene;
-    }
+    static Scene *getScene();
 
-    static void setScene(Scene *scene) {
-        if(Runtime::scene != nullptr){
-            Runtime::scene->destroy();
-            delete Runtime::scene;
-        }
-        Runtime::scene = scene;
-    }
+    static void setScene(Scene *scene);
 
-    static Camera *getCamera(){
-       return getScene()->getCamera();
-    }
+    static Camera *getCamera();
 
-    static void setCamera(Camera *camera){
-        getScene()->getCamera();
-    }
+    static void setCamera(Camera *camera);
 
-
-
-    static void __start(){
-        Utility::__initialOpenGL();
-        Input::initialize();
-        Entry::start();
-        setScene(Entry::getDefaultScene());
-        getScene()->start();
-        double lastFrame = glfwGetTime();
-        while(!glfwWindowShouldClose(Utility::window)) {
-
-            double currentFrame = glfwGetTime();
-            Utility::deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-            getScene()->update();   // EntryPoint
-            //UI::drawUI();
-
-            glfwSwapBuffers(Utility::window);
-            glfwPollEvents();
-        }
-    }
+    static void start();
 
 };
 

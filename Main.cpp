@@ -5,6 +5,6 @@
 #include "GameEngine/Core/Runtime.h"
 
 int main(){
-    Runtime::__start();
+    Runtime::start();
     return 0;
 }

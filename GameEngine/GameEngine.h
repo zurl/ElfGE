@@ -19,7 +19,7 @@
 #include "Components/Mesh.h"
 #include "Components/Model.h"
 #include "Components/Camera.h"
-#include "Components/MeshRenderer.h"
+#include "Components/Renderer.h"
 #include "Components/Lighting.h"
 #include "../StandardAssets/Physics/RigidBody.h"
 

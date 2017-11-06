@@ -21,6 +21,7 @@ public:
     virtual ~Scene();
     Camera *getCamera() const;
     void setCamera(Camera *camera);
+
     void addGameObject(GameObject * gameObject);
     GameObject * createGameObject();
 };

@@ -51,7 +51,7 @@ public:
 
         auto nano = createGameObject()
         ->createComponent<DefaultModel>(Utility::ASSETS_PREFIX + "Resources/nanosuit/nanosuit.obj")
-        ->createComponent<MeshRenderer>(&material, ShaderManager::getShader("light"))
+        ->createComponent<Renderer>(&material, ShaderManager::getShader("light"))
         ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0.01f), glm::vec3(0, 0, 0), 0.5, false)
         ->createComponent<AABBCollider>(false);
 

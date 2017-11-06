@@ -1,6 +1,11 @@
 The Elf Game Engine
 ========================
 
+依赖：
+stb_image.h(include)
+freetype(include, lib(自行))
+glfw,glew,assimp(include自行,lib自行)
+
 
 开发者手册
 ### 架构
@@ -16,8 +21,8 @@ GameObject通过Component支持各种效果
 
 ### 内建的Component
 Model(物体模型)  
-MeshRenderer(渲染器)  
-> 一个物体如果想被显示，至少要求Model和MeshRenderer
+Renderer(渲染器)  
+> 一个物体如果想被显示，至少要求Model和Renderer
 
 Lighting(光源)  
 Camera(摄像机)  

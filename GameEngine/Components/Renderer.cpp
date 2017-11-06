@@ -2,14 +2,14 @@
 // Created by 张程易 on 29/10/2017.
 //
 
-#include "MeshRenderer.h"
+#include "Renderer.h"
 #include "../Core/Runtime.h"
 #include "../Shader/LightingManager.h"
 
 
-MeshRenderer::MeshRenderer(Material *material, Shader *shader) : material(material), shader(shader) {}
+Renderer::Renderer(Material *material, Shader *shader) : material(material), shader(shader) {}
 
-void MeshRenderer::update() {
+void Renderer::update() {
     if( Runtime::getCamera() == nullptr ){
         throw Exception("No Camera");
     }
@@ -25,7 +25,7 @@ void MeshRenderer::update() {
     model->render(shader);
 }
 
-void MeshRenderer::start() {
+void Renderer::start() {
     if( getGameObject() == nullptr){
         throw Exception("A MeshRender Without Parents");
     }
@@ -37,6 +37,6 @@ void MeshRenderer::start() {
     }
 }
 
-void MeshRenderer::destroy() {
+void Renderer::destroy() {
 
 }

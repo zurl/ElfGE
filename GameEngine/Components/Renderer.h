@@ -11,12 +11,12 @@
 #include "../Shader/Shader.h"
 #include "Model.h"
 
-class MeshRenderer: public Component {
+class Renderer: public Component {
     Material * material;
     Shader * shader;
     Model * model;
 public:
-    MeshRenderer(Material *material, Shader *shader);
+    Renderer(Material *material, Shader *shader);
     void start() override;
     void update() override;
     void destroy() override;

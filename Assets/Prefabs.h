@@ -38,7 +38,7 @@ public:
     static GameObject * cube(Scene * scene, glm::vec3 position = glm::vec3(0,0,0)){
         auto cube = scene->createGameObject()
                 ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
-                ->createComponent<MeshRenderer>(
+                ->createComponent<Renderer>(
                         &material, ShaderManager::getShader("light"));
 
         cube->transform.translate(position);
