@@ -14,22 +14,6 @@ GLFWwindow* Utility::window = nullptr;
 std::string Utility::WINDOW_NAME = "ElfGameEngine";
 std::string Utility::ASSETS_PREFIX = "../Assets/";
 
-int Utility::initialFreeType() {
-    FT_Library ft;
-    if (FT_Init_FreeType(&ft))
-        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-
-    FT_Face face;
-    if (FT_New_Face(ft, (Utility::ASSETS_PREFIX + "Resources/Fonts/arial.ttf").c_str(), 0, &face))
-        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-
-    FT_Set_Pixel_Sizes(face, 0, 48);
-
-    if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
-        std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
-
-    return 0;
-}
 
 int Utility::__initialOpenGL() {
     glfwInit();

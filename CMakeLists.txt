@@ -51,10 +51,17 @@ set(SOURCE_FILES
 
 include_directories("./Dependency")
 
-find_library(OPENGL OpenGL)
-find_library(GLFW glfw)
-find_library(GLEW glew)
-find_library(ASSIMP assimp)
+IF (WIN32)
+    MESSAGE(STATUS "Now is windows")
+ELSEIF (APPLE)
+    MESSAGE(STATUS "Now is Apple systens.")
+    find_library(OPENGL OpenGL)
+    find_library(GLFW glfw)
+    find_library(GLEW glew)
+    find_library(ASSIMP assimp)
+    link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP})
+ELSEIF (UNIX)
+    MESSAGE(STATUS "Now is UNIX-like OS's. Including aPPLE os x  and CygWin")
+ENDIF ()
 
-link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP})
 add_executable(elfge ${SOURCE_FILES})
