@@ -2,9 +2,8 @@ The Elf Game Engine
 ========================
 
 依赖：
-stb_image.h(include)
-freetype(include, lib(自行))
-glfw,glew,assimp(include自行,lib自行)
+stb_image.h(include)  
+glfw,glew,assimp(include自行,lib自行)  
 
 
 开发者手册

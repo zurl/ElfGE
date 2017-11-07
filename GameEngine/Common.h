@@ -30,8 +30,6 @@
 #include <GLFW/glfw3.h>
 
 #include "stb_image.h"
-#include "ft2build.h"
-#include FT_FREETYPE_H
 #include "Exception.h"
 
 #endif //ELFGE_COMMON_H

@@ -55,7 +55,6 @@ find_library(OPENGL OpenGL)
 find_library(GLFW glfw)
 find_library(GLEW glew)
 find_library(ASSIMP assimp)
-find_library(FREETYPE freetype)
 
-link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP} ${FREETYPE})
+link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP})
 add_executable(elfge ${SOURCE_FILES})
