@@ -1,6 +1,7 @@
 cmake-build-debug/
 .idea/
-Resources/
+Resources/Textures
+Resources/nanosuit
 *.png
 *.blend
 *.obj
