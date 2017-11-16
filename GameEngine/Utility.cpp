@@ -12,7 +12,7 @@ double Utility::deltaTime = 0.0;
 GLFWwindow* Utility::window = nullptr;
 
 std::string Utility::WINDOW_NAME = "ElfGameEngine";
-std::string Utility::ASSETS_PREFIX = "../Assets/";
+std::string Utility::RESOURCE_PREFIX = "Resources/";
 
 
 int Utility::__initialOpenGL() {

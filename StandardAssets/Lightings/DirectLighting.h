@@ -6,7 +6,7 @@
 #define ELFGE_DIRECTLIGHTING_H
 
 
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class DirectLighting: public Lighting {
     glm::vec3 ambient, diffuse, specular;

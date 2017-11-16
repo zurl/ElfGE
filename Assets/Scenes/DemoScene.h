@@ -6,8 +6,8 @@
 #define ELFGE_DEMOSCENE_H
 
 
-#include "../../GameEngine/GameEngine.h"
-#include "../../StandardAssets/StandardAssets.h"
+#include "GameEngine.h"
+#include "StandardAssets.h"
 #include "../Prefabs.h"
 #include "../FuckScript.h"
 
@@ -50,7 +50,7 @@ public:
 
 
         auto nano = createGameObject()
-        ->createComponent<DefaultModel>(Utility::ASSETS_PREFIX + "Resources/nanosuit/nanosuit.obj")
+        ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "nanosuit/nanosuit.obj")
         ->createComponent<Renderer>(&material, ShaderManager::getShader("light"))
         ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0.01f), glm::vec3(0, 0, 0), 0.5, false)
         ->createComponent<AABBCollider>(false);

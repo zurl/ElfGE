@@ -5,7 +5,7 @@
 #ifndef ELFGE_RIGIDBODY_H
 #define ELFGE_RIGIDBODY_H
 
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 const float g = 9.78f;
 

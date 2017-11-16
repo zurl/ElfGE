@@ -5,7 +5,7 @@
 #ifndef ELFGE_CANVAS_H
 #define ELFGE_CANVAS_H
 
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class Canvas: public Component {
 

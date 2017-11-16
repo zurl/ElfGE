@@ -4,7 +4,7 @@
 
 #ifndef ELFGE_STANDARDMATERIAL_H
 #define ELFGE_STANDARDMATERIAL_H
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class StandardMaterial: public Material {
 public:

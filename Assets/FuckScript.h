@@ -5,7 +5,7 @@
 #ifndef ELFGE_FUCKSCRIPT_H
 #define ELFGE_FUCKSCRIPT_H
 
-#include "../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class FuckScript: public GameScript {
 

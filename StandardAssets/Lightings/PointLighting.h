@@ -5,7 +5,7 @@
 #ifndef ELFGE_POINTLIGHTING_H
 #define ELFGE_POINTLIGHTING_H
 
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class PointLighting: public Lighting{
 

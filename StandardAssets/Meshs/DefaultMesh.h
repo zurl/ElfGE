@@ -5,8 +5,7 @@
 #ifndef ELFGE_DEFAULTMESH_H
 #define ELFGE_DEFAULTMESH_H
 
-#include "../../GameEngine/Common.h"
-#include "../../GameEngine/Components/Mesh.h"
+#include "GameEngine.h"
 
 class DefaultMesh: public Mesh{
 

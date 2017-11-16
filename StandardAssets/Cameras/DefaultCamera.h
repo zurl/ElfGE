@@ -5,7 +5,7 @@
 #ifndef ELFGE_DEFAULTCAMERA_H
 #define ELFGE_DEFAULTCAMERA_H
 
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 
 const float SPEED       =  2.5f;

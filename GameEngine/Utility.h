@@ -14,7 +14,7 @@ public:
     static GLFWwindow* window;
 
     static std::string WINDOW_NAME;
-    static std::string ASSETS_PREFIX;
+    static std::string RESOURCE_PREFIX;
 
     static int SCREEN_WIDTH;
     static int SCREEN_HEIGHT;

@@ -6,10 +6,10 @@
 
 Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) {
     const char * vertexShaderSource = Utility::getTextFromFile(
-            (Utility::ASSETS_PREFIX + "Shaders/" + vertexShaderPath + ".vert").c_str()
+            (Utility::RESOURCE_PREFIX + "Shaders/" + vertexShaderPath + ".vert").c_str()
     );
     const char * fragmentShaderSource = Utility::getTextFromFile(
-            (Utility::ASSETS_PREFIX + "Shaders/" + vertexShaderPath + ".frag").c_str()
+            (Utility::RESOURCE_PREFIX + "Shaders/" + vertexShaderPath + ".frag").c_str()
     );
     if( vertexShaderSource == nullptr || fragmentShaderSource == nullptr){
         throw Exception("Illegal Shader Position");

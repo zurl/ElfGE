@@ -5,8 +5,8 @@
 #ifndef ELFGE_PREFABS_H
 #define ELFGE_PREFABS_H
 
-#include "../GameEngine/GameEngine.h"
-#include "../StandardAssets/StandardAssets.h"
+#include "GameEngine.h"
+#include "StandardAssets.h"
 
 StandardMaterial material;
 

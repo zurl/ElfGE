@@ -6,7 +6,7 @@
 #define ELFGE_DEFAULTMATERIAL_H
 
 
-#include "../../GameEngine/Shader/Material.h"
+#include "GameEngine.h"
 
 class BlankMaterial: public Material {
 public:

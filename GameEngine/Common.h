@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <functional>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

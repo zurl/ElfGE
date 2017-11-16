@@ -5,7 +5,7 @@
 #ifndef ELFGE_AABBCOLLIDER_H
 #define ELFGE_AABBCOLLIDER_H
 
-#include "../../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class AABBCollider: public Collider {
 

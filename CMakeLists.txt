@@ -50,6 +50,9 @@ set(SOURCE_FILES
         Assets/Prefabs.h GameEngine/Shader/LightingManager.cpp GameEngine/Shader/LightingManager.h GameEngine/Components/Lighting.cpp GameEngine/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h StandardAssets/Lightings/DirectLighting.cpp StandardAssets/Lightings/DirectLighting.h StandardAssets/Materials/StandardMaterial.cpp StandardAssets/Materials/StandardMaterial.h StandardAssets/Cameras/DefaultCamera.cpp StandardAssets/Cameras/DefaultCamera.h StandardAssets/StandardAssets.h GameEngine/Shader/TextureManager.cpp GameEngine/Shader/TextureManager.h GameEngine/Shader/Texture.h Assets/FuckScript.cpp Assets/FuckScript.h StandardAssets/Physics/Colliders/AABBCollider.cpp StandardAssets/Physics/Colliders/AABBCollider.h GameEngine/Components/Collider.h StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h StandardAssets/UI/Text.cpp StandardAssets/UI/Text.h StandardAssets/UI/Canvas.cpp StandardAssets/UI/Canvas.h)
 
 include_directories("./Dependency")
+include_directories("./GameEngine")
+include_directories("./StandardAssets")
+
 
 IF (WIN32)
     MESSAGE(STATUS "Now is windows")
@@ -64,4 +67,5 @@ ELSEIF (UNIX)
     MESSAGE(STATUS "Now is UNIX-like OS's. Including aPPLE os x  and CygWin")
 ENDIF ()
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(elfge ${SOURCE_FILES})

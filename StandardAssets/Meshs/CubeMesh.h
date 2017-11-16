@@ -7,7 +7,7 @@
 
 
 #include "DefaultMesh.h"
-#include "../../GameEngine/GameEngine.h"
+#include "GameEngine.h"
 
 class CubeMesh: public DefaultMesh {
 public:
