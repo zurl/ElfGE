@@ -18,7 +18,11 @@ public:
 
         auto light =
                 scene->createGameObject()
-                        ->createComponent<DirectLighting>();
+                        ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
+                        ->createComponent<Renderer>(
+                                &material, ShaderManager::getShader("light_with_directional_shadow"))
+
+        ->createComponent<DirectLighting>();
 
         light->transform.setRotation(rotation);
 

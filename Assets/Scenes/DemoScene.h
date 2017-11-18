@@ -16,7 +16,7 @@ class DemoScene: public Scene {
 
 public:
 
-    GameObject * cube1, * cube2, * cube3, * cube4, * cube5;
+    GameObject * cube1, * cube2, * cube3, * cube4, * cube5, * light;
 
     DemoScene(){}
 
@@ -24,22 +24,23 @@ public:
 
     Text * text;
 
+
     void start() override {
 
-        setShadowMappingManager(new DirectionalShadowMappingManager(glm::vec3(0, 0, 60)));
+       light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
+        light->transform.translate(-light->transform.getUp() * 3.0f);
+        light->transform.translate(-light->transform.getForward() * 5.0f);
+        setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        getShadowMappingManager()->setPosition(glm::vec3(-2, 2, 0));
 
         auto cube1 = Prefabs::cube(this, glm::vec3(0.0f, 1.5f, 0.0));
         auto cube2 = Prefabs::cube(this, glm::vec3(2.0f, 0.0f, 1.0));
         auto cube3 = Prefabs::cube(this, glm::vec3(-1.0f, 0.0f, 2.0));
 
         auto plane = Prefabs::cube(this, glm::vec3(0.0f, 0.0f, 0.0f));
-        plane->transform.setScale(glm::vec3(15.0f, 0.05f, 15.0f));
+        plane->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
 //        auto arialFont = FontManager::loadFont("Arial");
 
-        auto light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
-//
         auto camera = Prefabs::camera(this);
 //
         camera->transform.setPosition(glm::vec3(-2, 2, 0));
@@ -101,7 +102,12 @@ public:
         return iss.str();
     }
 
+    float rt = 0.0f;
     void update() override {
+        light->transform.translate(-light->transform.getForward() * 0.0005f);
+        light->transform.setRotation(glm::vec3(0, rt, 60));
+        rt += 0.003f;
+        if( rt > 0.5) rt = -0.5;
 //        cnt ++;
 //        dt += Utility::deltaTime;
 //        if(dt >= 1.0f){

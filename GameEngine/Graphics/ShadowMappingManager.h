@@ -16,11 +16,6 @@ public:
 
     virtual void applyMapping(Shader * shader) = 0;
 
-
-    virtual const glm::vec3 &getPosition() const = 0;
-
-    virtual void setPosition(const glm::vec3 &position) = 0;
-
     virtual ~ShadowMappingManager(){}
 };
 
