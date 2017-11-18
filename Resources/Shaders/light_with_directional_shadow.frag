@@ -45,7 +45,9 @@ struct SpotLight {
 in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
+in vec4 FragPosLightSpace;
 
+uniform vec3 shadowLightPos;
 uniform vec3 viewPos;
 uniform DirLight dirLight[NR_DIR_LIGHTS];
 uniform PointLight pointLight[NR_POINT_LIGHTS];
@@ -53,6 +55,7 @@ uniform SpotLight spotLight[NR_SPOT_LIGHTS];
 uniform Material material;
 
 // function prototypes
+float ShadowCalculation(vec4 fragPosLightSpace);
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -66,6 +69,22 @@ float LinearizeDepth(float depth)
     return (2.0 * near * far) / (far + near - z * (far - near));
 }
 
+uniform sampler2D shadowMap;
+
+float ShadowCalculation(vec4 fragPosLightSpace){
+    // perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    // get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // check whether current frag pos is in shadow
+    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+    return shadow;
+}
+
 void main(){
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
@@ -77,7 +96,6 @@ void main(){
         result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
         //result += CalcSpotLight(spotLight[i], norm, FragPos, viewDir);
     }
-
     //FragColor = vec4(vec3(LinearizeDepth(gl_FragCoord.z)), 1.0);
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
@@ -95,7 +113,10 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir){
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
-    return (ambient + diffuse + specular);
+    float shadow = 0;
+    shadow = ShadowCalculation(FragPosLightSpace);
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular));
+    return lighting;
 }
 
 // calculates the color when using a point light.

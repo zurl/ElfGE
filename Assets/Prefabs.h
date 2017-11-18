@@ -14,6 +14,17 @@ class Prefabs{
 
 public:
 
+    static GameObject * dirLight(Scene * scene, glm::vec3 rotation){
+
+        auto light =
+                scene->createGameObject()
+                        ->createComponent<DirectLighting>();
+
+        light->transform.setRotation(rotation);
+
+        return light;
+    }
+
     static GameObject * pointLight(Scene * scene, glm::vec3 position){
 
         auto light =
@@ -39,10 +50,9 @@ public:
         auto cube = scene->createGameObject()
                 ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
                 ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light"));
+                        &material, ShaderManager::getShader("light_with_directional_shadow"));
 
         cube->transform.translate(position);
-
 
         return cube;
     }

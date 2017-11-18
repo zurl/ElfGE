@@ -30,7 +30,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "stb_image.h"
 #include "Exception.h"
+#include "stb_image.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+enum class RenderLayer{
+    WORLD_SHADOW,
+    WORLD,
+    SCREEN
+};
 
 #endif //ELFGE_COMMON_H

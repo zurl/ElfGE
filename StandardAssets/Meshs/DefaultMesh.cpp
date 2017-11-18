@@ -3,7 +3,7 @@
 //
 
 #include "DefaultMesh.h"
-#include "../../GameEngine/Shader/TextureManager.h"
+#include "Graphics/TextureManager.h"
 
 DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) {
     this->directory = directory;

@@ -7,25 +7,24 @@
 
 #include "Exception.h"
 #include "Common.h"
-#include "Utility.h"
 
+#include "Core/Utility.h"
 #include "Core/GameObject.h"
 #include "Core/Scene.h"
 #include "Core/Input.h"
 #include "Core/Transform.h"
 #include "Core/Runtime.h"
 #include "Core/Component.h"
+#include "Core/Camera.h"
 
-#include "Components/Mesh.h"
-#include "Components/Model.h"
-#include "Components/Camera.h"
-#include "Components/Renderer.h"
-#include "Components/Lighting.h"
-#include "../StandardAssets/Physics/RigidBody.h"
-
-#include "Shader/Shader.h"
-#include "Shader/ShaderManager.h"
-#include "Shader/LightingManager.h"
-#include "Shader/TextureManager.h"
+#include "Graphics/Components/Mesh.h"
+#include "Graphics/Components/Model.h"
+#include "Graphics/Components/Renderer.h"
+#include "Graphics/Components/Lighting.h"
+#include "Graphics/Shader.h"
+#include "Graphics/ShaderManager.h"
+#include "Graphics/LightingManager.h"
+#include "Graphics/TextureManager.h"
+#include "Graphics/ShadowMappingManager.h"
 
 #endif //ELFGE_ELFGE_H

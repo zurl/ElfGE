@@ -17,9 +17,14 @@ void Component::start() {
 }
 
 void Component::destroy() {
+
 }
 
 void Component::update() {
+
+}
+
+void Component::updateGraphics(RenderLayer renderLayer){
 
 }
 

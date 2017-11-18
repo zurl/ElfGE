@@ -5,6 +5,8 @@
 #ifndef ELFGE_COMPONENT_H
 #define ELFGE_COMPONENT_H
 
+#include <Common.h>
+
 class GameObject;
 
 class Component {
@@ -15,11 +17,13 @@ class Component {
     friend class GameObject;
 
 public:
-    virtual void start() = 0;
+    virtual void start() ;
 
-    virtual void update() = 0;
+    virtual void update() ;
 
-    virtual void destroy() = 0;
+    virtual void destroy() ;
+
+    virtual void updateGraphics(RenderLayer renderLayer);
 
     GameObject * getGameObject() const;
 

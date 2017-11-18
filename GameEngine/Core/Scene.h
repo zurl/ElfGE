@@ -5,12 +5,14 @@
 #ifndef ELFGE_SCENE_H
 #define ELFGE_SCENE_H
 
+#include <Graphics/ShadowMappingManager.h>
 #include "../Common.h"
-#include "../Components/Camera.h"
+#include "Camera.h"
 #include "GameObject.h"
-#include "../Shader/ShaderManager.h"
+#include "Graphics/ShaderManager.h"
 
 class Scene {
+    ShadowMappingManager * shadowMappingManager;
     Camera * camera;
     GameObject * rootGameObject;
 public:
@@ -18,9 +20,14 @@ public:
     virtual void start();
     virtual void update();
     virtual void destroy();
+    virtual void updateGraphics(RenderLayer renderLayer);
     virtual ~Scene();
     Camera *getCamera() const;
     void setCamera(Camera *camera);
+
+    ShadowMappingManager *getShadowMappingManager() const;
+
+    void setShadowMappingManager(ShadowMappingManager *shadowMappingManager);
 
     void addGameObject(GameObject * gameObject);
     GameObject * createGameObject();

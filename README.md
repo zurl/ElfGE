@@ -20,7 +20,7 @@ GameObject通过Component支持各种效果
 
 ### 内建的Component
 Model(物体模型)  
-Renderer(渲染器)  
+MeshRenderer(渲染器)  
 > 一个物体如果想被显示，至少要求Model和Renderer
 
 Lighting(光源)  

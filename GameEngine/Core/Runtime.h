@@ -7,11 +7,15 @@
 
 
 #include "Scene.h"
-#include "../Utility.h"
+#include "Utility.h"
 #include "../../Assets/Entry.h"
+#include <UI/Font/FontManager.h>
+#include "../Graphics/GraphicsRuntime.h"
 
 class Runtime {
     static Scene * scene;
+
+    static GraphicsRuntime graphicsRuntime;
 public:
 
     static Scene *getScene();

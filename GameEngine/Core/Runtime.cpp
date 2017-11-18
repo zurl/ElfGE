@@ -2,12 +2,15 @@
 // Created by 张程易 on 30/10/2017.
 //
 
+
+#include <Graphics/GraphicsRuntime.h>
 #include "Runtime.h"
 
 Scene * Runtime::scene;
-
+GraphicsRuntime Runtime::graphicsRuntime;
 void Runtime::start() {
-    Utility::__initialOpenGL();
+    graphicsRuntime.initialize();
+    FontManager::initialize();
     Input::initialize();
     Entry::start();
     setScene(Entry::getDefaultScene());
@@ -19,11 +22,9 @@ void Runtime::start() {
         Utility::deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        getScene()->update();
 
-        getScene()->update();   // EntryPoint
-        //UI::drawUI();
+        graphicsRuntime.update(getScene());
 
         glfwSwapBuffers(Utility::window);
         glfwPollEvents();

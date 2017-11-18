@@ -22,41 +22,15 @@ private:
 public:
     Transform transform;
 
-    glm::mat4 getModelMatrix(){
-        if(parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
-        else return transform.getModelMatrix(parent->getModelMatrix());
-    }
+    glm::mat4 getModelMatrix();
 
-    virtual void start(){
-        for(auto &x : components){
-            x->start();
-        }
-        for(auto &x : children){
-            x->start();
-        }
-    }
+    virtual void start();
 
-    virtual void update(){
-        for(auto &x : components){
-            x->update();
-        }
-        for(auto &x : children){
-            x->update();
-        }
-    }
+    virtual void update();
 
-    virtual void destroy(){
-        for(auto &x : components){
-            x->destroy();
-            detachComponent(x);
-        }
-        for(auto &x : children){
-            x->destroy();
-        }
-        if(parent != nullptr){
-            parent->detachChildren(this);
-        }
-    }
+    virtual void destroy();
+
+    virtual void updateGraphics( RenderLayer renderLayer );
 
     template <typename T>
     T * getComponent(
@@ -103,15 +77,9 @@ public:
 
     void setParent(GameObject *parent);
 
-    static void destroy(GameObject * gameObject){
-        gameObject->destroy();
-        delete gameObject;
-    }
+    static void destroy(GameObject * gameObject);
 
-    static void destroy(Component * component){
-        component->destroy();
-        delete component;
-    }
+    static void destroy(Component * component);
 
     virtual ~GameObject();
 
