@@ -21,8 +21,7 @@ void Canvas::destroy() {
 }
 
 void Canvas::updateGraphics(RenderLayer renderLayer) {
-    if( renderLayer != RenderLayer::SCREEN)
-        return;
+    if( renderLayer != RenderLayer::SCREEN) return;
     UIShader->use();
     UIShader->setMat4("projection", projection);
 }

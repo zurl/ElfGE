@@ -103,6 +103,13 @@ public:
         text  = text1->getComponent<Text>();
         text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
 
+        auto image1 = createGameObject()
+                ->createComponent<Image>(TextureManager::loadTexture(
+                        Utility::RESOURCE_PREFIX + "Textures/cube_diffuse.png"
+                ), 200.0f, 100.0f);
+        image1->setParent(canvas);
+        image1->transform.translate(glm::vec3(50, 50, 0));
+
         Scene::start();
     }
 

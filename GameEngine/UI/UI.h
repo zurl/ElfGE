@@ -6,6 +6,7 @@
 #define ELFGE_UI_H
 
 #include "Text.h"
+#include "Image.h"
 #include "Canvas.h"
 
 #endif //ELFGE_UI_H

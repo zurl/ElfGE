@@ -14,7 +14,8 @@ class FontFace {
         glm::ivec2 bearing;    // 从基准线到字形左部/顶部的偏移值
         GLuint     advance;    // 原点距下一个字形原点的距离
     };
-    GLuint VAO, VBO;
+    static GLuint VAO, VBO;
+    static bool isInit;
     FT_Face face;
     std::map<GLchar, Character> Characters;
     int fontSize;
