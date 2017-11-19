@@ -27,19 +27,33 @@ public:
 
     void start() override {
 
-       light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
-        light->transform.translate(-light->transform.getUp() * 3.0f);
-        light->transform.translate(-light->transform.getForward() * 5.0f);
-        setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
-        getShadowMappingManager()->initialize();
+        //light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
+        //light->transform.translate(-light->transform.getUp() * 3.0f);
+        //light->transform.translate(-light->transform.getForward() * 5.0f);
+        //setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
+        //getShadowMappingManager()->initialize();
 
-        auto cube1 = Prefabs::cube(this, glm::vec3(0.0f, 1.5f, 0.0));
-        auto cube2 = Prefabs::cube(this, glm::vec3(2.0f, 0.0f, 1.0));
-        auto cube3 = Prefabs::cube(this, glm::vec3(-1.0f, 0.0f, 2.0));
+        light = Prefabs::pointLight(this, glm::vec3(0, 5, 0));
+        setShadowMappingManager(new OmnidirectionalShadowMappingManager(light->getComponent<PointLighting>()));
+        getShadowMappingManager()->initialize();
+        auto cube1 = Prefabs::cube(this, glm::vec3(0.0f, 3.0f, 0.0));
+        auto cube2 = Prefabs::cube(this, glm::vec3(2.0f, 3.0f, 1.0));
+        auto cube3 = Prefabs::cube(this, glm::vec3(-1.0f, 3.0f, 2.0));
 
         auto plane = Prefabs::cube(this, glm::vec3(0.0f, 0.0f, 0.0f));
         plane->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
-//        auto arialFont = FontManager::loadFont("Arial");
+
+        auto plane2 = Prefabs::cube(this, glm::vec3(0.0f, 20.0f, 0.0f));
+        plane2->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
+
+        auto plane3 = Prefabs::cube(this, glm::vec3(0.0f, 0.0f, -20.0f));
+        plane3->transform.setScale(glm::vec3(55.0f, 55.0f, 0.05f));
+
+        auto plane4 = Prefabs::cube(this, glm::vec3(0.0f, 0.0f, 20.0f));
+        plane4->transform.setScale(glm::vec3(55.0f, 55.0f, 0.05f));
+
+
+        auto arialFont = FontManager::loadFont("Arial");
 
         auto camera = Prefabs::camera(this);
 //
@@ -80,14 +94,14 @@ public:
 //        nano->transform.setPosition(glm::vec3(1,1,-5));
 //
 //
-//        auto canvas = createGameObject()->createComponent<Canvas>();
-//
-//        auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
-//
-//        text1->setParent(canvas);
-//        text1->transform.translate(glm::vec3(20, 20, 0));
-//        text  = text1->getComponent<Text>();
-//        text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
+        auto canvas = createGameObject()->createComponent<Canvas>();
+
+        auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
+
+        text1->setParent(canvas);
+        text1->transform.translate(glm::vec3(20, 20, 0));
+        text  = text1->getComponent<Text>();
+        text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
 
         Scene::start();
     }
@@ -104,17 +118,17 @@ public:
 
     float rt = 0.0f;
     void update() override {
-        light->transform.translate(-light->transform.getForward() * 0.0005f);
+        light->transform.translate(-light->transform.getForward() * 0.005f);
         light->transform.setRotation(glm::vec3(0, rt, 60));
-        rt += 0.003f;
+        rt += 0.09f;
         if( rt > 0.5) rt = -0.5;
-//        cnt ++;
-//        dt += Utility::deltaTime;
-//        if(dt >= 1.0f){
-//            dt = 0;
-//            text->setText("FPS:" + itos(cnt));
-//            cnt = 0;
-//        }
+        cnt ++;
+        dt += Utility::deltaTime;
+        if(dt >= 1.0f){
+            dt = 0;
+            text->setText("FPS:" + itos(cnt));
+            cnt = 0;
+        }
 //        if(cube1->transform.getPosition().z > 5){
 //            dir = -0.01f;
 //        }

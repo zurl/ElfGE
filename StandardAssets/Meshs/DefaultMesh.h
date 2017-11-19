@@ -30,7 +30,7 @@ public:
 
     DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string & directory);
 
-    void render(Shader * shader);
+    void render(Shader * shader, RenderLayer renderLayer);
 
     virtual ~DefaultMesh();
 

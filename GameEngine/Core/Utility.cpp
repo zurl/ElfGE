@@ -28,3 +28,4 @@ const char *Utility::getTextFromFile(const char *filePath) {
     *now = 0;
     return result;
 }
+

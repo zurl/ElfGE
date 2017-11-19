@@ -13,30 +13,11 @@ class ShaderManager {
 
     static Shader * lastShader;
 public:
-    static void loadShader(const std::string & name, const std::string & vertex, const std::string & fragment){
-        auto iter = shaders.find(name);
-        if( iter != shaders.end() ) return;
-        shaders.emplace(std::piecewise_construct,
-                        std::forward_as_tuple(name),
-                        std::forward_as_tuple(vertex, fragment));
-    }
+    static void loadShader(const std::string & name, const std::string & vertex, const std::string & fragment, const std::string & geometry = "");
 
-    static Shader * getShader(const std::string & name){
-        auto iter = shaders.find(name);
-        if( iter == shaders.end()){
-            shaders.emplace(std::piecewise_construct,
-                            std::forward_as_tuple(name),
-                            std::forward_as_tuple(name, name));
-            iter = shaders.find(name);
-        }
-        return &iter->second;
-    }
+    static Shader * getShader(const std::string & name);
 
-    static bool useShader(Shader * shader){
-        bool result = shader == lastShader;
-        lastShader = shader;
-        return result;
-    }
+    static bool useShader(Shader * shader);
 
 };
 

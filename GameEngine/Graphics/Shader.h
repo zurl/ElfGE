@@ -12,7 +12,9 @@ class Shader {
 protected:
     GLuint shaderID;
 public:
-    Shader(const std::string & vertexShaderPath, const std::string & fragmentShaderPath);
+    Shader(const std::string & vertexShaderPath,
+           const std::string & fragmentShaderPath,
+           const std::string & geometryShaderPath = "");
     void use(){
         glUseProgram(this->shaderID);
     }

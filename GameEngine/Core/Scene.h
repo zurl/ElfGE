@@ -6,13 +6,13 @@
 #define ELFGE_SCENE_H
 
 #include <Graphics/ShadowMappingManager.h>
-#include "../Common.h"
+#include "Common.h"
 #include "Camera.h"
 #include "GameObject.h"
 #include "Graphics/ShaderManager.h"
 
 class Scene {
-    ShadowMappingManager * shadowMappingManager;
+    ShadowMappingManager * shadowMappingManager = nullptr;
     Camera * camera;
     GameObject * rootGameObject;
 public:
@@ -30,6 +30,7 @@ public:
     void setShadowMappingManager(ShadowMappingManager *shadowMappingManager);
 
     void addGameObject(GameObject * gameObject);
+
     GameObject * createGameObject();
 };
 

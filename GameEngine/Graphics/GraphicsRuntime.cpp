@@ -46,17 +46,15 @@ void GraphicsRuntime::initialize() {
 
 void GraphicsRuntime::update(Scene *scene) {
 
-
-    scene->getShadowMappingManager()->computeMapping();
-    scene->updateGraphics(RenderLayer::WORLD_SHADOW);
-
-    // now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
+    if(scene->getShadowMappingManager() != nullptr){
+        scene->getShadowMappingManager()->computeMapping();
+        scene->updateGraphics(RenderLayer::WORLD_SHADOW);
+    }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glEnable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
-    // clear all relevant buffers
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
     scene->updateGraphics(RenderLayer::WORLD);
 //    debugUtility.shader->use();
 //
@@ -65,5 +63,5 @@ void GraphicsRuntime::update(Scene *scene) {
 //    debugUtility.RenderQuad();
     //scene->updateGraphics(RenderLayer::WORLD);
 
-    //scene->updateGraphics(RenderLayer::SCREEN);
+    scene->updateGraphics(RenderLayer::SCREEN);
 }

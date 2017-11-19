@@ -10,7 +10,7 @@
 
 class Mesh {
 public:
-    virtual void render(Shader * shader) = 0;
+    virtual void render(Shader * shader, RenderLayer renderLayer) = 0;
     virtual ~Mesh() {}
 };
 

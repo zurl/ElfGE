@@ -52,25 +52,27 @@ DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &
     bindVertice();
 }
 
-void DefaultMesh::render(Shader * shader) {
+void DefaultMesh::render(Shader * shader, RenderLayer renderLayer) {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
 
     // Binding All Textures
-    for(unsigned int i = 0; i < textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i); // 在绑定之前激活相应的纹理单元
-        // 获取纹理序号（diffuse_textureN 中的 N）
-        std::stringstream ss;
-        std::string number;
-        std::string name = textures[i].type;
-        if(name == "diffuse")
-            ss << diffuseNr++;
-        else if(name == "specular")
-            ss << specularNr++;
-        number = ss.str();
+    if( renderLayer == RenderLayer::WORLD) {
+        for (unsigned int i = 0; i < textures.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + i); // 在绑定之前激活相应的纹理单元
+            // 获取纹理序号（diffuse_textureN 中的 N）
+            std::stringstream ss;
+            std::string number;
+            std::string name = textures[i].type;
+            if (name == "diffuse")
+                ss << diffuseNr++;
+            else if (name == "specular")
+                ss << specularNr++;
+            number = ss.str();
 
-        shader->setInt(("material." + name).c_str(), i);
-        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+            shader->setInt(("material." + name).c_str(), i);
+            glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        }
     }
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, 0);

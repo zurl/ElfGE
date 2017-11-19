@@ -20,7 +20,7 @@ public:
                 scene->createGameObject()
                         ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
                         ->createComponent<Renderer>(
-                                &material, ShaderManager::getShader("light_with_directional_shadow"))
+                                &material, ShaderManager::getShader("light_with_omnidirectional_shadow"))
 
         ->createComponent<DirectLighting>();
 
@@ -54,7 +54,7 @@ public:
         auto cube = scene->createGameObject()
                 ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
                 ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light_with_directional_shadow"));
+                        &material, ShaderManager::getShader("light_with_omnidirectional_shadow"));
 
         cube->transform.translate(position);
 

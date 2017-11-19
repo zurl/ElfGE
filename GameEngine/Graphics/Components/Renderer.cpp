@@ -12,7 +12,7 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
     }
     if( useShadow && renderLayer == RenderLayer::WORLD_SHADOW){
         shader->setMat4("model", getGameObject()->getModelMatrix());
-        model->render(shader);
+        model->render(shader, renderLayer);
     }
     if( renderLayer == RenderLayer::WORLD ){
         if(!ShaderManager::useShader(shader)){
@@ -26,7 +26,7 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
         }
         shader->setMat4("model", getGameObject()->getModelMatrix());
         if( material != nullptr) material->use(shader);
-        model->render(shader);
+        model->render(shader, renderLayer);
     }
 }
 

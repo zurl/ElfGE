@@ -4,7 +4,10 @@
 
 #include "Shader.h"
 
-Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath) {
+Shader::Shader(const std::string &vertexShaderPath,
+               const std::string &fragmentShaderPath,
+               const std::string & geometryShaderPath) {
+    bool enableGeometry = geometryShaderPath != "";
     const char * vertexShaderSource = Utility::getTextFromFile(
             (Utility::RESOURCE_PREFIX + "Shaders/" + vertexShaderPath + ".vert").c_str()
     );
@@ -39,6 +42,25 @@ Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentS
     shaderID = glCreateProgram();
     glAttachShader(shaderID, vertexShader);
     glAttachShader(shaderID, fragmentShader);
+    if(enableGeometry) {
+        GLuint geometryShader;
+        const char * geometryShaderSource = Utility::getTextFromFile(
+                (Utility::RESOURCE_PREFIX + "Shaders/" + geometryShaderPath + ".geom").c_str()
+        );
+        if( geometryShaderSource == nullptr){
+            throw Exception("Illegal Shader Position");
+        }
+        geometryShader = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(geometryShader, 1, &geometryShaderSource, NULL);
+        glCompileShader(geometryShader);
+        glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &success);
+        if(!success) {
+            glGetShaderInfoLog(geometryShader, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::GEOM::COMPILATION_FAILED\n" << infoLog << std::endl;
+            std::cout << "AT:" << geometryShaderPath << std::endl;
+        }
+        glAttachShader(shaderID, geometryShader);
+    }
     glLinkProgram(shaderID);
     glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
     if(!success) {
