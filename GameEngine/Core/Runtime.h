@@ -6,11 +6,14 @@
 #define ELFGE_RUNTIME_H
 
 
-#include "Scene.h"
 #include "Utility.h"
 #include "../../Assets/Entry.h"
 #include <UI/Font/FontManager.h>
+#include <Graphics/GraphicsRuntime.h>
 #include "../Graphics/GraphicsRuntime.h"
+
+class Scene;
+class Camera;
 
 class Runtime {
     static Scene * scene;

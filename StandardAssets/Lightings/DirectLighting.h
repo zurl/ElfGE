@@ -9,8 +9,8 @@
 #include "GameEngine.h"
 
 class DirectLighting: public Lighting {
-    glm::vec3 ambient, diffuse, specular;
 public:
+    glm::vec3 ambient, diffuse, specular;
     DirectLighting(const glm::vec3 &ambient = glm::vec3(0.05f, 0.05f, 0.05f),
                    const glm::vec3 &diffuse = glm::vec3(1.4f, 1.4f, 1.4f),
                    const glm::vec3 &specular= glm::vec3(1.5f, 1.5f, 1.5f));

@@ -16,6 +16,7 @@
 #include "Core/Runtime.h"
 #include "Core/Component.h"
 #include "Core/Camera.h"
+#include "Core/Prefab.h"
 
 #include "Graphics/Components/Mesh.h"
 #include "Graphics/Components/Model.h"

@@ -5,6 +5,8 @@
 
 #include <Graphics/GraphicsRuntime.h>
 #include "Runtime.h"
+#include "Input.h"
+#include "Core/Scene.h"
 
 Scene * Runtime::scene;
 GraphicsRuntime Runtime::graphicsRuntime;

@@ -9,10 +9,10 @@
 
 class PointLighting: public Lighting{
 
+public:
     glm::vec3 ambient, diffuse, specular;
     float constant, linear, quadratic;
 
-public:
     PointLighting(const glm::vec3 &ambient = glm::vec3(0.05f, 0.05f, 0.05f),
                   const glm::vec3 &diffuse = glm::vec3(0.8f, 0.8f, 0.8f),
                   const glm::vec3 &specular =glm::vec3(1.0f, 1.0f, 1.0f),

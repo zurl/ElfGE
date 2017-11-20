@@ -7,9 +7,10 @@
 
 #include <Graphics/ShadowMappingManager.h>
 #include "Common.h"
-#include "Camera.h"
 #include "GameObject.h"
 #include "Graphics/ShaderManager.h"
+
+class Camera;
 
 class Scene {
     ShadowMappingManager * shadowMappingManager = nullptr;
@@ -24,14 +25,20 @@ public:
     virtual ~Scene();
     Camera *getCamera() const;
     void setCamera(Camera *camera);
-
     ShadowMappingManager *getShadowMappingManager() const;
-
     void setShadowMappingManager(ShadowMappingManager *shadowMappingManager);
-
     void addGameObject(GameObject * gameObject);
-
     GameObject * createGameObject();
+
+protected:
+    template <typename T, typename... Args>
+    GameObject * set(Args&&... args){
+        auto prefab = new T(std::forward<Args>(args)...);
+        auto result = prefab->instantiate(this);
+        delete prefab;
+        return result;
+    }
+
 };
 
 

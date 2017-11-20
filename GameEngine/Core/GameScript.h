@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "Input.h"
 #include "Physics/Colliders/Collider.h"
+#include "Runtime.h"
 
 
 class GameScript: public Component {
@@ -21,6 +22,16 @@ public:
     virtual void onScrollMove(double x){ }
     virtual void onCollisionEnter(Collider * collider){ }
     virtual void onCollisionExit(Collider * collider){ }
+
+    template <typename T, typename... Args>
+    GameObject * instantiate(Args&&... args){
+        auto prefab = new T(std::forward<Args>(args)...);
+        auto result = prefab->instantiate(Runtime::getScene());
+        delete prefab;
+        result->start();
+        return result;
+    }
+
     void destroy() override;
 };
 

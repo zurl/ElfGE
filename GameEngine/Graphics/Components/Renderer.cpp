@@ -2,9 +2,13 @@
 // Created by 张程易 on 29/10/2017.
 //
 
+#include <Graphics/ShaderManager.h>
 #include "Renderer.h"
 #include "Core/Runtime.h"
 #include "Graphics/LightingManager.h"
+#include "Core/GameObject.h"
+#include "Core/Scene.h"
+#include "Core/Camera.h"
 
 void Renderer::updateGraphics(RenderLayer renderLayer) {
     if( Runtime::getCamera() == nullptr ){

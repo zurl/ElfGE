@@ -8,58 +8,67 @@
 #include "GameEngine.h"
 #include "StandardAssets.h"
 
-StandardMaterial material;
+namespace Prefabs{
 
-class Prefabs{
+    extern StandardMaterial material;
 
-public:
+    class DirLight: public Prefab{
+        glm::vec3 rotation;
+    public:
+        DirLight(const glm::vec3 &rotation) : rotation(rotation) {}
 
-    static GameObject * dirLight(Scene * scene, glm::vec3 rotation){
+        GameObject * instantiate(Scene *scene) override {
+            auto ret = scene->createGameObject()
+            ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
+            ->createComponent<Renderer>(
+                    &material, ShaderManager::getShader("light_with_directional_shadow"))
+            ->createComponent<DirectLighting>();
+            ret->transform.setRotation(rotation);
+            return ret;
+        }
+    };
 
-        auto light =
-                scene->createGameObject()
-                        ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
-                        ->createComponent<Renderer>(
-                                &material, ShaderManager::getShader("light_with_omnidirectional_shadow"))
+    class PointLight: public Prefab{
 
-        ->createComponent<DirectLighting>();
+        glm::vec3 position;
+    public:
+        PointLight(const glm::vec3 &position) : position(position) {}
+        GameObject * instantiate(Scene *scene) override {
+            auto result = scene->createGameObject()
+                    ->createComponent<PointLighting>();
+            result->transform.setPosition(position);
+            return result;
+        }
+    };
 
-        light->transform.setRotation(rotation);
+    class Cube: public Prefab{
+        glm::vec3 position;
+    public:
+        Cube(const glm::vec3 &position) : position(position) {}
+        GameObject * instantiate(Scene *scene) override {
+            auto result = scene->createGameObject()
+                    ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_with_omnidirectional_shadow"))
+                    ->createComponent<AABBCollider>(false)
+                    ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
 
-        return light;
-    }
+            result->transform.setPosition(position);
+            return result;
+        }
+    };
 
-    static GameObject * pointLight(Scene * scene, glm::vec3 position){
+    class Camera: public Prefab{
+    public:
+        GameObject * instantiate(Scene *scene) override {
+            auto camera = scene->createGameObject()
+                                   ->createComponent<FirstPlayerCamera>();
 
-        auto light =
-                scene->createGameObject()
-                ->createComponent<PointLighting>();
+            scene->setCamera(camera->getComponent<FirstPlayerCamera>());
+            return camera;
+        }
+    };
 
-        light->transform.translate(position);
-
-        return light;
-    }
-
-    static GameObject * camera(Scene * scene) {
-        auto camera =
-                scene->createGameObject()
-                ->createComponent<FirstPlayerCamera>();
-
-        scene->setCamera(camera->getComponent<FirstPlayerCamera>());
-
-        return camera;
-    }
-
-    static GameObject * cube(Scene * scene, glm::vec3 position = glm::vec3(0,0,0)){
-        auto cube = scene->createGameObject()
-                ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
-                ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light_with_omnidirectional_shadow"));
-
-        cube->transform.translate(position);
-
-        return cube;
-    }
 };
 
 #endif //ELFGE_PREFABS_H

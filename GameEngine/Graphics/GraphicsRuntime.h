@@ -6,8 +6,10 @@
 #define ELFGE_GRAPHICSRUNTIME_H
 
 
-#include <Core/Scene.h>
+
 #include "ShadowMappingManager.h"
+
+class Scene;
 
 class GraphicsRuntime {
 public:

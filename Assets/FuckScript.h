@@ -8,15 +8,11 @@
 #include "GameEngine.h"
 
 class FuckScript: public GameScript {
-
+    int cnt = 0;
 public:
     void start() override;
 
     void update() override;
-
-    void onCollisionEnter(Collider *collider) override;
-
-    void onCollisionExit(Collider *collider) override;
 
 };
 

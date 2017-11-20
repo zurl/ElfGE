@@ -5,11 +5,14 @@
 #include "RigidBody.h"
 
 void RigidBody::onCollisionEnter(Collider *collider) {
-    if( !isTrigger ) {
+    if( !isTrigger && !isFace) {
         auto target = collider->getGameObject();
         auto rb = target->getComponent<RigidBody>();
         if( rb == nullptr ) return;
-        glm::vec3 directVector = glm::normalize(target->transform.getPosition() - getGameObject()->transform.getPosition());
+        glm::vec3 directVector;
+        if( rb->isFace) directVector = getGameObject()->transform.forward;
+        else directVector = glm::normalize(target->transform.getPosition() - getGameObject()->transform.getPosition());
+
         float va = glm::dot(directVector, velocity);
         float vb = glm::dot(directVector, rb->velocity);
         float ma = mass;
@@ -19,6 +22,7 @@ void RigidBody::onCollisionEnter(Collider *collider) {
             || (va >= 0 && vb >= 0 && va >= vb)
             || (va <= 0 && vb <= 0 && va >= vb)){
 
+            printf("pz\n");
             float p = ma * va + mb * vb;
             float m = ma + mb;
             float vc = (collisionK * mb * (vb - va) + p) / m;
@@ -54,3 +58,4 @@ void RigidBody::start() {
 RigidBody::RigidBody(float mass, const glm::vec3 &velocity, const glm::vec3 &force, float collisionK, bool isTrigger,
                      bool useGravity) : mass(mass), collisionK(collisionK), isTrigger(isTrigger),
                                         useGravity(useGravity), velocity(velocity), force(force) {}
+
