@@ -18,4 +18,5 @@
 #include "ShadowMapping/DirectionalShadowMappingManager.h"
 #include "ShadowMapping/OmnidirectionalShadowMappingManager.h"
 #include "BoringHow/Terrain.h"
+#include "BoringHow/SkyBox.h"
 #endif //ELFGE_STANDARDASSETS_H

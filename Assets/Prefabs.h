@@ -72,9 +72,7 @@ namespace Prefabs{
     public:
         GameObject *instantiate(Scene *scene) override {
             auto terrain = scene->createGameObject()
-                    ->createComponent<Terrain>(
-                            Utility::RESOURCE_PREFIX + "Textures/" + "heightMap.png",
-                            Utility::RESOURCE_PREFIX + "Textures/" + "terrainTexture.jpg")
+                    ->createComponent<Terrain>("heightMap.png", "terrainTexture.jpg")
                     ->createComponent<Renderer>(
                             &material,
                             ShaderManager::getShader("light_with_directional_shadow")

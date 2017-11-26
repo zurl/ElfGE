@@ -74,14 +74,21 @@ public:
         text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
 
         auto image1 = createGameObject()
-                ->createComponent<Image>(TextureManager::loadTexture(
+                ->createComponent<Image>(TextureManager::loadTexture2D(
                         Utility::RESOURCE_PREFIX + "Textures/cube_diffuse.png"
                 ), 200.0f, 100.0f);
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(50, 50, 0));
 
+        auto skybox = createGameObject()
+                ->createComponent<SkyBox>("Textures/skybox/");
+
         Scene::start();
     }
+
+    float dir = 0.01f;
+    int cnt = 0;
+    float dt;
 
     std::string itos(int i){
         std::ostringstream iss;

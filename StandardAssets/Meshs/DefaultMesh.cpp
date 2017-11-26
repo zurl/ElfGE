@@ -84,7 +84,7 @@ void DefaultMesh::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std:
         aiString str;
         mat->GetTexture(type, i, &str);
         Texture texture;
-        texture.id = TextureManager::loadTexture(directory + "/" + str.C_Str());
+        texture.id = TextureManager::loadTexture2D(directory + "/" + str.C_Str());
         texture.type = typeName;
         textures.push_back(texture);
     }

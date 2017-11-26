@@ -6,7 +6,7 @@
 
 Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePath) {
     const int size = 1024; // 可以改成TerrianSize
-    heightMap = TextureManager::loadHeightMap(heightMapPath);
+    heightMap = TextureManager::loadHeightMap(Utility::RESOURCE_PREFIX + "Textures/" + heightMapPath);
     vertices.reserve(size * size);
     for (int i = 0;i < size;i++) {
         for (int j = 0;j < size;j++) {
@@ -47,12 +47,16 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
         }
     }
     textures.emplace_back(
-            TextureManager::loadTexture(texturePath),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" +texturePath),
             "diffuse"
     );
     textures.emplace_back(
-            TextureManager::loadTexture(texturePath),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" +texturePath),
             "specular"
     );
     bindVertice();
+}
+
+Terrain::~Terrain() {
+    delete heightMap;
 }

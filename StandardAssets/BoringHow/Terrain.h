@@ -36,6 +36,8 @@ public:
         //hero->position.y = -2.75 + _yA * (1-frac) + _yB * frac;
         return -2.75 + (_yA * (1 - frac) + _yB * frac) / 20.0; // 20.0这里是scale大小, -2.75有Translation,这里可以加参数
     }
+
+    virtual ~Terrain();
 };
 
 
