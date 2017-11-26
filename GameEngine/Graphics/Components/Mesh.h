@@ -7,8 +7,9 @@
 
 #include "Common.h"
 #include "Graphics/Shader.h"
+#include "Model.h"
 
-class Mesh {
+class Mesh : public Model{
 public:
     virtual void render(Shader * shader, RenderLayer renderLayer) = 0;
     virtual ~Mesh() {}

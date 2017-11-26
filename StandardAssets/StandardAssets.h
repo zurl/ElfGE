@@ -17,4 +17,5 @@
 #include "Physics/RigidBody.h"
 #include "ShadowMapping/DirectionalShadowMappingManager.h"
 #include "ShadowMapping/OmnidirectionalShadowMappingManager.h"
+#include "BoringHow/Terrain.h"
 #endif //ELFGE_STANDARDASSETS_H

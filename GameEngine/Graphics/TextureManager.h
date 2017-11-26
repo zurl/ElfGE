@@ -13,7 +13,12 @@
 class TextureManager {
     static std::map<std::string, unsigned int> textures;
 public:
+    static unsigned char* loadHeightMap(const std::string &path) {
+        int width, height, nrComponents;
+        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
+        return data;
 
+    }
     static unsigned int getTextureFromFile(const std::string &path, bool gamma = false){
         unsigned int textureID;
         glGenTextures(1, &textureID);

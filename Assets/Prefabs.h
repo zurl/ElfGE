@@ -49,7 +49,7 @@ namespace Prefabs{
             auto result = scene->createGameObject()
                     ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
                     ->createComponent<Renderer>(
-                            &material, ShaderManager::getShader("light_with_omnidirectional_shadow"))
+                            &material, ShaderManager::getShader("light_with_directional_shadow"))
                     ->createComponent<AABBCollider>(false)
                     ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
 
@@ -66,6 +66,20 @@ namespace Prefabs{
 
             scene->setCamera(camera->getComponent<FirstPlayerCamera>());
             return camera;
+        }
+    };
+    class DemoTerrain: public Prefab{
+    public:
+        GameObject *instantiate(Scene *scene) override {
+            auto terrain = scene->createGameObject()
+                    ->createComponent<Terrain>(
+                            Utility::RESOURCE_PREFIX + "Textures/" + "heightMap.png",
+                            Utility::RESOURCE_PREFIX + "Textures/" + "terrainTexture.jpg")
+                    ->createComponent<Renderer>(
+                            &material,
+                            ShaderManager::getShader("light_with_directional_shadow")
+                    );
+            return terrain;
         }
     };
 

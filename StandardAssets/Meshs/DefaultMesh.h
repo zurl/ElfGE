@@ -15,11 +15,19 @@ public:
         glm::vec3 position;
         glm::vec3 normal;
         glm::vec2 texCoords;
+
+        Vertex();
+
+        Vertex(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords);
     };
 
     struct Texture {
         unsigned int id;
         std::string type;
+
+        Texture();
+
+        Texture(unsigned int id, const std::string &type);
     };
 
     std::vector<Vertex> vertices;

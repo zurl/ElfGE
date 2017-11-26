@@ -36,9 +36,11 @@ public:
         //getShadowMappingManager()->initialize();
 
         light = set<DirLight>(glm::vec3(0, 0, 60));
+        light->transform.translate(-light->transform.getUp() * 10.0f);
+        light->transform.translate(-light->transform.getForward() * 10.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-
+        auto terrain = set<DemoTerrain>();
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -81,17 +83,12 @@ public:
         Scene::start();
     }
 
-    float dir = 0.01f;
-    int cnt = 0;
-    float dt;
-
     std::string itos(int i){
         std::ostringstream iss;
         iss<<i;
         return iss.str();
     }
 
-    float rt = 0.0f;
     void update() override {
         cnt ++;
         dt += Utility::deltaTime;
