@@ -5,7 +5,7 @@
 #include "AnimatedModel.h"
 
 
-void AnimatedModel::computeNodeTransform(float AnimationTime, const aiNode *pNode, const glm::mat4 &ParentTransform) {
+void AnimatedModel::computeNodeTransform(double AnimationTime, const aiNode *pNode, const glm::mat4 &ParentTransform) {
     std::string NodeName(pNode->mName.data);
 
     const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
@@ -21,10 +21,15 @@ void AnimatedModel::computeNodeTransform(float AnimationTime, const aiNode *pNod
         aiVector3D Translation;
         CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
         glm::mat4 TranslationM = glm::translate(iden,glm::vec3(Translation.x,Translation.y,Translation.z));
+
         aiQuaternion RotationQ;
         CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
         aiMatrix4x4 RotationMai = aiMatrix4x4(RotationQ.GetMatrix());
         glm::mat4 RotationM = Utility::aiMatrix4x4ToGlm(&RotationMai);
+
+//        glm::quat RotationQ;
+//        CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
+//        glm::mat4 RotationM = glm::toMat4(RotationQ);
         NodeTransformation = TranslationM * RotationM * ScalingM;
     }
 
@@ -41,9 +46,9 @@ void AnimatedModel::computeNodeTransform(float AnimationTime, const aiNode *pNod
     }
 }
 
-unsigned int AnimatedModel::FindPosition(float AnimationTime, const aiNodeAnim *pNodeAnim) {
+unsigned int AnimatedModel::FindPosition(double AnimationTime, const aiNodeAnim *pNodeAnim) {
     for (unsigned int i = 0 ; i < pNodeAnim->mNumPositionKeys - 1 ; i++) {
-        if (AnimationTime < (float)pNodeAnim->mPositionKeys[i + 1].mTime) {
+        if (AnimationTime < pNodeAnim->mPositionKeys[i + 1].mTime) {
             return i;
         }
     }
@@ -51,10 +56,10 @@ unsigned int AnimatedModel::FindPosition(float AnimationTime, const aiNodeAnim *
     return 0;
 }
 
-unsigned int AnimatedModel::FindRotation(float AnimationTime, const aiNodeAnim *pNodeAnim) {
+unsigned int AnimatedModel::FindRotation(double AnimationTime, const aiNodeAnim *pNodeAnim) {
     assert(pNodeAnim->mNumRotationKeys > 0);
     for (unsigned int i = 0 ; i < pNodeAnim->mNumRotationKeys - 1 ; i++) {
-        if (AnimationTime < (float)pNodeAnim->mRotationKeys[i + 1].mTime) {
+        if (AnimationTime < pNodeAnim->mRotationKeys[i + 1].mTime) {
             return i;
         }
     }
@@ -62,10 +67,10 @@ unsigned int AnimatedModel::FindRotation(float AnimationTime, const aiNodeAnim *
     return 0;
 }
 
-unsigned int AnimatedModel::FindScaling(float AnimationTime, const aiNodeAnim *pNodeAnim) {
+unsigned int AnimatedModel::FindScaling(double AnimationTime, const aiNodeAnim *pNodeAnim) {
     assert(pNodeAnim->mNumScalingKeys > 0);
     for (unsigned int i = 0 ; i < pNodeAnim->mNumScalingKeys - 1 ; i++) {
-        if (AnimationTime < (float) pNodeAnim->mScalingKeys[i + 1].mTime) {
+        if (AnimationTime < pNodeAnim->mScalingKeys[i + 1].mTime) {
             return i;
         }
     }
@@ -73,75 +78,94 @@ unsigned int AnimatedModel::FindScaling(float AnimationTime, const aiNodeAnim *p
     return 0;
 }
 
-void AnimatedModel::CalcInterpolatedPosition(aiVector3D &Out, float AnimationTime, const aiNodeAnim *pNodeAnim) {
+void AnimatedModel::CalcInterpolatedPosition(aiVector3D &Out, double AnimationTime, const aiNodeAnim *pNodeAnim) {
     if (pNodeAnim->mNumPositionKeys == 1 || AnimationTime < pNodeAnim->mPositionKeys[0].mTime) {
         Out = pNodeAnim->mPositionKeys[0].mValue;
         return;
     }
 
     unsigned int PositionIndex = FindPosition(AnimationTime, pNodeAnim);
+    if(PositionIndex <= 500){
+
+       // printf("%d\n", PositionIndex);
+    }
     unsigned int NextPositionIndex = (PositionIndex + 1);
     assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
-    float DeltaTime = (float)(pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime);
-    float Factor = (AnimationTime - (float)pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
+    double DeltaTime = (float)(pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime);
+    double Factor = (AnimationTime - pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
     assert(Factor >= 0.0f && Factor <= 1.0f);
     const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
     const aiVector3D& End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
     aiVector3D Delta = End - Start;
-    Out = Start + Factor * Delta;
+    Out = Start + (float)Factor * Delta;
 }
 
-void AnimatedModel::CalcInterpolatedRotation(aiQuaternion &Out, float AnimationTime, const aiNodeAnim *pNodeAnim) {
+void AnimatedModel::CalcInterpolatedRotation(aiQuaternion &Out, double AnimationTime, const aiNodeAnim *pNodeAnim) {
     // we need at least two values to interpolate...
     if (pNodeAnim->mNumRotationKeys == 1 || AnimationTime < pNodeAnim->mRotationKeys[0].mTime) {
-        Out = pNodeAnim->mRotationKeys[0].mValue;
+        const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[0].mValue;
+        glm::quat startQ(StartRotationQ.w, StartRotationQ.x, StartRotationQ.y, StartRotationQ.z);
         return;
     }
 
     unsigned int RotationIndex = FindRotation(AnimationTime, pNodeAnim);
     unsigned int NextRotationIndex = (RotationIndex + 1);
     assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
-    float DeltaTime = (float)(pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime);
-    float Factor = (AnimationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-    assert(Factor >= 0.0f && Factor <= 1.0f);
+    float DeltaTime = (float)pNodeAnim->mRotationKeys[NextRotationIndex].mTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime;
+    float Factor = ((float)AnimationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
+    assert(Factor >= 0.0 && Factor <= 1.0);
     const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
     const aiQuaternion& EndRotationQ   = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
+//    printf("%f %f %f %f -> %f %f %f %f\n",
+//           StartRotationQ.x, StartRotationQ.y,StartRotationQ.z,StartRotationQ.w,
+//           EndRotationQ.x, EndRotationQ.y,EndRotationQ.z,EndRotationQ.w);
     aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
     Out = Out.Normalize();
+    //Out = StartRotationQ;
+//    glm::quat startQ(StartRotationQ.w, StartRotationQ.x, StartRotationQ.y, StartRotationQ.z);
+//    glm::quat endQ(EndRotationQ.w, EndRotationQ.x, EndRotationQ.y, EndRotationQ.z);
+//    //Out = startQ;
+//    Out = glm::lerp(startQ, endQ, Factor);
 }
 
-void AnimatedModel::CalcInterpolatedScaling(aiVector3D &Out, float AnimationTime, const aiNodeAnim *pNodeAnim) {
+void AnimatedModel::CalcInterpolatedScaling(aiVector3D &Out, double AnimationTime, const aiNodeAnim *pNodeAnim) {
     if (pNodeAnim->mNumScalingKeys == 1 || AnimationTime < pNodeAnim->mScalingKeys[0].mTime) {
         Out = pNodeAnim->mScalingKeys[0].mValue;
         return;
     }
-
     unsigned int ScalingIndex = FindScaling(AnimationTime, pNodeAnim);
+    //printf("%d\n", ScalingIndex);
     unsigned int NextScalingIndex = (ScalingIndex + 1);
     assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
-    float DeltaTime = (float)(pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime);
-    float Factor = (AnimationTime - (float)pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
+    double DeltaTime = pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime;
+    double Factor = (AnimationTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
     assert(Factor >= 0.0f && Factor <= 1.0f);
     const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
     const aiVector3D& End   = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
     aiVector3D Delta = End - Start;
-    Out = Start + Factor * Delta;
+    Out = Start + (float)Factor * Delta;
 }
 
 void AnimatedModel::update() {
     glm::mat4 transform(1.0f);
-    timeCounter += Utility::deltaTime;
-    while(timeCounter > duration) timeCounter -= duration;
-    computeNodeTransform(timeCounter, scene->mRootNode, transform);
+    animation_now += Utility::deltaTime;
+    if(animation_now > currentAnimation.end) animation_now = currentAnimation.start;
+    computeNodeTransform(animation_now, scene->mRootNode, transform);
 }
 
 void AnimatedModel::render(Shader *shader, RenderLayer renderLayer) {
+    if(renderLayer == RenderLayer::WORLD_SHADOW){
+        shader->setInt("enableBones", 1);
+    }
     std::string bonename("bones[");
-    for(int i = 0 ; i < bonesInfo.size(); i++){
+    for (int i = 0; i < bonesInfo.size(); i++) {
         shader->setMat4(bonename + std::to_string(i) + "]", bonesInfo[i].transform);
     }
     for(auto & x: meshes){
         x->render(shader, renderLayer);
+    }
+    if(renderLayer == RenderLayer::WORLD_SHADOW){
+        shader->setInt("enableBones", 0);
     }
 }
 
@@ -208,13 +232,23 @@ const aiNodeAnim *AnimatedModel::FindNodeAnim(const aiAnimation *pAnimation, con
 }
 
 void AnimatedModel::playAnimation(const std::string &name) {
-    auto iter = animationMap.find(name);
-    if( iter == animationMap.end()){
+    auto iter = customAnimationMap.find(name);
+    if( iter == customAnimationMap.end()){
         throw Exception("NO ANIMATION FOUND");
     }
     else{
-        pAnimation = scene->mAnimations[iter->second];
-        duration = pAnimation->mDuration;
-        timeCounter = 0.0f;
+        currentAnimation = iter->second;
+        animation_now = currentAnimation.start;
     }
+}
+
+void AnimatedModel::registerAnimation(const std::string &name, unsigned int startFrame, unsigned int endFrame) {
+    assert(startFrame != 0 && endFrame >= startFrame);
+    aiNodeAnim * pNode = pAnimation->mChannels[0];
+    Animation animation;
+    animation.start = pNode->mScalingKeys[startFrame - 1].mTime;
+    animation.end = pNode->mScalingKeys[endFrame].mTime;
+    animation.startFrame = startFrame;
+    animation.endFrame = endFrame;
+    customAnimationMap.emplace(name, animation);
 }

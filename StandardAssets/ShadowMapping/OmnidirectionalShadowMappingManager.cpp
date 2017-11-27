@@ -53,6 +53,7 @@ void OmnidirectionalShadowMappingManager::computeMapping() {
     glViewport(0, 0, resolution, resolution);
     shader->setVec3("shadowLightPos", pointLighting->getGameObject()->transform.getPosition());
     shader->setFloat("far_plane", 25.0f);
+    shader->setInt("enableBones", 0);
 }
 
 void OmnidirectionalShadowMappingManager::applyMapping(Shader *shader) {
@@ -65,3 +66,7 @@ void OmnidirectionalShadowMappingManager::applyMapping(Shader *shader) {
 
 OmnidirectionalShadowMappingManager::OmnidirectionalShadowMappingManager(PointLighting *pointLighting, int resolution)
         : pointLighting(pointLighting), resolution(resolution) {}
+
+Shader *OmnidirectionalShadowMappingManager::getShader() {
+    return shader;
+}

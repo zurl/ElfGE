@@ -25,8 +25,6 @@ void main()
         BoneTransform += bones[BoneIDs[2]] * Weights[2];
         BoneTransform += bones[BoneIDs[3]] * Weights[3];
 
-    //mat4 BoneTransform = mat4(Weights[0] + Weights[1] + Weights[2] + Weights[3]);
-
     FragPos = vec3(model * BoneTransform * vec4(aPos, 1.0));
     Normal = mat3(transpose(inverse(model))) * aNormal;
     TexCoords = aTexCoords;

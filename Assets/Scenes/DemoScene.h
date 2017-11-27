@@ -36,11 +36,13 @@ public:
         //getShadowMappingManager()->initialize();
 
         light = set<DirLight>(glm::vec3(0, 0, 60));
-        light->transform.translate(-light->transform.getUp() * 10.0f);
-        light->transform.translate(-light->transform.getForward() * 10.0f);
+        light->transform.translate(-light->transform.getUp() * 5.0f);
+        light->transform.translate(-light->transform.getForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        //auto terrain = set<DemoTerrain>();
+        auto terrain = set<DemoTerrain>();
+
+        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -50,15 +52,20 @@ public:
 
 
         human = createGameObject()
-        ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/Lod1/soldier_head.dae")
+                //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
+->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/Lod1/soldier_head.dae")
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
 
-        //human->transform.setScale(glm::vec3(0.004f));
-        //human->transform.translate(glm::vec3(0,1,0));
-        //human->transform.rotate(Transform::forward, -90);
+        auto humanModel = human->getComponent<AnimatedModel>();
+        humanModel->registerAnimation("RUN", 585, 595);
+        humanModel->playAnimation("RUN");
+
+//        human->transform.setScale(glm::vec3(0.04f));
+//        human->transform.translate(glm::vec3(0,1,0));
+//        human->transform.rotate(Transform::forward, -90);
 
 
 
@@ -66,8 +73,8 @@ public:
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
-        auto plane = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        plane->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
+//        auto plane = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        plane->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
 
         auto arialFont = FontManager::loadFont("Arial");
 
