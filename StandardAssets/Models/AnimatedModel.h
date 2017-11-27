@@ -11,29 +11,56 @@
 
 class AnimatedModel: public DefaultModel{
     Assimp::Importer import;
+
+    struct BoneInfo {
+        glm::mat4 offset;
+        glm::mat4 transform;
+    };
+
+    std::vector<BoneInfo> bonesInfo;
+
+    std::map<std::string, unsigned int> bonesMap;
+    std::map<std::string, unsigned int> animationMap;
+    unsigned int bonesCnt = 0;
+    const aiAnimation* pAnimation;
+
+    double duration = 0;
+
+    double timeCounter = 0.0f;
+
+    const aiScene *scene;
+
+    glm::mat4 globalInverseTransform;
+
+
+    const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string NodeName);
+
+    unsigned int FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    unsigned int FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    unsigned int FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+
+    void computeNodeTransform(float AnimationTime, const aiNode* pNode, const glm::mat4 & ParentTransform);
+
+
+    void processNode(aiNode *node, const aiScene *scene);
+
+
 public:
-    void processNode(aiNode *node, const aiScene *scene) {
-        for(unsigned int i = 0; i < node->mNumMeshes; i++) {
-            aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.emplace_back(new AnimatedMesh(mesh, scene, directory));
-        }
-        for(unsigned int i = 0; i < node->mNumChildren; i++) {
-            processNode(node->mChildren[i], scene);
-        }
-    }
+    AnimatedModel(const std::string &path);
 
-    AnimatedModel(const std::string &path) {
+    void render(Shader *shader, RenderLayer renderLayer) override;
 
-        std::cout<<path<<std::endl;
-        scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    void update() override;
 
-        if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-            std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
-            return;
-        }
-        directory = path.substr(0, path.find_last_of('/'));
-        processNode(scene->mRootNode, scene);
-    }
+    void playAnimation(const std::string & name);
 
 };
 

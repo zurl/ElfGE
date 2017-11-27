@@ -50,15 +50,15 @@ public:
 
 
         human = createGameObject()
-        ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Jarvan/run.DAE")
+        ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/Lod1/soldier_head.dae")
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
 
-        human->transform.setScale(glm::vec3(0.004f));
-        human->transform.translate(glm::vec3(0,1,0));
-        human->transform.rotate(Transform::forward, -90);
+        //human->transform.setScale(glm::vec3(0.004f));
+        //human->transform.translate(glm::vec3(0,1,0));
+        //human->transform.rotate(Transform::forward, -90);
 
 
 
@@ -88,13 +88,13 @@ public:
         text1->transform.translate(glm::vec3(20, 20, 0));
         text  = text1->getComponent<Text>();
         text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
-
-        auto image1 = createGameObject()
-                ->createComponent<Image>(TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Jarvan/images/0_jarvanIV_base_TX_CM.DDS"
-                ), 200.0f, 100.0f);
-        image1->setParent(canvas);
-        image1->transform.translate(glm::vec3(50, 50, 0));
+//
+//        auto image1 = createGameObject()
+//                ->createComponent<Image>(TextureManager::loadTexture2D(
+//                        Utility::RESOURCE_PREFIX + "Jarvan/images/0_jarvanIV_base_TX_CM.DDS"
+//                ), 200.0f, 100.0f);
+//        image1->setParent(canvas);
+//        image1->transform.translate(glm::vec3(50, 50, 0));
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");

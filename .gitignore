@@ -1,8 +1,7 @@
 cmake-build-debug/
 .idea/
 Resources/Textures
-Resources/nanosuit
-Resources/Jarvan
+Resources/Models
 *.png
 *.blend
 *.obj

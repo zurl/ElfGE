@@ -59,10 +59,15 @@ void DefaultMesh::initMesh(aiMesh *mesh, const aiScene *scene) {
         vector.z = mesh->mVertices[i].z;
         vertex.position = vector;
         // normals
-        vector.x = mesh->mNormals[i].x;
-        vector.y = mesh->mNormals[i].y;
-        vector.z = mesh->mNormals[i].z;
-        vertex.normal = vector;
+        if(mesh->mNormals != nullptr){
+            vector.x = mesh->mNormals[i].x;
+            vector.y = mesh->mNormals[i].y;
+            vector.z = mesh->mNormals[i].z;
+            vertex.normal = vector;
+        }
+        else{
+            vertex.normal = glm::vec3(0.0f);
+        }
         // texture coordinates
         if(mesh->mTextureCoords[0]){
             glm::vec2 vec;
