@@ -9,10 +9,11 @@
 #include "../Meshs/DefaultMesh.h"
 
 class DefaultModel: public Model {
-
+protected:
     std::string directory;
-
+    const aiScene *scene;
 public:
+    DefaultModel();
 
     std::vector<DefaultMesh *> meshes;
 

@@ -43,6 +43,8 @@ public:
     virtual ~DefaultMesh();
 
 protected:
+    void initMesh(aiMesh *mesh, const aiScene *scene);
+
     std::string directory;
     unsigned int VAO, VBO, EBO;
     void loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);

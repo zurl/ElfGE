@@ -13,6 +13,7 @@
 #include "Meshs/CubeMesh.h"
 #include "Meshs/DefaultMesh.h"
 #include "Models/DefaultModel.h"
+#include "Models/AnimatedModel.h"
 #include "Physics/Colliders/AABBCollider.h"
 #include "Physics/RigidBody.h"
 #include "ShadowMapping/DirectionalShadowMappingManager.h"

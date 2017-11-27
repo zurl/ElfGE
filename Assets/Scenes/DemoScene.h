@@ -18,7 +18,7 @@ class DemoScene: public Scene {
 
 public:
 
-    GameObject * cube1, * cube2, * cube3, * cube4, * cube5, * light;
+    GameObject *human, * cube1, * cube2, * cube3, * cube4, * cube5, * light;
 
     DemoScene(){}
 
@@ -40,10 +40,26 @@ public:
         light->transform.translate(-light->transform.getForward() * 10.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
+        //auto terrain = set<DemoTerrain>();
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+
+
+
+
+
+        human = createGameObject()
+        ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Jarvan/run.DAE")
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("light_with_directional_shadow_anim")
+                );
+
+        human->transform.setScale(glm::vec3(0.004f));
+        human->transform.translate(glm::vec3(0,1,0));
+        human->transform.rotate(Transform::forward, -90);
+
 
 
         auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
@@ -75,7 +91,7 @@ public:
 
         auto image1 = createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Textures/cube_diffuse.png"
+                        Utility::RESOURCE_PREFIX + "Jarvan/images/0_jarvanIV_base_TX_CM.DDS"
                 ), 200.0f, 100.0f);
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(50, 50, 0));
@@ -96,6 +112,8 @@ public:
         return iss.str();
     }
 
+    float x = 0;
+
     void update() override {
         cnt ++;
         dt += Utility::deltaTime;
@@ -104,6 +122,11 @@ public:
             text->setText("FPS:" + itos(cnt));
             cnt = 0;
         }
+
+        x++;
+        if(x > 360000) x= 0;
+
+
 //        if(cube1->transform.getPosition().z > 5){
 //            dir = -0.01f;
 //        }

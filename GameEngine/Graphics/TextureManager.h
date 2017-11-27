@@ -14,6 +14,8 @@ class TextureManager {
     static std::map<std::string, unsigned int> textures;
 public:
 
+    static unsigned int getDDSTexture(const std::string &path);
+
     static unsigned char* loadHeightMap(const std::string &path);
 
     static unsigned int getTexture3DFromFile(const std::vector<std::string> & faces);
