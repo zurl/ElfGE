@@ -19,7 +19,7 @@ namespace Prefabs{
 
         GameObject * instantiate(Scene *scene) override {
             auto ret = scene->createGameObject()
-            ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
+            ->createComponent<CubeMesh>("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg")
             ->createComponent<Renderer>(
                     &material, ShaderManager::getShader("light_with_directional_shadow"))
             ->createComponent<DirectLighting>();
@@ -46,8 +46,9 @@ namespace Prefabs{
     public:
         Cube(const glm::vec3 &position) : position(position) {}
         GameObject * instantiate(Scene *scene) override {
+
             auto result = scene->createGameObject()
-                    ->createComponent<DefaultModel>(new CubeMesh("cube_specular.png", "cube_diffuse.png"))
+                    ->createComponent<DefaultModel>(new CubeMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
                     ->createComponent<Renderer>(
                             &material, ShaderManager::getShader("light_with_directional_shadow"))
                     ->createComponent<AABBCollider>(false)
@@ -72,7 +73,7 @@ namespace Prefabs{
     public:
         GameObject *instantiate(Scene *scene) override {
             auto terrain = scene->createGameObject()
-                    ->createComponent<Terrain>("heightMap.png", "terrainTexture.jpg")
+                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
                     ->createComponent<Renderer>(
                             &material,
                             ShaderManager::getShader("light_with_directional_shadow")

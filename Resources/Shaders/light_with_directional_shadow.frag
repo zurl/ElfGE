@@ -9,6 +9,7 @@ out vec4 FragColor;
 struct Material {
     sampler2D diffuse;
     sampler2D specular;
+    sampler2D normal;
     float shininess;
 };
 
@@ -43,9 +44,9 @@ struct SpotLight {
 };
 
 in vec3 FragPos;
-in vec3 Normal;
 in vec2 TexCoords;
 in vec4 FragPosLightSpace;
+in mat3 TBN;
 
 uniform vec3 shadowLightPos;
 uniform vec3 viewPos;
@@ -53,6 +54,7 @@ uniform DirLight dirLight[NR_DIR_LIGHTS];
 uniform PointLight pointLight[NR_POINT_LIGHTS];
 uniform SpotLight spotLight[NR_SPOT_LIGHTS];
 uniform Material material;
+uniform sampler2D shadowMap;
 
 // function prototypes
 float ShadowCalculation(vec4 fragPosLightSpace);
@@ -69,7 +71,7 @@ float LinearizeDepth(float depth)
     return (2.0 * near * far) / (far + near - z * (far - near));
 }
 
-uniform sampler2D shadowMap;
+
 
 float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir){
     // perform perspective divide
@@ -98,8 +100,10 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir){
 }
 
 void main(){
-    vec3 norm = normalize(Normal);
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 normal = texture(material.normal, TexCoords).rgb;
+    vec3 norm = normalize(normal * 2.0 - 1.0);
+    vec3 viewDir = TBN * normalize(viewPos - FragPos);
+
     vec3 result = vec3(0.0, 0.0, 0.0);
     for(int i = 0; i < NR_DIR_LIGHTS; i++){
         result += CalcDirLight(dirLight[i], norm, viewDir);
@@ -115,7 +119,7 @@ void main(){
 
 // calculates the color when using a directional light.
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir){
-    vec3 lightDir = normalize(-light.direction);
+    vec3 lightDir = TBN * normalize(-light.direction);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
@@ -133,7 +137,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir){
 
 // calculates the color when using a point light.
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = TBN * normalize(light.position - FragPos);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
@@ -154,7 +158,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
 
 // calculates the color when using a spot light.
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
-    vec3 lightDir = normalize(light.position - fragPos);
+    vec3 lightDir = TBN * normalize(light.position - FragPos);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading

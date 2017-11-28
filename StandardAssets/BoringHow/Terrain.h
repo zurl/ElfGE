@@ -12,7 +12,8 @@ class Terrain: public DefaultMesh {
     unsigned char * heightMap;
 public:
     Terrain(const std::string & heightMapPath,
-            const std::string & texturePath);
+            const std::string & texturePath,
+            const std::string &normalPath = "");
 
     glm::vec3 getNormal(float x,float y) {
         int PosY = x + 512;

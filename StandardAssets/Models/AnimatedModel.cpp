@@ -148,7 +148,7 @@ void AnimatedModel::CalcInterpolatedScaling(aiVector3D &Out, double AnimationTim
 
 void AnimatedModel::update() {
     glm::mat4 transform(1.0f);
-    animation_now += Utility::deltaTime;
+    animation_now += Utility::deltaTime / 10.0f;
     if(animation_now > currentAnimation.end) animation_now = currentAnimation.start;
     computeNodeTransform(animation_now, scene->mRootNode, transform);
 }
@@ -172,7 +172,7 @@ void AnimatedModel::render(Shader *shader, RenderLayer renderLayer) {
 AnimatedModel::AnimatedModel(const std::string &path) {
 
     std::cout<<path<<std::endl;
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;

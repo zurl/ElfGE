@@ -14,7 +14,7 @@ DefaultMesh::DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &
 void DefaultMesh::render(Shader * shader, RenderLayer renderLayer) {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
-
+    unsigned int normalNr = 1;
     // Binding All Textures
     if( renderLayer == RenderLayer::WORLD) {
         for (unsigned int i = 0; i < textures.size(); i++) {
@@ -27,6 +27,8 @@ void DefaultMesh::render(Shader * shader, RenderLayer renderLayer) {
                 ss << diffuseNr++;
             else if (name == "specular")
                 ss << specularNr++;
+            else if (name == "normal")
+                ss << normalNr++;
             number = ss.str();
 
             shader->setInt(("material." + name).c_str(), i);
@@ -46,6 +48,16 @@ void DefaultMesh::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std:
         texture.id = TextureManager::loadTexture2D(directory + "/" + str.C_Str());
         texture.type = typeName;
         textures.push_back(texture);
+        if( typeName == "diffuse"){
+            char fuckbuffer[128];
+            strcpy(fuckbuffer, str.C_Str());
+            int len = strlen(fuckbuffer);
+            strcpy(fuckbuffer + len - 11, "normal");
+            strncpy(fuckbuffer + len - 5, fuckbuffer + len - 4, 5);
+            texture.id = TextureManager::loadTexture2D(directory + "/" + fuckbuffer);
+            texture.type = "normal";
+            textures.push_back(texture);
+        }
     }
 }
 
@@ -59,7 +71,7 @@ void DefaultMesh::initMesh(aiMesh *mesh, const aiScene *scene) {
         vector.z = mesh->mVertices[i].z;
         vertex.position = vector;
         // normals
-        if(mesh->mNormals != nullptr){
+        if(mesh->mNormals){
             vector.x = mesh->mNormals[i].x;
             vector.y = mesh->mNormals[i].y;
             vector.z = mesh->mNormals[i].z;
@@ -78,6 +90,19 @@ void DefaultMesh::initMesh(aiMesh *mesh, const aiScene *scene) {
             vertex.texCoords = vec;
         }
         else vertex.texCoords = glm::vec2(0.0f, 0.0f);
+        if( mesh->mTangents){
+            vector.x = mesh->mTangents[i].x;
+            vector.y = mesh->mTangents[i].y;
+            vector.z = mesh->mTangents[i].z;
+            vertex.tangent = vector;
+        }
+
+        if( mesh->mBitangents){
+            vector.x = mesh->mBitangents[i].x;
+            vector.y = mesh->mBitangents[i].y;
+            vector.z = mesh->mBitangents[i].z;
+            vertex.bitangent = vector;
+        }
         vertices.push_back(vertex);
     }
     // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -91,11 +116,11 @@ void DefaultMesh::initMesh(aiMesh *mesh, const aiScene *scene) {
     /** Materials **/
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
     loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
     loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
     loadMaterialTextures(material, aiTextureType_HEIGHT, "normal");
     loadMaterialTextures(material, aiTextureType_AMBIENT, "height");
+    //loadMaterialTextures(material, _aiTextureType_Force32Bit, "height");
 }
 void DefaultMesh::bindVertice() {
     glGenVertexArrays(1, &VAO);
@@ -113,6 +138,10 @@ void DefaultMesh::bindVertice() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
     glBindVertexArray(0);
 }
 

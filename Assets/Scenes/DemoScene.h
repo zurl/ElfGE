@@ -43,29 +43,29 @@ public:
         auto terrain = set<DemoTerrain>();
 
         terrain->transform.translate(glm::vec3(0, -1.5f, 0));
-        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
-        auto l2p = light2->getComponent<PointLighting>();
-        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+//        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
+//        auto l2p = light2->getComponent<PointLighting>();
+//        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
 
 
 
 
         human = createGameObject()
-                //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
-->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/Lod1/soldier_head.dae")
+//                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
+->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
 
         auto humanModel = human->getComponent<AnimatedModel>();
-        humanModel->registerAnimation("RUN", 585, 595);
+
+        humanModel->registerAnimation("RUN", 500, 600);
         humanModel->playAnimation("RUN");
 
-//        human->transform.setScale(glm::vec3(0.04f));
-//        human->transform.translate(glm::vec3(0,1,0));
-//        human->transform.rotate(Transform::forward, -90);
+       human->transform.setScale(glm::vec3(0.01f));
+        human->transform.translate(glm::vec3(3,1,0));
 
 
 
@@ -133,6 +133,7 @@ public:
         x++;
         if(x > 360000) x= 0;
 
+        //human->transform.rotate(Transform::right, 0.5);
 
 //        if(cube1->transform.getPosition().z > 5){
 //            dir = -0.01f;
