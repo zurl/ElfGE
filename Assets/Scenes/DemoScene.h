@@ -85,7 +85,6 @@ public:
         cube4 = set<Cube>(glm::vec3(1,1,7));
         cube5 = set<Cube>(glm::vec3(1,1,10));
 
-        camera->createComponent<FuckScript>();
 
         auto canvas = createGameObject()->createComponent<Canvas>();
 
@@ -95,13 +94,21 @@ public:
         text1->transform.translate(glm::vec3(20, 20, 0));
         text  = text1->getComponent<Text>();
         text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
-//
-//        auto image1 = createGameObject()
-//                ->createComponent<Image>(TextureManager::loadTexture2D(
-//                        Utility::RESOURCE_PREFIX + "Jarvan/images/0_jarvanIV_base_TX_CM.DDS"
-//                ), 200.0f, 100.0f);
-//        image1->setParent(canvas);
-//        image1->transform.translate(glm::vec3(50, 50, 0));
+
+
+        auto text2 = createGameObject()->createComponent<Text>("hello world!", arialFont);
+
+        text2->setParent(canvas);
+        text2->transform.translate(glm::vec3(40, 40, 0));
+        text2->createComponent<FuckScript>(human);
+
+
+        auto image1 = createGameObject()
+                ->createComponent<Image>(TextureManager::loadTexture2D(
+                        Utility::RESOURCE_PREFIX + "Textures/brickwall.jpg"
+                ), 20.0f, 20.0f);
+        image1->setParent(canvas);
+        image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");

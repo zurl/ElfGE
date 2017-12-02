@@ -21,8 +21,8 @@ void AABBCollider::start() {
                 max = glm::max(vertex.position, max);
             }
         }
-        offset = (min + max) * 0.5f * getGameObject()->transform.getScale();
-        size = (max - min) * 0.5f * getGameObject()->transform.getScale();
+        offset = (min + max) * 0.5f;
+        size = (max - min) * 0.5f;
     }
     allColliders.emplace_back(this);
     vertices.emplace_back(offset.x + size.x, offset.y + size.y, offset.z + size.z);
@@ -70,7 +70,10 @@ AABBCollider::AABBCollider(const glm::vec3 &size,
              const glm::vec3 &offset,
              bool passive
 ):passive(passive),offset(offset), size(size) {
-
+    for(auto & x: vertices){
+        min = glm::min(x, min);
+        max = glm::max(x, max);
+    }
 }
 
 bool AABBCollider::checkCollision(AABBCollider *dst) {
@@ -87,7 +90,8 @@ void AABBCollider::computeBox() {
     min = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
     for(auto & x: vertices){
-        glm::vec3 result = glm::rotate(getGameObject()->transform.getQuaternion(), x);
+        glm::vec3 result =
+                glm::rotate(getGameObject()->transform.getQuaternion(), x * getGameObject()->transform.getScale());
         min = glm::min(min, result);
         max = glm::max(max, result);
     }
@@ -97,4 +101,48 @@ void AABBCollider::computeBox() {
 
 AABBCollider::AABBCollider(bool passive) {
     autogen = true;
+    this->passive = passive;
+}
+
+bool check2DRayCast(float ox, float oy, float dx, float dy,
+float xl, float xr, float yl, float yr){
+    float k = dy / dx;
+    float b = - k * ox + oy;
+    float py1 = k * xl + b;
+    float py2 = k * xr + b;
+    float pyl = fmin(py1, py2);
+    float pyr = fmax(py1, py2);
+    if( pyr < yl || pyl > yr) return false;
+    return true;
+}
+
+AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float distance) {
+    AABBCollider * result = nullptr;
+    float resultDistance = FLT_MAX;
+    for(auto target : allColliders){
+        target->computeBox();
+        glm::vec3 pos = target->getGameObject()->transform.getPosition();
+        float targetDis = glm::distance(origin, pos);
+        if(targetDis < distance){
+
+            if( check2DRayCast(origin.x, origin.z, direction.x, direction.z,
+                               target->min.x, target->max.x, target->min.z, target->max.z)
+                    ){
+                printf("RC OK 1\n");
+                    if(check2DRayCast(origin.x, origin.y, direction.x, direction.y,
+                                      target->min.x, target->max.x, target->min.y, target->max.y)
+                            ){
+                        printf("RC OK 2\n");
+                        if( targetDis < resultDistance){
+                            resultDistance = targetDis;
+                            result = target;
+                        }
+
+                }
+
+            }
+        }
+    }
+    printf("RC END\n");
+    return result;
 }

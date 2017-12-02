@@ -9,6 +9,11 @@
 
 int Utility::SCREEN_WIDTH = 1024;
 int Utility::SCREEN_HEIGHT = 768;
+
+
+double Utility::MOUSE_X = 0.0;
+double Utility::MOUSE_Y = 0.0;
+
 double Utility::deltaTime = 0.0;
 GLFWwindow* Utility::window = nullptr;
 

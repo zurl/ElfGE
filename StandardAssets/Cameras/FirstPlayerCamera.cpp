@@ -19,6 +19,9 @@ void FirstPlayerCamera::update() {
 
 void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
 
+    Utility::MOUSE_X = xpos;
+    Utility::MOUSE_Y = ypos;
+
     static double lastX = Utility::SCREEN_HEIGHT / 2, lastY = Utility::SCREEN_WIDTH / 2;
 
     double xoffset = xpos - lastX;

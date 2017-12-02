@@ -6,10 +6,16 @@
 #define ELFGE_FUCKSCRIPT_H
 
 #include "GameEngine.h"
+#include "UI/UI.h"
 
 class FuckScript: public GameScript {
     int cnt = 0;
+    Text * text;
+    GameObject * human;
 public:
+
+    FuckScript(GameObject *human);
+
     void start() override;
 
     void update() override;

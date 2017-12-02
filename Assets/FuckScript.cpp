@@ -8,7 +8,7 @@
 
 
 void FuckScript::start() {
-
+    text = getGameObject()->getComponent<Text>();
 }
 
 void FuckScript::update() {
@@ -16,11 +16,21 @@ void FuckScript::update() {
         cnt --;
         return;
     }
-    if( glfwGetKey(Utility::window, GLFW_KEY_Q) == GLFW_PRESS){
-        cnt = 50;
-        auto a = instantiate<Prefabs::Cube>(getGameObject()->transform.getPosition());
-        a->transform.setScale(glm::vec3(0.2));
-        auto r = a->getComponent<RigidBody>();
-        r->velocity = (getGameObject()->transform.getForward() * 0.15f);
+    if( glfwGetMouseButton(Utility::window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS){
+        AABBCollider * collider = AABBCollider::raycast(
+                Runtime::getCamera()->getGameObject()->transform.getPosition(),
+                Runtime::getCamera()->getGameObject()->transform.getForward(),
+                100000.0f
+        );
+        if( collider == nullptr){
+            text->setText("NO");
+        }
+        else{
+            text->setText("YES");
+            //collider->getGameObject()->transform.translate(Transform::up);
+        }
+        cnt = 0;
     }
 }
+
+FuckScript::FuckScript(GameObject *human) : human(human) {}

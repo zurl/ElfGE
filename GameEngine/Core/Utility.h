@@ -18,6 +18,9 @@ public:
     static int SCREEN_WIDTH;
     static int SCREEN_HEIGHT;
 
+    static double MOUSE_X;
+    static double MOUSE_Y;
+
     static double deltaTime;
 
     static const char * getTextFromFile(const char * filePath);
