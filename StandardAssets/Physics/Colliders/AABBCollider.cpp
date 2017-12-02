@@ -110,10 +110,9 @@ float xl, float xr, float yl, float yr){
     float b = - k * ox + oy;
     float py1 = k * xl + b;
     float py2 = k * xr + b;
-    float pyl = fmin(py1, py2);
-    float pyr = fmax(py1, py2);
-    if( pyr < yl || pyl > yr) return false;
-    return true;
+    float pyl = (float) fmin(py1, py2);
+    float pyr = (float) fmax(py1, py2);
+    return !(pyr < yl || pyl > yr);
 }
 
 AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float distance) {
@@ -123,26 +122,15 @@ AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float
         target->computeBox();
         glm::vec3 pos = target->getGameObject()->transform.getPosition();
         float targetDis = glm::distance(origin, pos);
-        if(targetDis < distance){
-
-            if( check2DRayCast(origin.x, origin.z, direction.x, direction.z,
+        if(targetDis < distance
+            && check2DRayCast(origin.x, origin.z, direction.x, direction.z,
                                target->min.x, target->max.x, target->min.z, target->max.z)
-                    ){
-                printf("RC OK 1\n");
-                    if(check2DRayCast(origin.x, origin.y, direction.x, direction.y,
-                                      target->min.x, target->max.x, target->min.y, target->max.y)
-                            ){
-                        printf("RC OK 2\n");
-                        if( targetDis < resultDistance){
-                            resultDistance = targetDis;
-                            result = target;
-                        }
-
-                }
-
-            }
+            && check2DRayCast(origin.x, origin.y, direction.x, direction.y,
+                              target->min.x, target->max.x, target->min.y, target->max.y)
+            && targetDis < resultDistance){
+                resultDistance = targetDis;
+                result = target;
         }
     }
-    printf("RC END\n");
     return result;
 }
