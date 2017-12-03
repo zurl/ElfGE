@@ -13,16 +13,17 @@ class Image: public Component {
     static GLuint VAO, VBO;
     static bool isInit;
     float width, height;
+    bool isCenter;
     GLfloat vertices[6][4] ={
-        { 0.0f, 1.0f, 0.0f, 0.0f },
-        { 0.0f, 0.0f, 0.0f, 1.0f },
-        { 1.0f, 0.0f, 1.0f, 1.0f },
-        { 0.0f, 1.0f, 0.0f, 0.0f },
-        { 1.0f, 0.0f, 1.0f, 1.0f },
+        { -1.0f, 1.0f, 0.0f, 0.0f },
+        { -1.0f, -1.0f, 0.0f, 1.0f },
+        { 1.0f, -1.0f, 1.0f, 1.0f },
+        { -1.0f, 1.0f, 0.0f, 0.0f },
+        { 1.0f, -1.0f, 1.0f, 1.0f },
         { 1.0f, 1.0f, 1.0f, 0.0f }
     };
 public:
-    Image(unsigned int texture, float width, float height);
+    Image(unsigned int texture, float width, float height, bool isCenter = true);
 
     void start() override;
 

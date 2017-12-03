@@ -89,7 +89,7 @@ namespace Prefabs{
 
         class ImageButtonScript: public Component {
             double xl, xr, yl, yr;
-            std::function<void()> * callback;
+            std::function<void()> * callback, onenter, onexit;
         public:
             ImageButtonScript(double xl, double xr, double yl, double yr, std::function<void()> *callback) : xl(xl),
                                                                                                              xr(xr),
@@ -97,8 +97,21 @@ namespace Prefabs{
                                                                                                              yr(yr),
                                                                                                              callback(
                                                                                                                      callback) {}
+            void onEnter(){
+                if(callback != nullptr) callback->operator()();
+                getGameObject()->transform.setScale(glm::vec3(0.8));
+            }
+
+            void onExit(){
+                getGameObject()->transform.setScale(glm::vec3(1.0));
+            }
+
             void start() override {
-                Input::attachOnMouseClick(xl, xr, yl, yr, 10, callback, nullptr);
+                onenter = std::bind(&ImageButtonScript::onEnter, this);
+                onexit = std::bind(&ImageButtonScript::onExit, this);
+
+                Input::attachOnMouseClick(xl, xr, yl, yr, 10,&onenter, &onexit);
+
                 Component::start();
             }
 
@@ -124,10 +137,10 @@ namespace Prefabs{
             result->transform.setPosition(position);
             double px = result->transform.getPosition().x;
             double py = result->transform.getPosition().y;
-            result->createComponent<Image>( image, size.x, size.y )
-                    ->createComponent<ImageButtonScript>(
-                            px, px + size.x,
-                            py, py + size.y,
+            result->createComponent<Image>( image, size.x, size.y );
+            result->createComponent<ImageButtonScript>(
+                            px - size.x / 2, px + size.x / 2,
+                            py - size.y / 2, py + size.y / 2,
                             callback
                     );
             return result;
