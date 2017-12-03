@@ -26,6 +26,8 @@ public:
 
     Text * text;
 
+    std::function<void()> onclk;
+
 
     void start() override {
 
@@ -102,6 +104,7 @@ public:
         text2->transform.translate(glm::vec3(40, 40, 0));
         text2->createComponent<FuckScript>(human);
 
+        auto text2Text = text2->getComponent<Text>();
 
         auto image1 = createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
@@ -109,6 +112,15 @@ public:
                 ), 20.0f, 20.0f);
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
+
+        onclk = [text2Text](){
+            text2Text->setText("WOW HERE");
+        };
+
+        auto button = set<ImageButton>(canvas, TextureManager::loadTexture2D(
+                Utility::RESOURCE_PREFIX + "Textures/brickwall.jpg"
+        ), glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
+
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");

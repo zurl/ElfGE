@@ -38,7 +38,7 @@ void AABBCollider::start() {
 
 void AABBCollider::update() {
     computeBox();
-    if( ! passive ){
+    if( !passive ){
         for(auto & x : allColliders ){
             if( x != this ){
                 bool isCollision = checkCollision(x);

@@ -36,12 +36,12 @@ void AnimatedModel::computeNodeTransform(double AnimationTime, const aiNode *pNo
     glm::mat4 GlobalTransformation = ParentTransform * NodeTransformation;
 
     if (bonesMap.find(NodeName) != bonesMap.end()) {
-        uint BoneIndex = bonesMap[NodeName];
+        unsigned int BoneIndex = bonesMap[NodeName];
         bonesInfo[BoneIndex].transform = globalInverseTransform * GlobalTransformation * bonesInfo[BoneIndex].offset;
         // * bonesInfo[BoneIndex].offset;
     }
 
-    for (uint i = 0 ; i < pNode->mNumChildren ; i++) {
+    for (unsigned int i = 0 ; i < pNode->mNumChildren ; i++) {
         computeNodeTransform(AnimationTime, pNode->mChildren[i], GlobalTransformation);
     }
 }
@@ -198,8 +198,8 @@ AnimatedModel::AnimatedModel(const std::string &path) {
 void AnimatedModel::processNode(aiNode *node, const aiScene *scene) {
     for(unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        for (uint j = 0 ; j < mesh->mNumBones ; j++) {
-            uint BoneIndex = 0;
+        for (unsigned int j = 0 ; j < mesh->mNumBones ; j++) {
+            unsigned int BoneIndex = 0;
             std::string BoneName(mesh->mBones[j]->mName.data);
             if (bonesMap.find(BoneName) == bonesMap.end()) {
                 BoneIndex = bonesCnt;
@@ -220,7 +220,7 @@ void AnimatedModel::processNode(aiNode *node, const aiScene *scene) {
 
 
 const aiNodeAnim *AnimatedModel::FindNodeAnim(const aiAnimation *pAnimation, const std::string NodeName) {
-    for (uint i = 0 ; i < pAnimation->mNumChannels ; i++) {
+    for (unsigned int i = 0 ; i < pAnimation->mNumChannels ; i++) {
         const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];
 
         if (std::string(pNodeAnim->mNodeName.data) == NodeName) {

@@ -16,11 +16,11 @@ AnimatedMesh::AnimatedMesh(aiMesh *mesh, const aiScene *scene, const std::string
 
 void AnimatedMesh::LoadBones(const aiMesh *pMesh, const std::map<std::string, unsigned int> & bonesMap) {
     bones.resize(vertices.size());
-    for (uint i = 0 ; i < pMesh->mNumBones ; i++) {
+    for (unsigned int i = 0 ; i < pMesh->mNumBones ; i++) {
         std::string BoneName(pMesh->mBones[i]->mName.data);
-        uint BoneIndex = bonesMap.find(BoneName)->second;
-        for (uint j = 0 ; j < pMesh->mBones[i]->mNumWeights ; j++) {
-            uint VertexID = pMesh->mBones[i]->mWeights[j].mVertexId;
+        unsigned int BoneIndex = bonesMap.find(BoneName)->second;
+        for (unsigned int j = 0 ; j < pMesh->mBones[i]->mNumWeights ; j++) {
+            unsigned int VertexID = pMesh->mBones[i]->mWeights[j].mVertexId;
             float weight = pMesh->mBones[i]->mWeights[j].mWeight;
             for(int k = 0; k < NUM_BONES_PER_VEREX + 1; k++){
                 assert( k != NUM_BONES_PER_VEREX);

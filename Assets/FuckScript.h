@@ -12,7 +12,10 @@ class FuckScript: public GameScript {
     int cnt = 0;
     Text * text;
     GameObject * human;
+    std::function<void()> cb;
 public:
+
+    void onClick();
 
     FuckScript(GameObject *human);
 

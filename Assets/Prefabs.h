@@ -5,6 +5,7 @@
 #ifndef ELFGE_PREFABS_H
 #define ELFGE_PREFABS_H
 
+#include <UI/Image.h>
 #include "GameEngine.h"
 #include "StandardAssets.h"
 
@@ -79,6 +80,57 @@ namespace Prefabs{
                             ShaderManager::getShader("light_with_directional_shadow")
                     );
             return terrain;
+        }
+    };
+
+
+
+    class ImageButton: public Prefab{
+
+        class ImageButtonScript: public Component {
+            double xl, xr, yl, yr;
+            std::function<void()> * callback;
+        public:
+            ImageButtonScript(double xl, double xr, double yl, double yr, std::function<void()> *callback) : xl(xl),
+                                                                                                             xr(xr),
+                                                                                                             yl(yl),
+                                                                                                             yr(yr),
+                                                                                                             callback(
+                                                                                                                     callback) {}
+            void start() override {
+                Input::attachOnMouseClick(xl, xr, yl, yr, 10, callback, nullptr);
+                Component::start();
+            }
+
+            void destroy() override {
+                Input::detachOnMouseClick(callback);
+                Component::destroy();
+            }
+        };
+        GameObject * canvas;
+        unsigned int image;
+        glm::vec2 size;
+        glm::vec3 position;
+        std::function<void()> * callback;
+
+    public:
+        ImageButton(GameObject *canvas, unsigned int image, const glm::vec2 &size, const glm::vec3 &position,
+                    std::function<void()> *callback) : canvas(canvas), image(image), size(size), position(position),
+                                                       callback(callback) {}
+
+        GameObject *instantiate(Scene *scene) override {
+            auto result = scene->createGameObject();
+            result->setParent(canvas);
+            result->transform.setPosition(position);
+            double px = result->transform.getPosition().x;
+            double py = result->transform.getPosition().y;
+            result->createComponent<Image>( image, size.x, size.y )
+                    ->createComponent<ImageButtonScript>(
+                            px, px + size.x,
+                            py, py + size.y,
+                            callback
+                    );
+            return result;
         }
     };
 

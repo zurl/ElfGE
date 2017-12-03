@@ -51,7 +51,56 @@ set(SOURCE_FILES
         StandardAssets/ShadowMapping/DirectionalShadowMappingManager.h
         StandardAssets/BoringHow/Terrain.cpp
         StandardAssets/BoringHow/Terrain.h
-        Assets/Prefabs.h GameEngine/Graphics/LightingManager.cpp GameEngine/Graphics/LightingManager.h GameEngine/Graphics/Components/Lighting.cpp GameEngine/Graphics/Components/Lighting.h StandardAssets/Lightings/PointLighting.cpp StandardAssets/Lightings/PointLighting.h StandardAssets/Lightings/DirectLighting.cpp StandardAssets/Lightings/DirectLighting.h StandardAssets/Materials/StandardMaterial.cpp StandardAssets/Materials/StandardMaterial.h StandardAssets/Cameras/DefaultCamera.cpp StandardAssets/Cameras/DefaultCamera.h StandardAssets/StandardAssets.h GameEngine/Graphics/TextureManager.cpp GameEngine/Graphics/TextureManager.h GameEngine/Graphics/Texture.h Assets/FuckScript.cpp Assets/FuckScript.h StandardAssets/Physics/Colliders/AABBCollider.cpp StandardAssets/Physics/Colliders/AABBCollider.h StandardAssets/Physics/Colliders/Collider.h StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h GameEngine/UI/Text.cpp GameEngine/UI/Text.h GameEngine/UI/Canvas.cpp GameEngine/UI/Canvas.h GameEngine/UI/Font/FontManager.cpp GameEngine/UI/Font/FontManager.h GameEngine/UI/Font/FontFace.cpp GameEngine/UI/Font/FontFace.h GameEngine/UI/UI.h GameEngine/Graphics/GraphicsRuntime.cpp GameEngine/Graphics/GraphicsRuntime.h GameEngine/Graphics/ShadowMappingManager.h GameEngine/Graphics/DebugUtility.cpp GameEngine/Graphics/DebugUtility.h StandardAssets/ShadowMapping/OmnidirectionalShadowMappingManager.cpp StandardAssets/ShadowMapping/OmnidirectionalShadowMappingManager.h GameEngine/UI/Image.cpp GameEngine/UI/Image.h Assets/Prefabs.cpp GameEngine/Core/Prefab.h StandardAssets/BoringHow/SkyBox.cpp StandardAssets/BoringHow/SkyBox.h StandardAssets/Models/AnimatedModel.cpp StandardAssets/Models/AnimatedModel.h StandardAssets/Meshs/AnimatedMesh.cpp StandardAssets/Meshs/AnimatedMesh.h)
+        Assets/Prefabs.h
+        GameEngine/Graphics/LightingManager.cpp
+        GameEngine/Graphics/LightingManager.h
+        GameEngine/Graphics/Components/Lighting.cpp
+        GameEngine/Graphics/Components/Lighting.h
+        StandardAssets/Lightings/PointLighting.cpp
+        StandardAssets/Lightings/PointLighting.h
+        StandardAssets/Lightings/DirectLighting.cpp
+        StandardAssets/Lightings/DirectLighting.h
+        StandardAssets/Materials/StandardMaterial.cpp
+        StandardAssets/Materials/StandardMaterial.h
+        StandardAssets/Cameras/DefaultCamera.cpp
+        StandardAssets/Cameras/DefaultCamera.h
+        StandardAssets/StandardAssets.h
+        GameEngine/Graphics/TextureManager.cpp
+        GameEngine/Graphics/TextureManager.h
+        GameEngine/Graphics/Texture.h
+        Assets/FuckScript.cpp
+        Assets/FuckScript.h
+        StandardAssets/Physics/Colliders/AABBCollider.cpp
+        StandardAssets/Physics/Colliders/AABBCollider.h
+        StandardAssets/Physics/Colliders/Collider.h
+        StandardAssets/Physics/RigidBody.cpp
+        StandardAssets/Physics/RigidBody.h
+        GameEngine/UI/Text.cpp
+        GameEngine/UI/Text.h
+        GameEngine/UI/Canvas.cpp
+        GameEngine/UI/Canvas.h
+        GameEngine/UI/Font/FontManager.cpp
+        GameEngine/UI/Font/FontManager.h
+        GameEngine/UI/Font/FontFace.cpp
+        GameEngine/UI/Font/FontFace.h
+        GameEngine/UI/UI.h
+        GameEngine/Graphics/GraphicsRuntime.cpp
+        GameEngine/Graphics/GraphicsRuntime.h
+        GameEngine/Graphics/ShadowMappingManager.h
+        GameEngine/Graphics/DebugUtility.cpp
+        GameEngine/Graphics/DebugUtility.h
+        StandardAssets/ShadowMapping/OmnidirectionalShadowMappingManager.cpp
+        StandardAssets/ShadowMapping/OmnidirectionalShadowMappingManager.h
+        GameEngine/UI/Image.cpp
+        GameEngine/UI/Image.h
+        Assets/Prefabs.cpp
+        GameEngine/Core/Prefab.h
+        StandardAssets/BoringHow/SkyBox.cpp
+        StandardAssets/BoringHow/SkyBox.h
+        StandardAssets/Models/AnimatedModel.cpp
+        StandardAssets/Models/AnimatedModel.h
+        StandardAssets/Meshs/AnimatedMesh.cpp
+        StandardAssets/Meshs/AnimatedMesh.h)
 
 include_directories("./Dependency")
 include_directories("./GameEngine")
