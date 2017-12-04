@@ -60,6 +60,35 @@ namespace Prefabs{
         }
     };
 
+    class Plane: public Prefab{
+        glm::vec3 position;
+    public:
+        Plane(const glm::vec3 &position) : position(position) {}
+        GameObject * instantiate(Scene *scene) override {
+
+            auto result = scene->createGameObject()
+//                    ->createComponent<DefaultModel>(new PlaneMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
+                    ->createComponent<DefaultModel>(new PlaneMesh("", "", ""))
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_with_directional_shadow"));
+            result->transform.setPosition(position);
+            return result;
+        }
+    };
+    class Water: public Prefab{
+        glm::vec3 position;
+    public:
+        Water(const glm::vec3 &position) : position(position) {}
+        GameObject * instantiate(Scene *scene) override {
+            auto result = scene->createGameObject()
+//                    ->createComponent<DefaultModel>(new PlaneMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
+                    ->createComponent<WaterModel>("water")
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_with_directional_shadow"));
+            result->transform.setPosition(position);
+            return result;
+        }
+    };
     class Camera: public Prefab{
     public:
         GameObject * instantiate(Scene *scene) override {

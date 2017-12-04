@@ -42,41 +42,42 @@ public:
         light->transform.translate(-light->transform.getForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
+//        auto terrain = set<DemoTerrain>();
 
-        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
-//        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
-//        auto l2p = light2->getComponent<PointLighting>();
-//        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
-
-
+//        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
+        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
+        auto l2p = light2->getComponent<PointLighting>();
+        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
 
 
-        human = createGameObject()
+
+
+//        human = createGameObject()
 //                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
-->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
-                ->createComponent<Renderer>(
-                        &material,
-                        ShaderManager::getShader("light_with_directional_shadow_anim")
-                );
+//->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
+//                ->createComponent<Renderer>(
+//                        &material,
+//                        ShaderManager::getShader("light_with_directional_shadow_anim")
+//                );
+//
+//        auto humanModel = human->getComponent<AnimatedModel>();
 
-        auto humanModel = human->getComponent<AnimatedModel>();
+//        humanModel->registerAnimation("RUN", 500, 600);
+//        humanModel->playAnimation("RUN");
 
-        humanModel->registerAnimation("RUN", 500, 600);
-        humanModel->playAnimation("RUN");
-
-       human->transform.setScale(glm::vec3(0.01f));
-        human->transform.translate(glm::vec3(3,1,0));
+//       human->transform.setScale(glm::vec3(0.01f));
+//        human->transform.translate(glm::vec3(3,1,0));
 
 
 
-        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
-        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
+//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
+//        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
 //        auto plane = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-//        plane->transform.setScale(glm::vec3(55.0f, 0.05f, 55.0f));
+        auto plane = set<Water>(glm::vec3(0.0f, 0.0f, 0.0f));
+        plane->transform.setScale(glm::vec3(55.0f, 55.0f, 55.0f));
 
         auto arialFont = FontManager::loadFont("Arial");
 
@@ -84,14 +85,14 @@ public:
 
         camera->transform.setPosition(glm::vec3(-2, 2, 0));
 
-        cube4 = set<Cube>(glm::vec3(1,1,7));
-        cube5 = set<Cube>(glm::vec3(1,1,10));
+//        cube4 = set<Cube>(glm::vec3(1,1,7));
+//        cube5 = set<Cube>(glm::vec3(1,1,10));
 
 
         auto canvas = createGameObject()->createComponent<Canvas>();
-
+//
         auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
-
+//
         text1->setParent(canvas);
         text1->transform.translate(glm::vec3(20, 20, 0));
         text  = text1->getComponent<Text>();
