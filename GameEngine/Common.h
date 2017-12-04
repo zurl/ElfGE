@@ -27,6 +27,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 

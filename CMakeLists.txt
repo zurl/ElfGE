@@ -56,6 +56,8 @@ include_directories("./GameEngine")
 include_directories("./StandardAssets")
 
 IF (WIN32)
+	find_package (OpenGL REQUIRED)
+	link_libraries (glew32s.lib glfw3.dll  assimp freetype ${OPENGL_LIBRARIES} )
     MESSAGE(STATUS "Now is windows")
 ELSEIF (APPLE)
     include_directories("/usr/local/Cellar/freetype/2.7.1/include/freetype2")
