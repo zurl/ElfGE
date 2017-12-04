@@ -29,7 +29,6 @@ void Image::updateGraphics(RenderLayer renderLayer) {
     if( renderLayer == RenderLayer::SCREEN){
         UIShader->setMat4("model", getGameObject()->getModelMatrix());
         UIShader->setVec3("color", glm::vec3(1.0f));
-        //ff->renderText("shit")
         UIShader->setInt("text", 0);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
@@ -43,10 +42,18 @@ void Image::updateGraphics(RenderLayer renderLayer) {
     }
 }
 
-Image::Image(unsigned int texture, float width, float height) :
-        texture(texture), width(width), height(height) {
+Image::Image(unsigned int texture, float width, float height, bool isCenter) :
+        texture(texture), width(width), height(height), isCenter(isCenter) {
     for(int i = 0; i < 6; i++){
-        vertices[i][0] *= width;
-        vertices[i][1] *= height;
+        if(!isCenter){
+            vertices[i][0] *= width;
+            vertices[i][1] *= height;
+            if(vertices[i][0] < 0) vertices[i][0] = 0;
+            if(vertices[i][1] < 0) vertices[i][1] = 0;
+        }
+        else{
+            vertices[i][0] *= width / 2;
+            vertices[i][1] *= height / 2;
+        }
     }
 }

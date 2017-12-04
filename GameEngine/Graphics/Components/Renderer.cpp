@@ -15,8 +15,9 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
         throw Exception("No Camera");
     }
     if( useShadow && renderLayer == RenderLayer::WORLD_SHADOW){
-        shader->setMat4("model", getGameObject()->getModelMatrix());
-        model->render(shader, renderLayer);
+        Shader * shadowShader = Runtime::getScene()->getShadowMappingManager()->getShader();
+        shadowShader->setMat4("model", getGameObject()->getModelMatrix());
+        model->render(shadowShader, renderLayer);
     }
     if( renderLayer == RenderLayer::WORLD ){
         if(!ShaderManager::useShader(shader)){

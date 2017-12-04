@@ -3,24 +3,39 @@
 //
 
 #include "FuckScript.h"
-#include "Prefabs.h"
-
+#include "StandardAssets.h"
 
 
 void FuckScript::start() {
-
+    text = getGameObject()->getComponent<Text>();
 }
 
 void FuckScript::update() {
     if( cnt != 0){
         cnt --;
+        if(cnt == 0){
+            text->setText("");
+        }
         return;
     }
-    if( glfwGetKey(Utility::window, GLFW_KEY_Q) == GLFW_PRESS){
-        cnt = 50;
-        auto a = instantiate<Prefabs::Cube>(getGameObject()->transform.getPosition());
-        a->transform.setScale(glm::vec3(0.2));
-        auto r = a->getComponent<RigidBody>();
-        r->velocity = (getGameObject()->transform.getForward() * 0.15f);
+    cb = std::bind(&FuckScript::onClick, this);
+    Input::attachOnMouseClick(0, Utility::SCREEN_WIDTH, 0, Utility::SCREEN_WIDTH, 0, &cb, nullptr);
+}
+
+FuckScript::FuckScript(GameObject *human) : human(human) {}
+
+void FuckScript::onClick() {
+    AABBCollider * collider = AABBCollider::raycast(
+            Runtime::getCamera()->getGameObject()->transform.getPosition(),
+            Runtime::getCamera()->getGameObject()->transform.getForward(),
+            100000.0f
+    );
+    if( collider == nullptr){
+        text->setText("NO");
     }
+    else{
+        text->setText("YES");
+        //collider->getGameObject()->transform.translate(Transform::up);
+    }
+    cnt = 5;
 }

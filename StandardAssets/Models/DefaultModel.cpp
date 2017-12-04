@@ -29,7 +29,7 @@ void DefaultModel::processNode(aiNode *node, const aiScene *scene) {
 
 DefaultModel::DefaultModel(const std::string &path) {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
@@ -42,3 +42,5 @@ DefaultModel::DefaultModel(const std::string &path) {
 DefaultModel::DefaultModel(DefaultMesh *mesh) {
     meshes.emplace_back(mesh);
 }
+
+DefaultModel::DefaultModel() {}

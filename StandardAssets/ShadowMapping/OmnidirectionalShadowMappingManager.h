@@ -22,6 +22,8 @@ public:
     void computeMapping() override;
 
     void applyMapping(Shader *shader) override;
+
+    Shader *getShader() override;
 };
 
 

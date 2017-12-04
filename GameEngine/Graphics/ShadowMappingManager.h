@@ -16,6 +16,8 @@ public:
 
     virtual void applyMapping(Shader * shader) = 0;
 
+    virtual Shader * getShader() = 0;
+
     virtual ~ShadowMappingManager(){}
 };
 

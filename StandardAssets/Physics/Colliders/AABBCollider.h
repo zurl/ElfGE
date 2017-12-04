@@ -42,6 +42,8 @@ public:
 
     void destroy() override;
 
+    static AABBCollider * raycast(glm::vec3 origin, glm::vec3 direction, float distance);
+
 };
 
 

@@ -23,6 +23,7 @@ void Runtime::start() {
         double currentFrame = glfwGetTime();
         Utility::deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        Input::processClick();
 
         getScene()->update();
 

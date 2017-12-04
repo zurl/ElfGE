@@ -12,7 +12,7 @@
 class CubeMesh: public DefaultMesh {
 public:
     CubeMesh();
-    CubeMesh(const std::string specularName, const std::string diffuseName);
+    CubeMesh(const std::string specularName, const std::string diffuseName, const std::string normalName = "");
 };
 
 
