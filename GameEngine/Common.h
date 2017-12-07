@@ -27,14 +27,23 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
+
+#ifdef __linux
+
 #include "glad.h"
+
+#else
+#include <GL/glew.h>
+#endif
+
 #include <GLFW/glfw3.h>
 
 #include "Exception.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-enum class RenderLayer{
+enum class RenderLayer
+{
     WORLD_SHADOW,
     WORLD,
     SCREEN

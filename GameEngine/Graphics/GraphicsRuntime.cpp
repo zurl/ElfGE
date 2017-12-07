@@ -2,7 +2,9 @@
 // Created by 张程易 on 17/11/2017.
 //
 
+#ifdef _linux
 #include <glad.h>
+#endif
 #include "GraphicsRuntime.h"
 
 #include "DebugUtility.h"
