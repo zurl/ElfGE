@@ -8,5 +8,5 @@ in vec2 TexCoords;
 out vec4 FragColor;         // 物体最终颜色
 
 void main(){
-    FragColor = vec4(Normal, 0) * 0.5 + 0.5;
+    FragColor =  vec4(1,0,0,1);
 }

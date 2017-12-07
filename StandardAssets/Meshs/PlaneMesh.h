@@ -11,6 +11,6 @@
 class PlaneMesh: public DefaultMesh {
 public:
     PlaneMesh();
-    PlaneMesh(const std::string specularName, const std::string diffuseName, const std::string normalName = "");
+    PlaneMesh(const std::string &specularName, const std::string &diffuseName, const std::string &normalName = "");
 };
 #endif //ELFGE_PLANEMESH_H

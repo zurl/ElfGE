@@ -1,3 +1,5 @@
+#version 330 core
+out vec4 FragColor;
     uniform sampler2D texture;
     uniform vec3 oldCenter;
     uniform vec3 newCenter;
@@ -15,7 +17,7 @@
     
     void main() {
       /* get vertex info */
-      vec4 info = texture2D(texture, coord);
+      vec4 info = texture(texture, coord);
       
       /* add the old volume */
       info.r += volumeInSphere(oldCenter);
@@ -23,5 +25,5 @@
       /* subtract the new volume */
       info.r -= volumeInSphere(newCenter);
       
-      gl_FragColor = info;
+      FragColor = info;
     }
