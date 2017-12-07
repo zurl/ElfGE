@@ -11,7 +11,7 @@
 class Exception {
     std::string info;
 public:
-    Exception(const std::string &info);
+    explicit Exception(const std::string &info);
 
     const std::string &getInfo() const;
 };

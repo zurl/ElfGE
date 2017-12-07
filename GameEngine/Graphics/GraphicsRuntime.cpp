@@ -2,6 +2,9 @@
 // Created by 张程易 on 17/11/2017.
 //
 
+#ifdef _linux
+#include <glad.h>
+#endif
 #include "GraphicsRuntime.h"
 
 #include "DebugUtility.h"
@@ -30,11 +33,19 @@ void GraphicsRuntime::initialize() {
         exit(1);
     }
     glfwMakeContextCurrent(Utility::window);
+#ifndef __linux
     GLenum err = glewInit();
     if(err != GLEW_OK) {
         std::cout << "glewInit failed: " << glewGetErrorString(err) << std::endl;
         exit(1);
     }
+#else
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "init glad failed." << std::endl;
+        exit(1);
+    }
+#endif
     glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
     glfwSetFramebufferSizeCallback(Utility::window, framebuffer_size_callback);
     glEnable(GL_BLEND);
