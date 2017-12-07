@@ -100,13 +100,15 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h)
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/WRC/Sphere.h StandardAssets/Meshs/SphereMesh.cpp StandardAssets/Meshs/SphereMesh.h StandardAssets/WRC/RTTexture.h StandardAssets/WRC/RTTexture.cpp StandardAssets/Models/WaterModel.cpp StandardAssets/Models/WaterModel.h StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
 
 include_directories("./Dependency")
 include_directories("./GameEngine")
 include_directories("./StandardAssets")
 
 IF (WIN32)
+	find_package (OpenGL REQUIRED)
+	link_libraries (glew32s.lib glfw3.dll  assimp freetype ${OPENGL_LIBRARIES} )
     MESSAGE(STATUS "Now is windows")
 ELSEIF (APPLE)
     include_directories("/usr/local/Cellar/freetype/2.7.1/include/freetype2")
