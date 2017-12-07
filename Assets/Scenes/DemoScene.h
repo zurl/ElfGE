@@ -66,7 +66,7 @@ public:
         humanModel->registerAnimation("RUN", 500, 600);
         humanModel->playAnimation("RUN");
 
-       human->transform.setScale(glm::vec3(0.01f));
+        human->transform.setScale(glm::vec3(0.01f));
         human->transform.translate(glm::vec3(3,1,0));
 
 
@@ -152,7 +152,10 @@ public:
         x++;
         if(x > 360000) x= 0;
 
-        //human->transform.rotate(Transform::right, 0.5);
+//        human->transform.setRotation(
+//                glm::vec3(human->transform.getRotation().x,
+//                          human->transform.getRotation().y +0.1f,
+//                          human->transform.getRotation().z));
 
 //        if(cube1->transform.getPosition().z > 5){
 //            dir = -0.01f;
