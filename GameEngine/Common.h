@@ -27,7 +27,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include <GL/glew.h>
+#include "glad.h"
 #include <GLFW/glfw3.h>
 
 #include "Exception.h"
