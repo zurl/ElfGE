@@ -87,11 +87,11 @@ namespace Prefabs{
             std::uniform_real_distribution<float> uni(0,1.0); // guaranteed unbiased
             auto result = scene->createGameObject()
 //                    ->createComponent<DefaultModel>(new PlaneMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
-                    ->createComponent<WaterModel>("Textures/water/");
+                    ->createComponent<WaterRenderer>();
 //            for(int i=0;i<10;i++){
 //                result->getComponent<WaterModel>()->addDrop(uni(rng),uni(rng),0.03,0.01);
 //            }
-            result->transform.setPosition(position);
+//            result->transform.setPosition(position);
             return result;
         }
     };

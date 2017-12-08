@@ -1,18 +1,28 @@
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec2 aTexCoords;
-layout (location = 3) in vec3 aTangent;
-layout (location = 4) in vec3 aBitangent;
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-      uniform sampler2D water;
+#version 400 core
 
-      out vec3 position;
-      void main() {
-        vec4 info = texture(water, aPos.xy * 0.5 + 0.5);
-        position = aPos.xzy;
-        position.y += info.r;
-        gl_Position =  projection* view*model * vec4(position, 1.0);
-      }
+layout (location = 0) in vec3 position;
+
+//out vec2 textureCoords;
+out vec4 clipSpace;
+out vec2 textureCoords;
+out vec3 toCameraVector;
+out vec3 fromLightVector;
+
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
+uniform vec3 cameraPosition;
+uniform vec3 lightPosition;
+
+
+const float tiling = 6.0;
+
+void main(void) {
+    vec4 worldPositon = model * vec4(position.xzy,1.0);
+	gl_Position = projection * view * worldPositon;
+	clipSpace = gl_Position;
+	textureCoords = vec2(position.x/2.0 + 0.5, position.y/2.0 + 0.5) * tiling;
+	toCameraVector = cameraPosition.xyz - worldPositon.xyz;
+	fromLightVector = worldPositon.xyz - fromLightVector;
+
+}

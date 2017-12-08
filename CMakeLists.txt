@@ -100,7 +100,7 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/WRC/Sphere.h StandardAssets/Meshs/SphereMesh.cpp StandardAssets/Meshs/SphereMesh.h StandardAssets/WRC/RTTexture.h StandardAssets/WRC/RTTexture.cpp StandardAssets/Models/WaterModel.cpp StandardAssets/Models/WaterModel.h StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
+        StandardAssets/Meshs/AnimatedMesh.h   StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp StandardAssets/Water/WaterTile.h StandardAssets/Water/WaterRenderer.h StandardAssets/Water/WaterFrameBuffer.h)
 
 include_directories("./Dependency")
 include_directories("./GameEngine")
