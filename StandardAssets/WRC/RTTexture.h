@@ -68,8 +68,7 @@ public:
         glEnable(GL_DEPTH_TEST);
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glViewport(v[0],v[1],v[2],v[3]);
+        glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
         dumpGLErrorLog(__LINE__);
     }
 

@@ -26,18 +26,16 @@ void WaterModel::updateGraphics(RenderLayer r){
     if(r != RenderLayer::WORLD) return;
 
 
-    testS->use();
-    testS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
-    testS->setMat4("view", Runtime::getCamera()->getViewMatrix());
-    testS->setMat4("model", getGameObject()->getModelMatrix());
-    testS->setInt("texture",0);
-    textureA->bind();
-    wplane->render(testS,RenderLayer::WORLD);
+//    testS->use();
+//    testS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
+//    testS->setMat4("view", Runtime::getCamera()->getViewMatrix());
+//    testS->setMat4("model", getGameObject()->getModelMatrix());
+//    testS->setInt("texture",0);
+//    textureA->bind();
+//    wplane->render(testS,RenderLayer::WORLD);
     glm::vec4 eye;
     eye = glm::inverse(Runtime::getCamera()->getViewMatrix())*glm::vec4(0,1,0,1);
     waterS->use();
-//    updateS->use();
-//    waterS->setVec3("light",glm::vec3(eye));
     waterS->setVec3("light",glm::vec3(0,1,0));
     waterS->setInt("water",0);
     waterS->setInt("tiles",1);
@@ -48,21 +46,22 @@ void WaterModel::updateGraphics(RenderLayer r){
     waterS->setVec3("sphereCenter",0.5,0.5,0.5);
     waterS->setFloat("sphereRadius",0);
 
-    glActiveTexture(GL_TEXTURE0 + 0);
-    glBindTexture(GL_TEXTURE_2D, textureA->id);
-    glActiveTexture(GL_TEXTURE0 + 1);
-    glBindTexture(GL_TEXTURE_2D, tileTexture);
-    glActiveTexture(GL_TEXTURE0 + 2);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, skyTexture);
-    glActiveTexture(GL_TEXTURE0 + 3);
-    glBindTexture(GL_TEXTURE_2D, causticTex->id);
+//    glActiveTexture(GL_TEXTURE0 + 0);
+//    glBindTexture(GL_TEXTURE_2D, textureA->id);
+//    glActiveTexture(GL_TEXTURE0 + 1);
+//    glBindTexture(GL_TEXTURE_2D, tileTexture);
+//    glActiveTexture(GL_TEXTURE0 + 2);
+//    glBindTexture(GL_TEXTURE_CUBE_MAP, skyTexture);
+//    glActiveTexture(GL_TEXTURE0 + 3);
+//    glBindTexture(GL_TEXTURE_2D, causticTex->id);
 
     waterS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
     waterS->setMat4("view", Runtime::getCamera()->getViewMatrix());
     waterS->setMat4("model", getGameObject()->getModelMatrix());
-    glEnable(GL_CULL_FACE);
-    wplane->render(waterS,RenderLayer::WORLD);
-    glDisable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
+    wplane->render(waterS, RenderLayer::WORLD);
+    //wplane->render(waterS, RenderLayer::WORLD);
+    //glDisable(GL_CULL_FACE);
 }
 
 
