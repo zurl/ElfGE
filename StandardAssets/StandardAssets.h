@@ -15,12 +15,11 @@
 #include "Meshs/DefaultMesh.h"
 #include "Models/DefaultModel.h"
 #include "Models/AnimatedModel.h"
-#include "Models/WaterModel.h"
 #include "Physics/Colliders/AABBCollider.h"
 #include "Physics/RigidBody.h"
 #include "ShadowMapping/DirectionalShadowMappingManager.h"
 #include "ShadowMapping/OmnidirectionalShadowMappingManager.h"
 #include "BoringHow/Terrain.h"
 #include "BoringHow/SkyBox.h"
-#include "WRC/RTTexture.h"
+#include "Water/WaterRenderer.h"
 #endif //ELFGE_STANDARDASSETS_H
