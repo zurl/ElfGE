@@ -27,9 +27,15 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
+
+
+#ifdef _linux
+#include <glad.h>
+#else
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#endif
 
 #include "Exception.h"
 #include <ft2build.h>
