@@ -79,7 +79,7 @@ public:
         auto arialFont = FontManager::loadFont("Arial");
         auto water = createGameObject()
                 ->createComponent<WaterRenderer>();
-        water->transform.setScale(glm::vec3(1,1,1));
+        water->transform.setPosition(glm::vec3(0,0,0));
 
         auto camera = set<Prefabs::Camera>();
 
