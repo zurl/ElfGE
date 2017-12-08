@@ -12,7 +12,7 @@ Shader::Shader(const std::string &vertexShaderPath,
             (Utility::RESOURCE_PREFIX + "Shaders/" + vertexShaderPath + ".vert").c_str()
     );
     const char * fragmentShaderSource = Utility::getTextFromFile(
-            (Utility::RESOURCE_PREFIX + "Shaders/" + vertexShaderPath + ".frag").c_str()
+            (Utility::RESOURCE_PREFIX + "Shaders/" + fragmentShaderPath + ".frag").c_str()
     );
     if( vertexShaderSource == nullptr || fragmentShaderSource == nullptr){
         throw Exception("Illegal Shader Position");
@@ -37,7 +37,7 @@ Shader::Shader(const std::string &vertexShaderPath,
     if(!success) {
         glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::FRAG::COMPILATION_FAILED\n" << infoLog << std::endl;
-        std::cout << "AT:" << vertexShaderPath << std::endl;
+        std::cout << "AT:" << fragmentShaderPath << std::endl;
     }
     shaderID = glCreateProgram();
     glAttachShader(shaderID, vertexShader);

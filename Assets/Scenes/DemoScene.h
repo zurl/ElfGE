@@ -31,6 +31,9 @@ public:
 
     void start() override {
 
+        ShaderManager::loadShader("fuck", "light", "exp/water");
+        Shader * fuck = ShaderManager::getShader("fuck");
+
         //light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
         //light->transform.translate(-light->transform.getUp() * 3.0f);
         //light->transform.translate(-light->transform.getForward() * 5.0f);
@@ -75,7 +78,7 @@ public:
 //        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
 //        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
-        auto plane = set<Water>(glm::vec3(0.0f, 0.0f, 0.0));
+        //auto plane = set<Water>(glm::vec3(0.0f, 0.0f, 0.0));
 //        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
 
