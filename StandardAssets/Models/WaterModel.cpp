@@ -24,17 +24,15 @@ void WaterModel::stepSimulation() {
 
 void WaterModel::updateGraphics(RenderLayer r){
     if(r != RenderLayer::WORLD) return;
-    addDrop(0.5,0.5,0.03,0.01);
-    stepSimulation();
-    updateNormals();
+
+
     testS->use();
     testS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
     testS->setMat4("view", Runtime::getCamera()->getViewMatrix());
     testS->setMat4("model", getGameObject()->getModelMatrix());
     testS->setInt("texture",0);
     textureA->bind();
-//    wplane->render(testS,RenderLayer::WORLD);
-//    stepSimulation();
+    wplane->render(testS,RenderLayer::WORLD);
     glm::vec4 eye;
     eye = glm::inverse(Runtime::getCamera()->getViewMatrix())*glm::vec4(0,1,0,1);
     waterS->use();
@@ -62,9 +60,9 @@ void WaterModel::updateGraphics(RenderLayer r){
     waterS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
     waterS->setMat4("view", Runtime::getCamera()->getViewMatrix());
     waterS->setMat4("model", getGameObject()->getModelMatrix());
-//    glEnable(GL_CULL_FACE);
-//    wplane->render(waterS,RenderLayer::WORLD);
-//    glDisable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
+    wplane->render(waterS,RenderLayer::WORLD);
+    glDisable(GL_CULL_FACE);
 }
 
 
@@ -74,12 +72,9 @@ void WaterModel::start() {
 }
 
 void WaterModel::addDrop(float x, float y, float radius, float strength) {
-    dropS->use();
+
     std::vector<GLuint>  v = textureB->drawToPrepare();
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
-        std::cout<<"Failed to bind fram buffer\n";
-        v = textureB->drawToPrepare();
-    }
+    dropS->use();
     dropS->setVec2("center",x,y);
     dropS->setFloat("radius",radius);
     dropS->setFloat("strength",strength);
