@@ -50,9 +50,9 @@ namespace Prefabs{
         GameObject * instantiate(Scene *scene) override {
 
             auto result = scene->createGameObject()
-                    ->createComponent<DefaultModel>(new CubeMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
+                    ->createComponent<DefaultModel>(new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(
-                            &material, ShaderManager::getShader("light_with_directional_shadow"))
+                            &material, ShaderManager::getShader("light_ds_pm"))
                     ->createComponent<AABBCollider>(false)
                     ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
 

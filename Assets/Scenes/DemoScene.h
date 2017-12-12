@@ -31,15 +31,6 @@ public:
 
     void start() override {
 
-        ShaderManager::loadShader("fuck", "light", "exp/water");
-        Shader * fuck = ShaderManager::getShader("fuck");
-
-        //light = Prefabs::dirLight(this, glm::vec3(0, 0, 60));
-        //light->transform.translate(-light->transform.getUp() * 3.0f);
-        //light->transform.translate(-light->transform.getForward() * 5.0f);
-        //setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
-        //getShadowMappingManager()->initialize();
-
         light = set<DirLight>(glm::vec3(0, 0, 60));
         light->transform.translate(-light->transform.getUp() * 5.0f);
         light->transform.translate(-light->transform.getForward() * 5.0f);
@@ -126,7 +117,7 @@ public:
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");
-      
+
         Scene::start();
     }
 

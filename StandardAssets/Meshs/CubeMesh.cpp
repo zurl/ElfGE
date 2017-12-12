@@ -71,11 +71,12 @@ CubeMesh::CubeMesh(){
     bindVertice();
 }
 
-CubeMesh::CubeMesh(const std::string specularName,
-                   const std::string diffuseName,
-                   const std::string normalName
+CubeMesh::CubeMesh(const std::string & specularName,
+                   const std::string & diffuseName,
+                   const std::string & normalName,
+                   const std::string & parallaxName
 ) :CubeMesh(){
-    Texture specular, diffuse, normal;
+    Texture specular, diffuse, normal, parallax;
     diffuse.id = TextureManager::loadTexture2D(
             Utility::RESOURCE_PREFIX + "Textures/" + diffuseName
     );
@@ -92,5 +93,12 @@ CubeMesh::CubeMesh(const std::string specularName,
         );
         normal.type = "normal";
         textures.emplace_back(normal);
+    }
+    if( parallaxName != ""){
+        parallax.id = TextureManager::loadTexture2D(
+                Utility::RESOURCE_PREFIX + "Textures/" + parallaxName
+        );
+        parallax.type = "parallax";
+        textures.emplace_back(parallax);
     }
 }
