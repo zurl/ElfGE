@@ -126,8 +126,8 @@ public:
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");
-//        auto water = createGameObject()
-//                ->createComponent<WaterModel>("Textures/water/");
+        auto water = createGameObject()
+                ->createComponent<WaterModel>("Textures/water/");
 
         Scene::start();
     }

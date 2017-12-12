@@ -27,36 +27,34 @@ public:
     unsigned int id,width,height;
     RTTexture(unsigned int width, unsigned height):width(width),height(height){
 
-        glGenTextures(1, &id);
-
-        // "Bind" the newly created texture : all future texture functions will modify this texture
-        glBindTexture(GL_TEXTURE_2D, id);
-
-
-        // Poor filtering
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-        // Give an empty image to OpenGL ( the last "0" means "empty" )
-        glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA16, width, height, 0,GL_RGB,GL_FLOAT, 0);
         glGenFramebuffers(1, &FramebufferName);
-        glGenRenderbuffers(1, &RenderbufferName);
+        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+        // create a color attachment texture
+
+        glGenTextures(1, &id);
+        glBindTexture(GL_TEXTURE_2D, id);
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+        GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0);
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
         dumpGLErrorLog(__LINE__);
     }
     std::vector<GLuint>  drawToPrepare(){
-        dumpGLErrorLog(__LINE__);
         GLint v[4];
         glGetIntegerv(GL_VIEWPORT,v);
         glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
-        glBindRenderbuffer(GL_RENDERBUFFER, RenderbufferName);
-
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
-//        dumpGLErrorLog(__LINE__);
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, id, 0);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RenderbufferName);
-
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //        dumpGLErrorLog(__LINE__);
         GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
         glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
@@ -66,13 +64,11 @@ public:
         return vv;
     }
     void drawToAfter(const std::vector<GLuint> & v){
-        dumpGLErrorLog(__LINE__);
-        glViewport(0,0,width,height);
-        dumpGLErrorLog(__LINE__);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        dumpGLErrorLog(__LINE__);
-        glBindRenderbuffer(GL_RENDERBUFFER, 0);
-        glViewport(v[0],v[1],v[2],v[3]);
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
         dumpGLErrorLog(__LINE__);
     }
 
