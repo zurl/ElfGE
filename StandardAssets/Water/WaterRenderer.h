@@ -31,7 +31,7 @@ public:
         shader = ShaderManager::getShader("water/water");
         quad = new PlaneMesh();
         water = new WaterTile(0,0,0);
-        skybox = new SkyBox("Textures/skybox/");
+        skybox = new SkyBox("Textures/water/ame_darkgloom/","tga");
         skybox->start();
         fbo = new WaterFrameBuffer();
         dudv = TextureManager::loadTexture2D(

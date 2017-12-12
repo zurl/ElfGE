@@ -13,7 +13,7 @@ uniform sampler2D dudvMap;
 uniform sampler2D normalMap;
 //uniform vec3 lightColor;
 
-const float waveStrength = 0.20;
+const float waveStrength = 0.020;
 const vec3 lightColour = vec3(0.5,0.5,0.5);
 uniform float moveFactor;
 const float shineDamper = 5.0;
@@ -41,7 +41,8 @@ void main(void) {
 
     vec3 viewVector = normalize(toCameraVector);
     float refractiveFactor = dot(viewVector,vec3(0.0,1.0,0.0));
-    refractiveFactor = pow(refractiveFactor,2);
+    refractiveFactor = pow(refractiveFactor,0.5);
+//    refractiveFactor = 0.9;
 
     vec4 normalMapColour = texture(normalMap, distortedTexCoords);
     vec3 normal = vec3(normalMapColour.r*2.0 - 1.0, normalMapColour.b, normalMapColour.g*2.0-1.0);

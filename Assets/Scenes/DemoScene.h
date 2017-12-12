@@ -80,7 +80,7 @@ public:
         auto water = createGameObject()
                 ->createComponent<WaterRenderer>();
         water->transform.setPosition(glm::vec3(0,0,0));
-
+        water->transform.rotate(Transform::right, glm::pi<float>());
         auto camera = set<Prefabs::Camera>();
 
         camera->transform.setPosition(glm::vec3(-2, 2, 0));
@@ -123,8 +123,8 @@ public:
         ), glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
 
 
-        auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/");
+//        auto skybox = createGameObject()
+//                ->createComponent<SkyBox>("Textures/water/ame_darkgloom/");
 
         Scene::start();
     }
