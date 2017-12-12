@@ -62,9 +62,7 @@ void WaterModel::updateGraphics(RenderLayer r){
     waterS->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
     waterS->setMat4("view", Runtime::getCamera()->getViewMatrix());
     waterS->setMat4("model", getGameObject()->getModelMatrix());
-//    glEnable(GL_CULL_FACE);
-//    wplane->render(waterS,RenderLayer::WORLD);
-//    glDisable(GL_CULL_FACE);
+
 }
 
 

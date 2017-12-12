@@ -39,3 +39,6 @@ void FuckScript::onClick() {
     }
     cnt = 5;
 }
+
+
+

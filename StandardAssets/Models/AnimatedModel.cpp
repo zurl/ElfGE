@@ -148,7 +148,7 @@ void AnimatedModel::CalcInterpolatedScaling(aiVector3D &Out, double AnimationTim
 
 void AnimatedModel::update() {
     glm::mat4 transform(1.0f);
-    animation_now += Utility::deltaTime / 10.0f;
+    animation_now += Utility::deltaTime ;
     if(animation_now > currentAnimation.end) animation_now = currentAnimation.start;
     computeNodeTransform(animation_now, scene->mRootNode, transform);
 }

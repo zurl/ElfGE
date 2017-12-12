@@ -18,7 +18,6 @@ struct DirLight {
     vec3 diffuse;
     vec3 specular;
 };
-
 struct PointLight {
     vec3 position;
     float constant;
