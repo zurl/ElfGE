@@ -11,15 +11,18 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Components/Model.h"
 
-class Renderer: public Component {
-    Material * material;
-    Shader * shader;
-    Model * model;
+class Renderer : public Component {
+    Material *material;
+    Shader *shader;
+    Model *model;
     bool useShadow;
 public:
     Renderer(Material *material, Shader *shader, bool useShadow = true);
+
     void start() override;
+
     void updateGraphics(RenderLayer renderLayer) override;
+
     void destroy() override;
 };
 

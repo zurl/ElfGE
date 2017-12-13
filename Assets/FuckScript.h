@@ -8,10 +8,10 @@
 #include "GameEngine.h"
 #include "UI/UI.h"
 
-class FuckScript: public GameScript {
+class FuckScript : public GameScript {
     int cnt = 0;
-    Text * text;
-    GameObject * human;
+    Text *text;
+    GameObject *human;
     std::function<void()> cb;
 public:
 

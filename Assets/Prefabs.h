@@ -10,32 +10,33 @@
 #include "StandardAssets.h"
 #include <random>
 
-namespace Prefabs{
+namespace Prefabs {
 
     extern StandardMaterial material;
 
-    class DirLight: public Prefab{
+    class DirLight : public Prefab {
         glm::vec3 rotation;
     public:
         DirLight(const glm::vec3 &rotation) : rotation(rotation) {}
 
-        GameObject * instantiate(Scene *scene) override {
+        GameObject *instantiate(Scene *scene) override {
             auto ret = scene->createGameObject()
-            ->createComponent<CubeMesh>("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg")
-            ->createComponent<Renderer>(
-                    &material, ShaderManager::getShader("light_with_directional_shadow"))
-            ->createComponent<DirectLighting>();
+                    ->createComponent<CubeMesh>("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg")
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_with_directional_shadow"))
+                    ->createComponent<DirectLighting>();
             ret->transform.setRotation(rotation);
             return ret;
         }
     };
 
-    class PointLight: public Prefab{
+    class PointLight : public Prefab {
 
         glm::vec3 position;
     public:
         PointLight(const glm::vec3 &position) : position(position) {}
-        GameObject * instantiate(Scene *scene) override {
+
+        GameObject *instantiate(Scene *scene) override {
             auto result = scene->createGameObject()
                     ->createComponent<PointLighting>();
             result->transform.setPosition(position);
@@ -43,14 +44,16 @@ namespace Prefabs{
         }
     };
 
-    class Cube: public Prefab{
+    class Cube : public Prefab {
         glm::vec3 position;
     public:
         Cube(const glm::vec3 &position) : position(position) {}
-        GameObject * instantiate(Scene *scene) override {
+
+        GameObject *instantiate(Scene *scene) override {
 
             auto result = scene->createGameObject()
-                    ->createComponent<DefaultModel>(new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+                    ->createComponent<DefaultModel>(
+                            new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(
                             &material, ShaderManager::getShader("light_ds_pm"))
                     ->createComponent<AABBCollider>(false)
@@ -61,11 +64,12 @@ namespace Prefabs{
         }
     };
 
-    class Plane: public Prefab{
+    class Plane : public Prefab {
         glm::vec3 position;
     public:
         Plane(const glm::vec3 &position) : position(position) {}
-        GameObject * instantiate(Scene *scene) override {
+
+        GameObject *instantiate(Scene *scene) override {
 
             auto result = scene->createGameObject()
 //                    ->createComponent<DefaultModel>(new PlaneMesh("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg"))
@@ -78,17 +82,18 @@ namespace Prefabs{
     };
 
 
-    class Camera: public Prefab{
+    class Camera : public Prefab {
     public:
-        GameObject * instantiate(Scene *scene) override {
+        GameObject *instantiate(Scene *scene) override {
             auto camera = scene->createGameObject()
-                                   ->createComponent<FirstPlayerCamera>();
+                    ->createComponent<FirstPlayerCamera>();
 
             scene->setCamera(camera->getComponent<FirstPlayerCamera>());
             return camera;
         }
     };
-    class DemoTerrain: public Prefab{
+
+    class DemoTerrain : public Prefab {
     public:
         GameObject *instantiate(Scene *scene) override {
             auto terrain = scene->createGameObject()
@@ -102,12 +107,11 @@ namespace Prefabs{
     };
 
 
+    class ImageButton : public Prefab {
 
-    class ImageButton: public Prefab{
-
-        class ImageButtonScript: public Component {
+        class ImageButtonScript : public Component {
             double xl, xr, yl, yr;
-            std::function<void()> * callback, onenter, onexit;
+            std::function<void()> *callback, onenter, onexit;
         public:
             ImageButtonScript(double xl, double xr, double yl, double yr, std::function<void()> *callback) : xl(xl),
                                                                                                              xr(xr),
@@ -115,12 +119,13 @@ namespace Prefabs{
                                                                                                              yr(yr),
                                                                                                              callback(
                                                                                                                      callback) {}
-            void onEnter(){
-                if(callback != nullptr) callback->operator()();
+
+            void onEnter() {
+                if (callback != nullptr) callback->operator()();
                 getGameObject()->transform.setScale(glm::vec3(0.8));
             }
 
-            void onExit(){
+            void onExit() {
                 getGameObject()->transform.setScale(glm::vec3(1.0));
             }
 
@@ -128,7 +133,7 @@ namespace Prefabs{
                 onenter = std::bind(&ImageButtonScript::onEnter, this);
                 onexit = std::bind(&ImageButtonScript::onExit, this);
 
-                Input::attachOnMouseClick(xl, xr, yl, yr, 10,&onenter, &onexit);
+                Input::attachOnMouseClick(xl, xr, yl, yr, 10, &onenter, &onexit);
 
                 Component::start();
             }
@@ -138,11 +143,12 @@ namespace Prefabs{
                 Component::destroy();
             }
         };
-        GameObject * canvas;
+
+        GameObject *canvas;
         unsigned int image;
         glm::vec2 size;
         glm::vec3 position;
-        std::function<void()> * callback;
+        std::function<void()> *callback;
 
     public:
         ImageButton(GameObject *canvas, unsigned int image, const glm::vec2 &size, const glm::vec3 &position,
@@ -155,12 +161,12 @@ namespace Prefabs{
             result->transform.setPosition(position);
             double px = result->transform.getPosition().x;
             double py = result->transform.getPosition().y;
-            result->createComponent<Image>( image, size.x, size.y );
+            result->createComponent<Image>(image, size.x, size.y);
             result->createComponent<ImageButtonScript>(
-                            px - size.x / 2, px + size.x / 2,
-                            py - size.y / 2, py + size.y / 2,
-                            callback
-                    );
+                    px - size.x / 2, px + size.x / 2,
+                    py - size.y / 2, py + size.y / 2,
+                    callback
+            );
             return result;
         }
     };

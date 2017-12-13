@@ -7,11 +7,11 @@
 
 #include "GameEngine.h"
 
-class Canvas: public Component {
+class Canvas : public Component {
 
     int height, width;
     glm::mat4 projection;
-    Shader * UIShader;
+    Shader *UIShader;
 
 public:
     void start() override;

@@ -4,7 +4,7 @@
 
 #include "GameEngine/Core/Runtime.h"
 
-int main(){
+int main() {
     Runtime::start();
     return 0;
 }

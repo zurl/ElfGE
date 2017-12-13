@@ -9,13 +9,14 @@
 
 const float g = 9.78f;
 
-class RigidBody: public GameScript {
+class RigidBody : public GameScript {
     bool onCollision;
 public:
     float mass;
     float collisionK;
     bool isTrigger, useGravity, isFace = false;
     glm::vec3 velocity, force;
+
     RigidBody(float mass,
               const glm::vec3 &velocity = glm::vec3(0, 0, 0),
               const glm::vec3 &force = glm::vec3(0, 0, 0),

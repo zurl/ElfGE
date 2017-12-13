@@ -15,7 +15,7 @@ void Scene::setCamera(Camera *camera) {
 Scene::~Scene() {
     destroy();
     delete rootGameObject;
-    if( shadowMappingManager != nullptr ) delete shadowMappingManager; // ?
+    if (shadowMappingManager != nullptr) delete shadowMappingManager; // ?
 }
 
 void Scene::addGameObject(GameObject *gameObject) {
@@ -27,7 +27,7 @@ Scene::Scene() {
 }
 
 GameObject *Scene::createGameObject() {
-    GameObject * gameObject = new GameObject();
+    GameObject *gameObject = new GameObject();
     addGameObject(gameObject);
     return gameObject;
 }
@@ -40,7 +40,7 @@ void Scene::update() {
     rootGameObject->update();
 }
 
-void Scene::updateGraphics(RenderLayer renderLayer){
+void Scene::updateGraphics(RenderLayer renderLayer) {
     ShaderManager::useShader(nullptr);
     rootGameObject->updateGraphics(renderLayer);
 }

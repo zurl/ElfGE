@@ -8,8 +8,9 @@
 #include "Input.h"
 #include "Core/Scene.h"
 
-Scene * Runtime::scene;
+Scene *Runtime::scene;
 GraphicsRuntime Runtime::graphicsRuntime;
+
 void Runtime::start() {
     graphicsRuntime.initialize();
     FontManager::initialize();
@@ -18,7 +19,7 @@ void Runtime::start() {
     setScene(Entry::getDefaultScene());
     getScene()->start();
     double lastFrame = glfwGetTime();
-    while(!glfwWindowShouldClose(Utility::window)) {
+    while (!glfwWindowShouldClose(Utility::window)) {
 
         double currentFrame = glfwGetTime();
         Utility::deltaTime = currentFrame - lastFrame;
@@ -39,7 +40,7 @@ Scene *Runtime::getScene() {
 }
 
 void Runtime::setScene(Scene *scene) {
-    if(Runtime::scene != nullptr){
+    if (Runtime::scene != nullptr) {
         Runtime::scene->destroy();
         delete Runtime::scene;
     }

@@ -23,7 +23,8 @@ void OmnidirectionalShadowMappingManager::initialize() {
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    ShaderManager::loadShader("omnidirectional_shadow", "omnidirectional_shadow", "omnidirectional_shadow", "omnidirectional_shadow");
+    ShaderManager::loadShader("omnidirectional_shadow", "omnidirectional_shadow", "omnidirectional_shadow",
+                              "omnidirectional_shadow");
     shader = ShaderManager::getShader("omnidirectional_shadow");
 }
 
@@ -40,14 +41,14 @@ void OmnidirectionalShadowMappingManager::computeMapping() {
     glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, near, far);
     std::vector<glm::mat4> shadowViews;
     glm::vec3 lightPos = pointLighting->getGameObject()->transform.getPosition();
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(1.0,0.0,0.0), glm::vec3(0.0,-1.0,0.0)));
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(-1.0,0.0,0.0), glm::vec3(0.0,-1.0,0.0)));
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0,1.0,0.0), glm::vec3(0.0,0.0,1.0)));
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0,-1.0,0.0), glm::vec3(0.0,0.0,-1.0)));
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0,0.0,1.0), glm::vec3(0.0,-1.0,0.0)));
-    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0,0.0,-1.0), glm::vec3(0.0,-1.0,0.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)));
+    shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, -1.0), glm::vec3(0.0, -1.0, 0.0)));
     shader->setMat4("projection", shadowProj);
-    for (GLuint i = 0; i < 6; ++i){
+    for (GLuint i = 0; i < 6; ++i) {
         shader->setMat4("views[" + std::to_string(i) + "]", shadowViews[i]);
     }
     glViewport(0, 0, resolution, resolution);

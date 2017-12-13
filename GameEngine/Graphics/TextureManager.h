@@ -16,15 +16,15 @@ public:
 
     static unsigned int getDDSTexture(const std::string &path);
 
-    static unsigned char* loadHeightMap(const std::string &path);
+    static unsigned char *loadHeightMap(const std::string &path);
 
-    static unsigned int getTexture3DFromFile(const std::vector<std::string> & faces);
+    static unsigned int getTexture3DFromFile(const std::vector<std::string> &faces);
 
     static unsigned int getTexture2DFromFile(const std::string &path, bool gamma = false);
 
-    static unsigned int loadTexture2D(const std::string & path) ;
+    static unsigned int loadTexture2D(const std::string &path);
 
-    static unsigned int loadTexture3D(const std::vector<std::string> & faces);
+    static unsigned int loadTexture3D(const std::vector<std::string> &faces);
 
 };
 

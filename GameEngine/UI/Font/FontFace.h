@@ -9,10 +9,10 @@
 
 class FontFace {
     struct Character {
-        GLuint     textureID;  // 字形纹理的ID
-        glm::ivec2 size;       // 字形大小
-        glm::ivec2 bearing;    // 从基准线到字形左部/顶部的偏移值
-        GLuint     advance;    // 原点距下一个字形原点的距离
+        GLuint textureID;
+        glm::ivec2 size;
+        glm::ivec2 bearing;
+        GLuint advance;
     };
     static GLuint VAO, VBO;
     static bool isInit;
@@ -23,9 +23,9 @@ public:
 
     int getFontSize() const;
 
-    FontFace(FT_Library ft, const std::string & path, int fontSize = 48);
+    FontFace(FT_Library ft, const std::string &path, int fontSize = 48);
 
-    void renderText(const std::string & text);
+    void renderText(const std::string &text);
 };
 
 

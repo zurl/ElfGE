@@ -8,9 +8,11 @@
 #include "DefaultMesh.h"
 #include "GameEngine.h"
 
-class SphereMesh: public DefaultMesh {
+class SphereMesh : public DefaultMesh {
 public:
     SphereMesh();
+
     SphereMesh(const std::string specularName, const std::string diffuseName, const std::string normalName = "");
 };
+
 #endif //ELFGE_SPHEREMESH_H

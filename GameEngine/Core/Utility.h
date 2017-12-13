@@ -10,7 +10,7 @@
 class Utility {
 public:
 
-    static GLFWwindow* window;
+    static GLFWwindow *window;
 
     static std::string WINDOW_NAME;
     static std::string RESOURCE_PREFIX;
@@ -23,9 +23,9 @@ public:
 
     static double deltaTime;
 
-    static const char * getTextFromFile(const char * filePath);
+    static const char *getTextFromFile(const char *filePath);
 
-    static inline glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4 * from){
+    static inline glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4 *from) {
         return glm::transpose(glm::make_mat4(&from->a1));
     }
 

@@ -13,26 +13,37 @@
 class Camera;
 
 class Scene {
-    ShadowMappingManager * shadowMappingManager = nullptr;
-    Camera * camera;
-    GameObject * rootGameObject;
+    ShadowMappingManager *shadowMappingManager = nullptr;
+    Camera *camera;
+    GameObject *rootGameObject;
 public:
     Scene();
+
     virtual void start();
+
     virtual void update();
+
     virtual void destroy();
+
     virtual void updateGraphics(RenderLayer renderLayer);
+
     virtual ~Scene();
+
     Camera *getCamera() const;
+
     void setCamera(Camera *camera);
+
     ShadowMappingManager *getShadowMappingManager() const;
+
     void setShadowMappingManager(ShadowMappingManager *shadowMappingManager);
-    void addGameObject(GameObject * gameObject);
-    GameObject * createGameObject();
+
+    void addGameObject(GameObject *gameObject);
+
+    GameObject *createGameObject();
 
 protected:
-    template <typename T, typename... Args>
-    GameObject * set(Args&&... args){
+    template<typename T, typename... Args>
+    GameObject *set(Args &&... args) {
         auto prefab = new T(std::forward<Args>(args)...);
         auto result = prefab->instantiate(this);
         delete prefab;

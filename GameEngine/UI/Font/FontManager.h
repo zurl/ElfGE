@@ -18,7 +18,7 @@ public:
 
     static void initialize();
 
-    static FontFace * loadFont(const std::string & fontName);
+    static FontFace *loadFont(const std::string &fontName);
 
 };
 

@@ -3,15 +3,18 @@
 //
 
 #include "TextureManager.h"
+
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "stb_image.h"
 
 #include <gli/gli.hpp>
+
 std::map<std::string, unsigned int> TextureManager::textures;
 
 unsigned int TextureManager::loadTexture2D(const std::string &path) {
     auto iter = textures.find(path);
-    if( iter == textures.end() ){
+    if (iter == textures.end()) {
         textures.emplace(
                 std::piecewise_construct,
                 std::forward_as_tuple(path),
@@ -24,7 +27,7 @@ unsigned int TextureManager::loadTexture2D(const std::string &path) {
 
 unsigned int TextureManager::loadTexture3D(const std::vector<std::string> &faces) {
     auto iter = textures.find(faces[0]);
-    if( iter == textures.end() ){
+    if (iter == textures.end()) {
         textures.emplace(
                 std::piecewise_construct,
                 std::forward_as_tuple(faces[0]),
@@ -34,15 +37,16 @@ unsigned int TextureManager::loadTexture3D(const std::vector<std::string> &faces
     }
     return iter->second;
 }
+
 unsigned int TextureManager::getTexture2DFromFile(const std::string &path, bool gamma) {
-    if( strstr(path.c_str(), ".DDS") != NULL) return getDDSTexture(path);
+    if (strstr(path.c_str(), ".DDS") != NULL) return getDDSTexture(path);
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;
     unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
-    if (data){
+    if (data) {
         GLenum format;
         if (nrComponents == 1)
             format = GL_RED;
@@ -59,17 +63,17 @@ unsigned int TextureManager::getTexture2DFromFile(const std::string &path, bool 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         stbi_image_free(data);
-    }
-    else{
+    } else {
         std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
 
     return textureID;
 }
+
 unsigned int TextureManager::getDDSTexture(const std::string &path) {
     gli::texture Texture = gli::load(path.c_str());
-    if(Texture.empty())
+    if (Texture.empty())
         return 0;
 
     gli::gl GL(gli::gl::PROFILE_GL33);
@@ -89,8 +93,7 @@ unsigned int TextureManager::getDDSTexture(const std::string &path) {
     glm::tvec3<GLsizei> const Extent(Texture.extent());
     GLsizei const FaceTotal = static_cast<GLsizei>(Texture.layers() * Texture.faces());
 
-    switch(Texture.target())
-    {
+    switch (Texture.target()) {
         case gli::TARGET_1D:
             glTexStorage1D(
                     Target, static_cast<GLint>(Texture.levels()), Format.Internal, Extent.x);
@@ -115,20 +118,18 @@ unsigned int TextureManager::getDDSTexture(const std::string &path) {
             break;
     }
 
-    for(std::size_t Layer = 0; Layer < Texture.layers(); ++Layer)
-        for(std::size_t Face = 0; Face < Texture.faces(); ++Face)
-            for(std::size_t Level = 0; Level < Texture.levels(); ++Level)
-            {
+    for (std::size_t Layer = 0; Layer < Texture.layers(); ++Layer)
+        for (std::size_t Face = 0; Face < Texture.faces(); ++Face)
+            for (std::size_t Level = 0; Level < Texture.levels(); ++Level) {
                 GLsizei const LayerGL = static_cast<GLsizei>(Layer);
                 glm::tvec3<GLsizei> Extent(Texture.extent(Level));
                 Target = gli::is_target_cube(Texture.target())
                          ? static_cast<GLenum>(GL_TEXTURE_CUBE_MAP_POSITIVE_X + Face)
                          : Target;
 
-                switch(Texture.target())
-                {
+                switch (Texture.target()) {
                     case gli::TARGET_1D:
-                        if(gli::is_compressed(Texture.format()))
+                        if (gli::is_compressed(Texture.format()))
                             glCompressedTexSubImage1D(
                                     Target, static_cast<GLint>(Level), 0, Extent.x,
                                     Format.Internal, static_cast<GLsizei>(Texture.size(Level)),
@@ -142,7 +143,7 @@ unsigned int TextureManager::getDDSTexture(const std::string &path) {
                     case gli::TARGET_1D_ARRAY:
                     case gli::TARGET_2D:
                     case gli::TARGET_CUBE:
-                        if(gli::is_compressed(Texture.format()))
+                        if (gli::is_compressed(Texture.format()))
                             glCompressedTexSubImage2D(
                                     Target, static_cast<GLint>(Level),
                                     0, 0,
@@ -162,7 +163,7 @@ unsigned int TextureManager::getDDSTexture(const std::string &path) {
                     case gli::TARGET_2D_ARRAY:
                     case gli::TARGET_3D:
                     case gli::TARGET_CUBE_ARRAY:
-                        if(gli::is_compressed(Texture.format()))
+                        if (gli::is_compressed(Texture.format()))
                             glCompressedTexSubImage3D(
                                     Target, static_cast<GLint>(Level),
                                     0, 0, 0,
@@ -179,7 +180,9 @@ unsigned int TextureManager::getDDSTexture(const std::string &path) {
                                     Format.External, Format.Type,
                                     Texture.data(Layer, Face, Level));
                         break;
-                    default: assert(0); break;
+                    default:
+                        assert(0);
+                        break;
                 }
             }
     return TextureName;
@@ -198,8 +201,7 @@ unsigned int TextureManager::getTexture3DFromFile(const std::vector<std::string>
                          0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
             );
             stbi_image_free(data);
-        }
-        else {
+        } else {
             std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
             stbi_image_free(data);
         }

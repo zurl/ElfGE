@@ -3,7 +3,6 @@
 //
 
 #include "GraphicsRuntime.h"
-
 #include "DebugUtility.h"
 
 
@@ -34,7 +33,7 @@ void GraphicsRuntime::initialize() {
     glfwMakeContextCurrent(Utility::window);
 #ifndef __linux
     GLenum err = glewInit();
-    if(err != GLEW_OK) {
+    if (err != GLEW_OK) {
         std::cout << "glewInit failed: " << glewGetErrorString(err) << std::endl;
         exit(1);
     }
@@ -55,13 +54,13 @@ void GraphicsRuntime::initialize() {
 
 void GraphicsRuntime::update(Scene *scene) {
 
-    if(scene->getShadowMappingManager() != nullptr){
+    if (scene->getShadowMappingManager() != nullptr) {
         scene->getShadowMappingManager()->computeMapping();
         scene->updateGraphics(RenderLayer::WORLD_SHADOW);
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
     scene->updateGraphics(RenderLayer::WORLD);

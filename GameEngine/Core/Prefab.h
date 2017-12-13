@@ -6,10 +6,11 @@
 #define ELFGE_PREFAB_H
 
 class Scene;
+
 class GameObject;
 
 class Prefab {
-    virtual GameObject * instantiate(Scene * scene) = 0;
+    virtual GameObject *instantiate(Scene *scene) = 0;
 };
 
 #endif //ELFGE_PREFAB_H

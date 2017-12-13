@@ -10,7 +10,7 @@
 
 class Material {
 public:
-    virtual void use(Shader * shader) = 0;
+    virtual void use(Shader *shader) = 0;
 };
 
 

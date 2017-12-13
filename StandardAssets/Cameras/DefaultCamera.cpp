@@ -13,16 +13,16 @@ glm::mat4 DefaultCamera::getViewMatrix() {
 }
 
 glm::mat4 DefaultCamera::getProjectionMatrix() {
-    return glm::perspective(glm::radians(zoom), (float)Utility::SCREEN_WIDTH / (float)Utility::SCREEN_HEIGHT, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(zoom), (float) Utility::SCREEN_WIDTH / (float) Utility::SCREEN_HEIGHT, 0.1f,
+                            100.0f);
 }
 
-DefaultCamera::DefaultCamera(glm::vec3 position, glm::vec3 rotation,glm::vec3 front, float zoom, float sensitivity,
-                     float speed) :
+DefaultCamera::DefaultCamera(glm::vec3 position, glm::vec3 rotation, glm::vec3 front, float zoom, float sensitivity,
+                             float speed) :
         movementSpeed(speed),
         mouseSensitivity(sensitivity),
         zoom(zoom),
-        front(front)
-{}
+        front(front) {}
 
 void DefaultCamera::start() {
     enableMouseInput();

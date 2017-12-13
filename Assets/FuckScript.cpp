@@ -11,9 +11,9 @@ void FuckScript::start() {
 }
 
 void FuckScript::update() {
-    if( cnt != 0){
-        cnt --;
-        if(cnt == 0){
+    if (cnt != 0) {
+        cnt--;
+        if (cnt == 0) {
             text->setText("");
         }
         return;
@@ -25,15 +25,14 @@ void FuckScript::update() {
 FuckScript::FuckScript(GameObject *human) : human(human) {}
 
 void FuckScript::onClick() {
-    AABBCollider * collider = AABBCollider::raycast(
+    AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->transform.getPosition(),
             Runtime::getCamera()->getGameObject()->transform.getForward(),
             100000.0f
     );
-    if( collider == nullptr){
+    if (collider == nullptr) {
         text->setText("NO");
-    }
-    else{
+    } else {
         text->setText("YES");
         //collider->getGameObject()->transform.translate(Transform::up);
     }

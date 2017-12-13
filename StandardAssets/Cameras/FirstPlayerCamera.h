@@ -8,10 +8,10 @@
 #include "DefaultCamera.h"
 
 
-class FirstPlayerCamera : public DefaultCamera{
+class FirstPlayerCamera : public DefaultCamera {
 
 public:
-    enum class Direction{
+    enum class Direction {
         FORWARD,
         BACKWARD,
         LEFT,

@@ -11,20 +11,25 @@
 #include "Runtime.h"
 
 
-class GameScript: public Component {
+class GameScript : public Component {
     std::function<void(double, double)> mouseHandler;
     std::function<void(double)> scrollHandler;
 protected:
     void enableMouseInput();
-    void enableScrollInput();
-public:
-    virtual void onMouseMove(double x, double y){ }
-    virtual void onScrollMove(double x){ }
-    virtual void onCollisionEnter(Collider * collider){ }
-    virtual void onCollisionExit(Collider * collider){ }
 
-    template <typename T, typename... Args>
-    GameObject * instantiate(Args&&... args){
+    void enableScrollInput();
+
+public:
+    virtual void onMouseMove(double x, double y) {}
+
+    virtual void onScrollMove(double x) {}
+
+    virtual void onCollisionEnter(Collider *collider) {}
+
+    virtual void onCollisionExit(Collider *collider) {}
+
+    template<typename T, typename... Args>
+    GameObject *instantiate(Args &&... args) {
         auto prefab = new T(std::forward<Args>(args)...);
         auto result = prefab->instantiate(Runtime::getScene());
         delete prefab;

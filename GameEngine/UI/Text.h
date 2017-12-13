@@ -8,12 +8,12 @@
 #include <UI/Font/FontFace.h>
 #include "GameEngine.h"
 
-class Text: public Component {
-    Shader * UIShader;
+class Text : public Component {
+    Shader *UIShader;
     std::string text;
     int fontSize;
     glm::vec3 fontColor;
-    FontFace * fontFace;
+    FontFace *fontFace;
 public:
 
     Text(const std::string &text, FontFace *fontFace);

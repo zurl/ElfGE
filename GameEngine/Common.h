@@ -33,15 +33,17 @@
 #include <glad.h>
 #else
 #define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 #endif
 
 #include "Exception.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-enum class RenderLayer{
+enum class RenderLayer {
     WORLD_SHADOW,
     WORLD,
     SCREEN

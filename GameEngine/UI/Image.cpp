@@ -3,14 +3,15 @@
 //
 
 #include "Image.h"
+
 GLuint Image::VAO, Image::VBO;
 bool Image::isInit = false;
 
-FontFace * ff;
+FontFace *ff;
 
 void Image::start() {
     UIShader = ShaderManager::getShader("UI");
-    if( !isInit ){
+    if (!isInit) {
         isInit = true;
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -26,7 +27,7 @@ void Image::start() {
 }
 
 void Image::updateGraphics(RenderLayer renderLayer) {
-    if( renderLayer == RenderLayer::SCREEN){
+    if (renderLayer == RenderLayer::SCREEN) {
         UIShader->setMat4("model", getGameObject()->getModelMatrix());
         UIShader->setVec3("color", glm::vec3(1.0f));
         UIShader->setInt("text", 0);
@@ -44,14 +45,13 @@ void Image::updateGraphics(RenderLayer renderLayer) {
 
 Image::Image(unsigned int texture, float width, float height, bool isCenter) :
         texture(texture), width(width), height(height), isCenter(isCenter) {
-    for(int i = 0; i < 6; i++){
-        if(!isCenter){
+    for (int i = 0; i < 6; i++) {
+        if (!isCenter) {
             vertices[i][0] *= width;
             vertices[i][1] *= height;
-            if(vertices[i][0] < 0) vertices[i][0] = 0;
-            if(vertices[i][1] < 0) vertices[i][1] = 0;
-        }
-        else{
+            if (vertices[i][0] < 0) vertices[i][0] = 0;
+            if (vertices[i][1] < 0) vertices[i][1] = 0;
+        } else {
             vertices[i][0] *= width / 2;
             vertices[i][1] *= height / 2;
         }

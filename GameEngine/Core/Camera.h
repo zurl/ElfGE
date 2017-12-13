@@ -9,7 +9,7 @@
 #include "GameScript.h"
 #include "GameObject.h"
 
-class Camera: public GameScript{
+class Camera : public GameScript {
 public:
     virtual glm::mat4 getViewMatrix() = 0;
 

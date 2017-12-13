@@ -52,7 +52,7 @@ glm::quat Transform::getQuaternion() const {
     return glm::quat_cast(rotation);
 }
 
-Transform::Transform():position(0.0f), rotation(1.0f), scale(1.0f){}
+Transform::Transform() : position(0.0f), rotation(1.0f), scale(1.0f) {}
 
 glm::vec3 Transform::getUp() const {
     return glm::rotate(getQuaternion(), Transform::up);

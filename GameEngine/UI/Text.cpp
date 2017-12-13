@@ -10,7 +10,7 @@ void Text::start() {
 
 
 void Text::updateGraphics(RenderLayer renderLayer) {
-    if( renderLayer == RenderLayer::SCREEN) {
+    if (renderLayer == RenderLayer::SCREEN) {
         UIShader->setMat4("model", getGameObject()->getModelMatrix());
         UIShader->setVec3("color", fontColor);
         fontFace->renderText(text);
@@ -31,7 +31,7 @@ int Text::getFontSize() const {
 
 void Text::setFontSize(int fontSize) {
     Text::fontSize = fontSize;
-    getGameObject()->transform.setScale(glm::vec3( fontSize * 1.0f / fontFace->getFontSize()));
+    getGameObject()->transform.setScale(glm::vec3(fontSize * 1.0f / fontFace->getFontSize()));
 }
 
 const glm::vec3 &Text::getFontColor() const {
@@ -48,7 +48,7 @@ FontFace *Text::getFontFace() const {
 
 void Text::setFontFace(FontFace *fontFace) {
     Text::fontFace = fontFace;
-    getGameObject()->transform.setScale(glm::vec3( fontSize * 1.0f / fontFace->getFontSize()));
+    getGameObject()->transform.setScale(glm::vec3(fontSize * 1.0f / fontFace->getFontSize()));
 }
 
 Text::Text(const std::string &text, FontFace *fontFace) : text(text), fontFace(fontFace) {}

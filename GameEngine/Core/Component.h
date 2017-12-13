@@ -10,22 +10,22 @@
 class GameObject;
 
 class Component {
-    GameObject * gameObject;
+    GameObject *gameObject;
 
     void setGameObject(GameObject *parent);
 
     friend class GameObject;
 
 public:
-    virtual void start() ;
+    virtual void start();
 
-    virtual void update() ;
+    virtual void update();
 
-    virtual void destroy() ;
+    virtual void destroy();
 
     virtual void updateGraphics(RenderLayer renderLayer);
 
-    GameObject * getGameObject() const;
+    GameObject *getGameObject() const;
 
     virtual ~Component();
 };

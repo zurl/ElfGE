@@ -21,7 +21,7 @@ void GameScript::enableScrollInput() {
 }
 
 void GameScript::destroy() {
-    if(mouseHandler != nullptr) Input::detachOnMouseMove(&mouseHandler);
-    if(scrollHandler != nullptr) Input::detachOnScrollMove(&scrollHandler);
+    if (mouseHandler != nullptr) Input::detachOnMouseMove(&mouseHandler);
+    if (scrollHandler != nullptr) Input::detachOnScrollMove(&scrollHandler);
 }
 

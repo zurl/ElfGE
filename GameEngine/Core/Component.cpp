@@ -24,7 +24,7 @@ void Component::update() {
 
 }
 
-void Component::updateGraphics(RenderLayer renderLayer){
+void Component::updateGraphics(RenderLayer renderLayer) {
 
 }
 

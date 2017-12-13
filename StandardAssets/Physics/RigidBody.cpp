@@ -5,22 +5,22 @@
 #include "RigidBody.h"
 
 void RigidBody::onCollisionEnter(Collider *collider) {
-    if( !isTrigger && !isFace) {
+    if (!isTrigger && !isFace) {
         auto target = collider->getGameObject();
         auto rb = target->getComponent<RigidBody>();
-        if( rb == nullptr ) return;
+        if (rb == nullptr) return;
         glm::vec3 directVector;
-        if( rb->isFace) directVector = getGameObject()->transform.forward;
+        if (rb->isFace) directVector = getGameObject()->transform.forward;
         else directVector = glm::normalize(target->transform.getPosition() - getGameObject()->transform.getPosition());
 
         float va = glm::dot(directVector, velocity);
         float vb = glm::dot(directVector, rb->velocity);
         float ma = mass;
         float mb = rb->mass;
-        if( fabs(va) < 1e-4 && fabs(vb) < 1e-4) return;
-        if( (va >= 0 && vb <= 0)
+        if (fabs(va) < 1e-4 && fabs(vb) < 1e-4) return;
+        if ((va >= 0 && vb <= 0)
             || (va >= 0 && vb >= 0 && va >= vb)
-            || (va <= 0 && vb <= 0 && va >= vb)){
+            || (va <= 0 && vb <= 0 && va >= vb)) {
 
             printf("pz\n");
             float p = ma * va + mb * vb;
@@ -38,13 +38,13 @@ void RigidBody::onCollisionEnter(Collider *collider) {
 }
 
 void RigidBody::update() {
-    velocity += (float)Utility::deltaTime / mass * force ;
-    if( useGravity ) velocity += (float)Utility::deltaTime * g ;
+    velocity += (float) Utility::deltaTime / mass * force;
+    if (useGravity) velocity += (float) Utility::deltaTime * g;
     getGameObject()->transform.translate(velocity);
 }
 
 void RigidBody::onCollisionExit(Collider *collider) {
-    if( !isTrigger ){
+    if (!isTrigger) {
         onCollision = false;
 
     }

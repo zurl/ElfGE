@@ -7,7 +7,7 @@
 
 #include "GameEngine.h"
 
-class PointLighting: public Lighting{
+class PointLighting : public Lighting {
 
 public:
     glm::vec3 ambient, diffuse, specular;
@@ -15,7 +15,7 @@ public:
 
     PointLighting(const glm::vec3 &ambient = glm::vec3(0.05f, 0.05f, 0.05f),
                   const glm::vec3 &diffuse = glm::vec3(0.8f, 0.8f, 0.8f),
-                  const glm::vec3 &specular =glm::vec3(1.0f, 1.0f, 1.0f),
+                  const glm::vec3 &specular = glm::vec3(1.0f, 1.0f, 1.0f),
                   float constant = 1.0f,
                   float linear = 0.09f,
                   float quadratic = 0.032f);

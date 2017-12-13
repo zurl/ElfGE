@@ -8,7 +8,7 @@
 #include "GameEngine.h"
 #include "../Meshs/DefaultMesh.h"
 
-class DefaultModel: public Model {
+class DefaultModel : public Model {
 protected:
     std::string directory;
     const aiScene *scene;
@@ -17,9 +17,9 @@ public:
 
     std::vector<DefaultMesh *> meshes;
 
-    DefaultModel(DefaultMesh * mesh);
+    DefaultModel(DefaultMesh *mesh);
 
-    DefaultModel(const std::string & path);
+    DefaultModel(const std::string &path);
 
     void render(Shader *shader, RenderLayer renderLayer) override;
 

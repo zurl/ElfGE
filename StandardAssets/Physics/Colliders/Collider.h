@@ -7,7 +7,7 @@
 
 #include "Core/Component.h"
 
-class Collider: public Component{
+class Collider : public Component {
 
 };
 

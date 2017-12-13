@@ -9,9 +9,9 @@
 #include "Core/Component.h"
 
 
-class Model: public Component{
+class Model : public Component {
 public:
-    virtual void render(Shader * shader, RenderLayer renderLayer) = 0;
+    virtual void render(Shader *shader, RenderLayer renderLayer) = 0;
 };
 
 #endif //ELFGE_MESHGROUP_H

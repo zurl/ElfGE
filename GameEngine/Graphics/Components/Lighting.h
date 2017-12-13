@@ -9,7 +9,7 @@
 #include "Graphics/Shader.h"
 #include "Core/Component.h"
 
-class Lighting: public Component {
+class Lighting : public Component {
 public:
 
     virtual std::string getName() = 0;
@@ -20,7 +20,7 @@ public:
 
     void destroy() override;
 
-    virtual void update(const std::string &prefix, Shader * shader) = 0;
+    virtual void update(const std::string &prefix, Shader *shader) = 0;
 
 };
 

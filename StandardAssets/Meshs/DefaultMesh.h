@@ -7,7 +7,7 @@
 
 #include "GameEngine.h"
 
-class DefaultMesh: public Mesh{
+class DefaultMesh : public Mesh {
 
 public:
 
@@ -17,16 +17,17 @@ public:
         glm::vec2 texCoords;
         glm::vec3 tangent;
         glm::vec3 bitangent;
+
         Vertex();
+
         Vertex(const glm::vec3 &position, const glm::vec3 &normal, const glm::vec2 &texCoords);
     };
 
 
-
     static inline void computeTangent(
-            glm::vec3 & tangent1, glm::vec3 & bitangent1,
-            Vertex & v0, Vertex & v1, Vertex v2
-    ){
+            glm::vec3 &tangent1, glm::vec3 &bitangent1,
+            Vertex &v0, Vertex &v1, Vertex v2
+    ) {
         glm::vec3 nm(0.0, 0.0, 1.0);
         glm::vec3 edge1 = v1.position - v0.position;
         glm::vec3 edge2 = v2.position - v0.position;
@@ -60,9 +61,9 @@ public:
 
     DefaultMesh();
 
-    DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string & directory);
+    DefaultMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory);
 
-    void render(Shader * shader, RenderLayer renderLayer);
+    void render(Shader *shader, RenderLayer renderLayer);
 
     virtual ~DefaultMesh();
 
@@ -71,7 +72,9 @@ protected:
 
     std::string directory;
     unsigned int VAO, VBO, EBO;
+
     void loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+
     void bindVertice();
 };
 

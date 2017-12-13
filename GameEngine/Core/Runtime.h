@@ -13,10 +13,11 @@
 #include "../Graphics/GraphicsRuntime.h"
 
 class Scene;
+
 class Camera;
 
 class Runtime {
-    static Scene * scene;
+    static Scene *scene;
 
     static GraphicsRuntime graphicsRuntime;
 public:

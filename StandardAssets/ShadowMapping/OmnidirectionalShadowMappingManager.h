@@ -8,12 +8,12 @@
 #include "GameEngine.h"
 #include "../Lightings/PointLighting.h"
 
-class OmnidirectionalShadowMappingManager: public ShadowMappingManager {
-    PointLighting * pointLighting;
+class OmnidirectionalShadowMappingManager : public ShadowMappingManager {
+    PointLighting *pointLighting;
     int resolution;
     GLuint depthMapFBO;
     GLuint depthCubemap;
-    Shader * shader;
+    Shader *shader;
 public:
     OmnidirectionalShadowMappingManager(PointLighting *pointLighting, int resolution = 1024);
 

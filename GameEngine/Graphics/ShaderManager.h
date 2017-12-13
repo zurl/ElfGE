@@ -11,13 +11,14 @@
 class ShaderManager {
     static std::map<std::string, Shader> shaders;
 
-    static Shader * lastShader;
+    static Shader *lastShader;
 public:
-    static void loadShader(const std::string & name, const std::string & vertex, const std::string & fragment, const std::string & geometry = "");
+    static void loadShader(const std::string &name, const std::string &vertex, const std::string &fragment,
+                           const std::string &geometry = "");
 
-    static Shader * getShader(const std::string & name);
+    static Shader *getShader(const std::string &name);
 
-    static bool useShader(Shader * shader);
+    static bool useShader(Shader *shader);
 
 };
 

@@ -14,17 +14,17 @@
 
 using namespace Prefabs;
 
-class DemoScene: public Scene {
+class DemoScene : public Scene {
 
 public:
 
-    GameObject *human, * cube1, * cube2, * cube3, * cube4, * cube5, * light;
+    GameObject *human, *cube1, *cube2, *cube3, *cube4, *cube5, *light;
 
-    DemoScene(){}
+    DemoScene() {}
 
     StandardMaterial material;
 
-    Text * text;
+    Text *text;
 
     std::function<void()> onclk;
 
@@ -44,12 +44,9 @@ public:
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
 
-
-
-
         human = createGameObject()
                 //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
-->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
+                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
@@ -60,9 +57,8 @@ public:
         humanModel->registerAnimation("RUN", 500, 600);
         humanModel->playAnimation("RUN");
 
-       human->transform.setScale(glm::vec3(0.01f));
-        human->transform.translate(glm::vec3(3,1,0));
-
+        human->transform.setScale(glm::vec3(0.01f));
+        human->transform.translate(glm::vec3(3, 1, 0));
 
 
         auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
@@ -87,7 +83,7 @@ public:
 //
         text1->setParent(canvas);
         text1->transform.translate(glm::vec3(20, 20, 0));
-        text  = text1->getComponent<Text>();
+        text = text1->getComponent<Text>();
         text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
 
 
@@ -106,7 +102,7 @@ public:
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
-        onclk = [text2Text](){
+        onclk = [text2Text]() {
             text2Text->setText("WOW HERE");
         };
 
@@ -125,25 +121,25 @@ public:
     int cnt = 0;
     float dt;
 
-    std::string itos(int i){
+    std::string itos(int i) {
         std::ostringstream iss;
-        iss<<i;
+        iss << i;
         return iss.str();
     }
 
     float x = 0;
 
     void update() override {
-        cnt ++;
+        cnt++;
         dt += Utility::deltaTime;
-        if(dt >= 1.0f){
+        if (dt >= 1.0f) {
             dt = 0;
             text->setText("FPS:" + itos(cnt));
             cnt = 0;
         }
 
         x++;
-        if(x > 360000) x= 0;
+        if (x > 360000) x = 0;
 
 //        human->transform.setRotation(
 //                glm::vec3(human->transform.getRotation().x,

@@ -9,7 +9,7 @@
 
 #define NUM_BONES_PER_VEREX 4
 
-class AnimatedMesh: public DefaultMesh {
+class AnimatedMesh : public DefaultMesh {
 
 
     struct VertexBoneData {
@@ -19,14 +19,16 @@ class AnimatedMesh: public DefaultMesh {
 
     std::vector<VertexBoneData> bones;
 
-    void LoadBones(const aiMesh * pMesh, const std::map<std::string, unsigned int> & bonesMap);
+    void LoadBones(const aiMesh *pMesh, const std::map<std::string, unsigned int> &bonesMap);
 
     unsigned int boneVBO;
 
     void bindVerticeEx();
+
 public:
 
-    AnimatedMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory, const std::map<std::string, unsigned int> & bonesMap);
+    AnimatedMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory,
+                 const std::map<std::string, unsigned int> &bonesMap);
 
 };
 

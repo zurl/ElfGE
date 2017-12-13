@@ -7,9 +7,10 @@
 
 #include "Common.h"
 
-struct Texture{
+struct Texture {
     unsigned int id;
     std::string type;
+
     Texture(unsigned int id, const std::string &type) : id(id), type(type) {}
 };
 

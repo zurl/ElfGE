@@ -7,7 +7,7 @@
 
 #include "GameEngine.h"
 
-class AABBCollider: public Collider {
+class AABBCollider : public Collider {
 
     static std::list<AABBCollider *> allColliders;
 
@@ -25,14 +25,14 @@ class AABBCollider: public Collider {
 
     bool checkAxis(float minA, float maxA, float minB, float maxB);
 
-    bool checkCollision(AABBCollider * dst);
+    bool checkCollision(AABBCollider *dst);
 
 public:
 
     AABBCollider(const glm::vec3 &size,
                  const glm::vec3 &offset = glm::vec3(0, 0, 0),
                  bool passive = true
-                 );
+    );
 
     AABBCollider(bool passive = true);
 
@@ -42,7 +42,7 @@ public:
 
     void destroy() override;
 
-    static AABBCollider * raycast(glm::vec3 origin, glm::vec3 direction, float distance);
+    static AABBCollider *raycast(glm::vec3 origin, glm::vec3 direction, float distance);
 
 };
 

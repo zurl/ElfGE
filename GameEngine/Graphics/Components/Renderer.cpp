@@ -11,38 +11,38 @@
 #include "Core/Camera.h"
 
 void Renderer::updateGraphics(RenderLayer renderLayer) {
-    if( Runtime::getCamera() == nullptr ){
+    if (Runtime::getCamera() == nullptr) {
         throw Exception("No Camera");
     }
-    if( useShadow && renderLayer == RenderLayer::WORLD_SHADOW){
-        Shader * shadowShader = Runtime::getScene()->getShadowMappingManager()->getShader();
+    if (useShadow && renderLayer == RenderLayer::WORLD_SHADOW) {
+        Shader *shadowShader = Runtime::getScene()->getShadowMappingManager()->getShader();
         shadowShader->setMat4("model", getGameObject()->getModelMatrix());
         model->render(shadowShader, renderLayer);
     }
-    if( renderLayer == RenderLayer::WORLD ){
-        if(!ShaderManager::useShader(shader)){
+    if (renderLayer == RenderLayer::WORLD) {
+        if (!ShaderManager::useShader(shader)) {
             shader->use();
             auto smm = Runtime::getScene()->getShadowMappingManager();
-            if( smm != nullptr ) smm->applyMapping(shader);
+            if (smm != nullptr) smm->applyMapping(shader);
             shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
             shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
             LightingManager::update(shader);
             shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->transform.getPosition());
         }
         shader->setMat4("model", getGameObject()->getModelMatrix());
-        if( material != nullptr) material->use(shader);
+        if (material != nullptr) material->use(shader);
         model->render(shader, renderLayer);
     }
 }
 
 void Renderer::start() {
-    if( getGameObject() == nullptr){
+    if (getGameObject() == nullptr) {
         throw Exception("A MeshRender Without Parents");
     }
-    if( getGameObject() != nullptr ){
+    if (getGameObject() != nullptr) {
         model = getGameObject()->getComponent<Model>();
     }
-    if( model == nullptr ){
+    if (model == nullptr) {
         throw Exception("GameObject contains no Model");
     }
 }

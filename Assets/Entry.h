@@ -14,7 +14,7 @@ public:
 
     static void start();
 
-    static Scene * getDefaultScene();
+    static Scene *getDefaultScene();
 
 };
 

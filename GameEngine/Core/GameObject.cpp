@@ -5,8 +5,8 @@
 #include "GameObject.h"
 
 void GameObject::setParent(GameObject *parent) {
-    if( parent == this->parent ) return;
-    if( this->parent != nullptr ){
+    if (parent == this->parent) return;
+    if (this->parent != nullptr) {
         this->parent->detachChildren(this);
     }
     this->parent = parent;
@@ -26,50 +26,50 @@ void GameObject::detachComponent(Component *component) {
 }
 
 GameObject::~GameObject() {
-    for(auto &x : components){
+    for (auto &x : components) {
         delete x;
     }
-    for(auto &x : children){
+    for (auto &x : children) {
         delete x;
     }
 }
 
 void GameObject::update() {
-    for(auto &x : components){
+    for (auto &x : components) {
         x->update();
     }
-    for(auto &x : children){
+    for (auto &x : children) {
         x->update();
     }
 }
 
 void GameObject::updateGraphics(RenderLayer renderLayer) {
-    for(auto &x : components){
+    for (auto &x : components) {
         x->updateGraphics(renderLayer);
     }
-    for(auto &x : children){
+    for (auto &x : children) {
         x->updateGraphics(renderLayer);
     }
 }
 
 void GameObject::start() {
-    for(auto &x : components){
+    for (auto &x : components) {
         x->start();
     }
-    for(auto &x : children){
+    for (auto &x : children) {
         x->start();
     }
 }
 
 void GameObject::destroy() {
-    for(auto &x : components){
+    for (auto &x : components) {
         x->destroy();
         detachComponent(x);
     }
-    for(auto &x : children){
+    for (auto &x : children) {
         x->destroy();
     }
-    if(parent != nullptr){
+    if (parent != nullptr) {
         parent->detachChildren(this);
     }
 }
@@ -85,6 +85,6 @@ void GameObject::destroy(Component *component) {
 }
 
 glm::mat4 GameObject::getModelMatrix() {
-    if(parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
+    if (parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
     else return transform.getModelMatrix(parent->getModelMatrix());
 }

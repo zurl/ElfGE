@@ -14,11 +14,11 @@ public:
 
     virtual void computeMapping() = 0;
 
-    virtual void applyMapping(Shader * shader) = 0;
+    virtual void applyMapping(Shader *shader) = 0;
 
-    virtual Shader * getShader() = 0;
+    virtual Shader *getShader() = 0;
 
-    virtual ~ShadowMappingManager(){}
+    virtual ~ShadowMappingManager() {}
 };
 
 

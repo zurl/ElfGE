@@ -9,10 +9,10 @@ void Canvas::start() {
 }
 
 void Canvas::update() {
-    if( height != Utility::SCREEN_HEIGHT || width != Utility::SCREEN_WIDTH ){
+    if (height != Utility::SCREEN_HEIGHT || width != Utility::SCREEN_WIDTH) {
         height = Utility::SCREEN_HEIGHT;
         width = Utility::SCREEN_WIDTH;
-        projection = glm::ortho(0.0f, (float)width, 0.0f, (float)height);
+        projection = glm::ortho(0.0f, (float) width, 0.0f, (float) height);
     }
 }
 
@@ -21,7 +21,7 @@ void Canvas::destroy() {
 }
 
 void Canvas::updateGraphics(RenderLayer renderLayer) {
-    if( renderLayer != RenderLayer::SCREEN) return;
+    if (renderLayer != RenderLayer::SCREEN) return;
     UIShader->use();
     UIShader->setMat4("projection", projection);
 }

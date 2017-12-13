@@ -12,13 +12,15 @@ void DirectionalShadowMappingManager::initialize() {
     glGenTextures(1, &textureColorbuffer);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
     //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, resolution, resolution, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, resolution, resolution, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE,
+                 NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+    GLfloat borderColor[] = {1.0, 1.0, 1.0, 1.0};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureColorbuffer, 0);
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
@@ -39,12 +41,12 @@ void DirectionalShadowMappingManager::computeMapping() {
     view = glm::lookAt(directLighting->getGameObject()->transform.getPosition(),
                        directLighting->getGameObject()->transform.getPosition()
                        + glm::rotate(directLighting->getGameObject()->transform.getQuaternion(), Transform::forward),
-                Transform::up);
+                       Transform::up);
     shader->setMat4("view", view);
     shader->setInt("enableBones", 1);
 }
 
-void DirectionalShadowMappingManager::applyMapping(Shader * shader) {
+void DirectionalShadowMappingManager::applyMapping(Shader *shader) {
     glActiveTexture(GL_TEXTURE8);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
     shader->setVec3("shadowLightPos", directLighting->getGameObject()->transform.getPosition());
@@ -52,7 +54,7 @@ void DirectionalShadowMappingManager::applyMapping(Shader * shader) {
     shader->setMat4("lightSpaceMatrix", projection * view);
 }
 
-DirectionalShadowMappingManager::DirectionalShadowMappingManager(DirectLighting * directLighting, int resolution)
+DirectionalShadowMappingManager::DirectionalShadowMappingManager(DirectLighting *directLighting, int resolution)
         : resolution(resolution), directLighting(directLighting) {}
 
 DirectionalShadowMappingManager::~DirectionalShadowMappingManager() {

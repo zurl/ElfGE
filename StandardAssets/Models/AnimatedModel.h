@@ -9,7 +9,7 @@
 #include "DefaultModel.h"
 #include "../Meshs/AnimatedMesh.h"
 
-class AnimatedModel: public DefaultModel{
+class AnimatedModel : public DefaultModel {
     Assimp::Importer import;
 
     struct BoneInfo {
@@ -22,7 +22,7 @@ class AnimatedModel: public DefaultModel{
     std::map<std::string, unsigned int> bonesMap;
     std::map<std::string, unsigned int> animationMap;
 
-    struct Animation{
+    struct Animation {
         unsigned int startFrame;
         unsigned int endFrame;
         double start;
@@ -32,7 +32,7 @@ class AnimatedModel: public DefaultModel{
     std::map<std::string, Animation> customAnimationMap;
 
     unsigned int bonesCnt = 0;
-    const aiAnimation* pAnimation;
+    const aiAnimation *pAnimation;
 
     Animation currentAnimation;
     double animation_now;
@@ -45,21 +45,21 @@ class AnimatedModel: public DefaultModel{
     glm::mat4 globalInverseTransform;
 
 
-    const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const std::string NodeName);
+    const aiNodeAnim *FindNodeAnim(const aiAnimation *pAnimation, const std::string NodeName);
 
-    unsigned int FindPosition(double AnimationTime, const aiNodeAnim* pNodeAnim);
+    unsigned int FindPosition(double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    unsigned int FindRotation(double AnimationTime, const aiNodeAnim* pNodeAnim);
+    unsigned int FindRotation(double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    unsigned int FindScaling(double AnimationTime, const aiNodeAnim* pNodeAnim);
+    unsigned int FindScaling(double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    void CalcInterpolatedPosition(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
+    void CalcInterpolatedPosition(aiVector3D &Out, double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    void CalcInterpolatedRotation(aiQuaternion& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
+    void CalcInterpolatedRotation(aiQuaternion &Out, double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    void CalcInterpolatedScaling(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
+    void CalcInterpolatedScaling(aiVector3D &Out, double AnimationTime, const aiNodeAnim *pNodeAnim);
 
-    void computeNodeTransform(double AnimationTime, const aiNode* pNode, const glm::mat4 & ParentTransform);
+    void computeNodeTransform(double AnimationTime, const aiNode *pNode, const glm::mat4 &ParentTransform);
 
     void processNode(aiNode *node, const aiScene *scene);
 
@@ -71,9 +71,9 @@ public:
 
     void update() override;
 
-    void registerAnimation(const std::string & name, unsigned int startFrame, unsigned int endFrame);
+    void registerAnimation(const std::string &name, unsigned int startFrame, unsigned int endFrame);
 
-    void playAnimation(const std::string & name);
+    void playAnimation(const std::string &name);
 
 };
 

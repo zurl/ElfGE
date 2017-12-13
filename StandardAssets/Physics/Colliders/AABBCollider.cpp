@@ -8,15 +8,15 @@
 std::list<AABBCollider *> AABBCollider::allColliders;
 
 void AABBCollider::start() {
-    if( autogen ){
+    if (autogen) {
         autogen = false;
         min = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
         max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
         auto model = getGameObject()->getComponent<DefaultModel>();
-        if( model == nullptr ) throw Exception("AutoGen Only Support Default Mesh");
-        for(auto & mesh : model->meshes){
-            if( mesh == nullptr ) throw Exception("AutoGen Only Support Default Mesh");
-            for(auto & vertex : mesh->vertices){
+        if (model == nullptr) throw Exception("AutoGen Only Support Default Mesh");
+        for (auto &mesh : model->meshes) {
+            if (mesh == nullptr) throw Exception("AutoGen Only Support Default Mesh");
+            for (auto &vertex : mesh->vertices) {
                 min = glm::min(vertex.position, min);
                 max = glm::max(vertex.position, max);
             }
@@ -38,22 +38,22 @@ void AABBCollider::start() {
 
 void AABBCollider::update() {
     computeBox();
-    if( !passive ){
-        for(auto & x : allColliders ){
-            if( x != this ){
+    if (!passive) {
+        for (auto &x : allColliders) {
+            if (x != this) {
                 bool isCollision = checkCollision(x);
                 bool isOnCollision = onCollision.find(x) != onCollision.end();
-                if(isCollision && !isOnCollision){
+                if (isCollision && !isOnCollision) {
                     onCollision.emplace(this);
                     auto result = this->getGameObject()->getComponents<GameScript>();
-                    for(auto & y: result){
+                    for (auto &y: result) {
                         y->onCollisionEnter(x);
                     }
                 }
-                if(!isCollision && isOnCollision){
+                if (!isCollision && isOnCollision) {
                     onCollision.erase(this);
                     auto result = this->getGameObject()->getComponents<GameScript>();
-                    for(auto & y: result){
+                    for (auto &y: result) {
                         y->onCollisionExit(x);
                     }
                 }
@@ -67,10 +67,10 @@ void AABBCollider::destroy() {
 }
 
 AABBCollider::AABBCollider(const glm::vec3 &size,
-             const glm::vec3 &offset,
-             bool passive
-):passive(passive),offset(offset), size(size) {
-    for(auto & x: vertices){
+                           const glm::vec3 &offset,
+                           bool passive
+) : passive(passive), offset(offset), size(size) {
+    for (auto &x: vertices) {
         min = glm::min(x, min);
         max = glm::max(x, max);
     }
@@ -89,7 +89,7 @@ bool AABBCollider::checkAxis(float minA, float maxA, float minB, float maxB) {
 void AABBCollider::computeBox() {
     min = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
-    for(auto & x: vertices){
+    for (auto &x: vertices) {
         glm::vec3 result =
                 glm::rotate(getGameObject()->transform.getQuaternion(), x * getGameObject()->transform.getScale());
         min = glm::min(min, result);
@@ -105,9 +105,9 @@ AABBCollider::AABBCollider(bool passive) {
 }
 
 bool check2DRayCast(float ox, float oy, float dx, float dy,
-float xl, float xr, float yl, float yr){
+                    float xl, float xr, float yl, float yr) {
     float k = dy / dx;
-    float b = - k * ox + oy;
+    float b = -k * ox + oy;
     float py1 = k * xl + b;
     float py2 = k * xr + b;
     float pyl = (float) fmin(py1, py2);
@@ -116,20 +116,20 @@ float xl, float xr, float yl, float yr){
 }
 
 AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float distance) {
-    AABBCollider * result = nullptr;
+    AABBCollider *result = nullptr;
     float resultDistance = FLT_MAX;
-    for(auto target : allColliders){
+    for (auto target : allColliders) {
         target->computeBox();
         glm::vec3 pos = target->getGameObject()->transform.getPosition();
         float targetDis = glm::distance(origin, pos);
-        if(targetDis < distance
+        if (targetDis < distance
             && check2DRayCast(origin.x, origin.z, direction.x, direction.z,
-                               target->min.x, target->max.x, target->min.z, target->max.z)
+                              target->min.x, target->max.x, target->min.z, target->max.z)
             && check2DRayCast(origin.x, origin.y, direction.x, direction.y,
                               target->min.x, target->max.x, target->min.y, target->max.y)
-            && targetDis < resultDistance){
-                resultDistance = targetDis;
-                result = target;
+            && targetDis < resultDistance) {
+            resultDistance = targetDis;
+            result = target;
         }
     }
     return result;
