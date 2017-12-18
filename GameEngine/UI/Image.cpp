@@ -31,6 +31,7 @@ void Image::updateGraphics(RenderLayer renderLayer) {
         UIShader->setMat4("model", getGameObject()->getModelMatrix());
         UIShader->setVec3("color", glm::vec3(1.0f));
         UIShader->setInt("text", 0);
+        UIShader->setInt("mode", 1);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
         glBindTexture(GL_TEXTURE_2D, texture);

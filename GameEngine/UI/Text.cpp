@@ -13,6 +13,7 @@ void Text::updateGraphics(RenderLayer renderLayer) {
     if (renderLayer == RenderLayer::SCREEN) {
         UIShader->setMat4("model", getGameObject()->getModelMatrix());
         UIShader->setVec3("color", fontColor);
+        UIShader->setInt("mode", 0);
         fontFace->renderText(text);
     }
 }

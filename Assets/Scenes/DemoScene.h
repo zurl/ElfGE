@@ -27,7 +27,7 @@ public:
     Text *text;
 
     std::function<void()> onclk;
-
+    std::function<void(double)> oncg;
 
     void start() override {
 
@@ -106,10 +106,24 @@ public:
             text2Text->setText("WOW HERE");
         };
 
-        auto button = set<ImageButton>(canvas, TextureManager::loadTexture2D(
-                Utility::RESOURCE_PREFIX + "Textures/brickwall.jpg"
-        ), glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
+        auto img = TextureManager::loadTexture2D(
+                Utility::RESOURCE_PREFIX + "Textures/cube_specular.png"
+        );
 
+        auto button = set<ImageButton>(
+                canvas, img,
+                glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
+
+        oncg = [text2Text](double x) {
+            text2Text->setText("WOW HERE" + std::to_string(x));
+        };
+
+        auto scrollbar = set<ScrollBar>(
+                canvas, img, img,
+                glm::vec3(300, 300, 0),
+                glm::vec2(500, 40), glm::vec2(20, 50),
+                &oncg
+        );
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/");
