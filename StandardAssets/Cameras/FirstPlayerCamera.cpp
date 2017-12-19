@@ -18,15 +18,13 @@ void FirstPlayerCamera::update() {
 }
 
 void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
-
     Utility::MOUSE_X = xpos;
     Utility::MOUSE_Y = ypos;
 
-    static double lastX = Utility::SCREEN_HEIGHT / 2, lastY = Utility::SCREEN_WIDTH / 2;
+    static double lastX= Utility::SCREEN_WIDTH / 2, lastY = Utility::SCREEN_HEIGHT / 2;
 
-    double xoffset = xpos - lastX;
-    double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
+    double xoffset =  xpos - lastX;
+    double yoffset =  lastY - ypos; // reversed since y-coordinates go from bottom to top
     lastX = xpos;
     lastY = ypos;
 
