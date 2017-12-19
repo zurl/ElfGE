@@ -24,7 +24,7 @@ void GraphicsRuntime::initialize() {
     Utility::window = glfwCreateWindow(Utility::SCREEN_WIDTH,
                                        Utility::SCREEN_HEIGHT,
                                        Utility::WINDOW_NAME.c_str(), NULL, NULL);
-//    glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     if (Utility::window == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
