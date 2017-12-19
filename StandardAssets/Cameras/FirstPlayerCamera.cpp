@@ -30,15 +30,11 @@ void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
     lastX = xpos;
     lastY = ypos;
 
-    glm::vec3 rotation = getGameObject()->transform.getRotation();
-
     xoffset *= mouseSensitivity;
     yoffset *= mouseSensitivity;
 
-    rotation.y -= xoffset;
-    rotation.z += yoffset;
-
-    getGameObject()->transform.setRotation(rotation);
+    getGameObject()->transform.rotate(Transform::up, -xoffset);
+    getGameObject()->transform.rotate(Transform::right, yoffset);
 }
 
 void FirstPlayerCamera::onScrollMove(double x) {
