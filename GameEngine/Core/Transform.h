@@ -11,6 +11,7 @@ class Transform {
     glm::vec3 position;
     glm::mat4 rotation;
     glm::vec3 scale;
+    glm::vec3 lastAngle = glm::vec3(0.0f);
 public:
     Transform();
 
