@@ -26,6 +26,8 @@ public:
 
     void setRotation(const glm::vec3 &eularAngle);
 
+    void setRotationEx(const glm::vec3 &eularAngle);
+
     glm::mat4 getQuatMatrix() const;
 
     glm::quat getQuaternion() const;

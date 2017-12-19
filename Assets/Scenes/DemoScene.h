@@ -158,23 +158,6 @@ public:
         x++;
         if (x > 360000) x = 0;
 
-//        human->transform.setRotation(
-//                glm::vec3(human->transform.getRotation().x,
-//                          human->transform.getRotation().y +0.1f,
-//                          human->transform.getRotation().z));
-
-//        if(cube1->transform.getPosition().z > 5){
-//            dir = -0.01f;
-//        }
-//        if(cube1->transform.getPosition().z < -5){
-//            dir = 0.01f;
-//        }
-//        cube1->transform.translate(glm::vec3(0, 0, dir));
-//        //cube1->transform.rotate(Transform::up, 0.01);
-        //cube1->transform.rotate(Transform::forward, 0.01);
-//        cube2->transform.rotate(Transform::up, 0.01);
-//        cube3->transform.setScale(cube3->transform.getScale() * 0.999f);
-
         Scene::update();
     }
 };
