@@ -84,7 +84,7 @@ namespace Prefabs {
     };
 
 
-    class Camera : public Prefab {
+    class Camera: public Prefab{
     public:
         GameObject *instantiate(Scene *scene) override {
             auto camera = scene->createGameObject()

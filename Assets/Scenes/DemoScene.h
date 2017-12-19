@@ -65,10 +65,13 @@ public:
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
-        //auto plane = set<Water>(glm::vec3(0.0f, 0.0f, 0.0));
+
 //        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
-
+        auto water = createGameObject()
+                ->createComponent<WaterRenderer>();
+        water->transform.setPosition(glm::vec3(0,0,0));
+        water->transform.rotate(Transform::right, glm::pi<float>());
         auto camera = set<Prefabs::Camera>();
 
         camera->transform.setPosition(glm::vec3(-2, 2, 0));
@@ -125,8 +128,8 @@ public:
                 &oncg
         );
 
-        auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/");
+//        auto skybox = createGameObject()
+//                ->createComponent<SkyBox>("Textures/skybox/");
 
         Scene::start();
     }

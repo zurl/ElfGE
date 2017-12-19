@@ -21,5 +21,5 @@
 #include "ShadowMapping/OmnidirectionalShadowMappingManager.h"
 #include "BoringHow/Terrain.h"
 #include "BoringHow/SkyBox.h"
-#include "WRC/RTTexture.h"
+#include "Water/WaterRenderer.h"
 #endif //ELFGE_STANDARDASSETS_H
