@@ -11,7 +11,7 @@ out vec3 FragPos;
 out vec2 TexCoords;
 out vec4 FragPosLightSpace;
 out mat3 TBN;
-
+out float visibility;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
@@ -19,6 +19,9 @@ uniform mat4 lightSpaceMatrix;
 
 const int MAX_BONES = 100;
 uniform mat4 bones[MAX_BONES];
+
+uniform float density;
+uniform float gradient;
 
 void main()
 {
@@ -32,9 +35,14 @@ void main()
     vec3 N = normalize(vec3(model * BoneTransform * vec4(aNormal,    0.0)));
     TBN = transpose(mat3(T, B, N));
 
-
     FragPos = vec3(model * BoneTransform * vec4(aPos, 1.0));
+    vec4 pos2camera = view * vec4(FragPos, 1.0);
+    float dis2camera = length(pos2camera);
+    visibility = exp(-pow((dis2camera * density), gradient));
+    visibility = clamp(visibility, 0.0, 1.0);
+
     TexCoords = aTexCoords;
-    gl_Position = projection * view * vec4(FragPos, 1.0);
+    gl_Position = projection * pos2camera;
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+
 }

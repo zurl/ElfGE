@@ -3,6 +3,7 @@
 //
 
 #include <Graphics/ShaderManager.h>
+#include <Config.h>
 #include "Renderer.h"
 #include "Core/Runtime.h"
 #include "Graphics/LightingManager.h"
@@ -27,6 +28,8 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
             shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
             shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
             LightingManager::update(shader);
+            shader->setFloat("gradient", Config::Fog::gradient);
+            shader->setFloat("density", Config::Fog::density);
             shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->transform.getPosition());
         }
         shader->setMat4("model", getGameObject()->getModelMatrix());

@@ -3,6 +3,10 @@ project(elfge)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
+        GameEngine/Config.cpp GameEngine/Config.h
+        StandardAssets/Water/WaterRenderer.h
+        StandardAssets/Water/WaterTile.h
+        StandardAssets/Water/WaterFrameBuffer.h
         Assets/Prefab/ImageButton.h
         Assets/Prefab/ScrollBar.h
         Assets/Prefab/ImageButton.h

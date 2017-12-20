@@ -43,7 +43,7 @@ public:
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
-
+        Config::Hack::hack = 1;
         human = createGameObject()
                 //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
@@ -51,6 +51,7 @@ public:
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
+        Config::Hack::hack = 0;
 
         auto humanModel = human->getComponent<AnimatedModel>();
 
@@ -68,10 +69,10 @@ public:
 
 //        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
-        auto water = createGameObject()
-                ->createComponent<WaterRenderer>();
-        water->transform.setPosition(glm::vec3(0,0,0));
-        water->transform.rotate(Transform::right, glm::pi<float>());
+//        auto water = createGameObject()
+//                ->createComponent<WaterRenderer>();
+//        water->transform.setPosition(glm::vec3(0,0,0));
+//        water->transform.rotate(Transform::right, glm::pi<float>());
         auto camera = set<Prefabs::Camera>();
 
         camera->transform.setPosition(glm::vec3(-2, 2, 0));
@@ -128,8 +129,8 @@ public:
                 &oncg
         );
 
-//        auto skybox = createGameObject()
-//                ->createComponent<SkyBox>("Textures/skybox/");
+        auto skybox = createGameObject()
+                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
         Scene::start();
     }
