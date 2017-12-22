@@ -36,14 +36,15 @@ public:
         light->transform.translate(-light->transform.getForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
+//        auto terrain = set<DemoTerrain>();
 
-        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
+//        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
         Config::Hack::hack = 1;
+        /*
         human = createGameObject()
                 //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
@@ -65,7 +66,7 @@ public:
         auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
-
+*/
 
 //        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
@@ -80,6 +81,8 @@ public:
 //        cube4 = set<Cube>(glm::vec3(1,1,7));
 //        cube5 = set<Cube>(glm::vec3(1,1,10));
 
+        std::cerr<<"Draw Grass!!"<<std::endl;
+        auto grass = createGameObject()->createComponent<GrassRenderer>();
 
         auto canvas = createGameObject()->createComponent<Canvas>();
 //
@@ -129,8 +132,8 @@ public:
                 &oncg
         );
 
-        auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+//        auto skybox = createGameObject()
+//                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
         Scene::start();
     }

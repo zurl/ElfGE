@@ -107,7 +107,10 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp
+        StandardAssets/Grass/GrassRenderer.h
+        StandardAssets/Grass/GrassRenderer.cpp
+        )
 
 include_directories("./Dependency")
 include_directories("./GameEngine")
@@ -130,7 +133,7 @@ ELSEIF (UNIX)
     include_directories("/usr/include/freetype")
     find_library(OPENGL OpenGL)
     find_library(GLFW glfw)
-    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c Assets/Prefab/ScrollBar.h)
+    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c Assets/Prefab/ScrollBar.h StandardAssets/Grass/GrassRenderer.cpp StandardAssets/Grass/GrassRenderer.h)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -lGLEW)
     find_library(ASSIMP assimp)

@@ -22,4 +22,5 @@
 #include "BoringHow/Terrain.h"
 #include "BoringHow/SkyBox.h"
 #include "Water/WaterRenderer.h"
+#include "Grass/GrassRenderer.h"
 #endif //ELFGE_STANDARDASSETS_H

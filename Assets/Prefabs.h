@@ -99,6 +99,7 @@ namespace Prefabs {
     public:
         GameObject *instantiate(Scene *scene) override {
             auto terrain = scene->createGameObject()
+//                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
                     ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
                     ->createComponent<Renderer>(
                             &material,
