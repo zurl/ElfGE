@@ -16,6 +16,7 @@ in vec2 vUv;
 out vec4 FragColor;
 
 void main() {
+///*
 	vec4 color = vec4(vColor) * texture(map, vUv);
 	vec4 hdata = texture(heightMap, vSamplePos);
 
@@ -23,6 +24,7 @@ void main() {
 
 	// make grass transparent as it approachs outer view distance perimeter
 	color.a = 1.0 - smoothstep(grassFogFar * 0.55, grassFogFar * 0.8, depth);
+//	color.a = 1.0;
 
 	// apply terrain lightmap
 	float light = hdata.g;
@@ -34,5 +36,7 @@ void main() {
 	float fogFactor = smoothstep(fogNear, fogFar, depth);
 	color.rgb = mix(color.rgb, fogColor, fogFactor);
 	// output
+//	*/
 	FragColor = color;
+//	FragColor = vec4(1.0,1.0,1.0,1.0);
 }

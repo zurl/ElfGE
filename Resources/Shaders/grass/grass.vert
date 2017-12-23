@@ -24,7 +24,7 @@ uniform float TRANSITION_LOW;
 uniform float TRANSITION_HIGH;
 
 //uniform vec3 lightDir;
-const vec3 lightDir = vec3(0,0,100);
+const vec3 lightDir = normalize(vec3(0,0,100));
 uniform vec3 camDir; // direction cam is looking at
 uniform vec2 drawPos; // centre of where we want to draw
 uniform float time;  // used to animate blades
@@ -34,8 +34,8 @@ uniform vec3 grassColor;
 uniform float windIntensity;
 
 layout  (location = 0) in float vindex ; // Which vertex are we drawing - the main thing we need to know
-layout (location = 1) in vec4 offset ; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
-layout (location = 2) in vec4 shape ; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
+layout (location = 1) in vec4 shape ; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
+layout (location = 2) in vec4 offset ; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
 
 out vec2 vSamplePos;
 out vec4 vColor;
@@ -126,7 +126,7 @@ void main() {
 		* (1.0 / (TRANSITION_HIGH - TRANSITION_LOW));
 
 	// Transition geometry toward degenerate as we approach beach altitude
-	vpos *= degenerate;
+//	vpos *= degenerate;
 
 	// Vertex color must be brighter because it is multiplied with blade texture
 	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95), 1.0);
@@ -159,7 +159,7 @@ void main() {
 	// Translate to world coordinates
 	vpos.x += bladePos.x;
 	vpos.y += bladePos.y;
-	vpos.z += altitude;
-
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);
+//	vpos.z += altitude;
+//	vpos.z = 0;
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos.xzy, 1.0);
 }

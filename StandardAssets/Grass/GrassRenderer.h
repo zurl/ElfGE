@@ -10,23 +10,24 @@
 
 class GrassRenderer : public Component{
     const int BLADE_SEGS = 4 ;// # of blade segments
-    const int BLADE_VERTS = (BLADE_SEGS + 1) * 2 ;// # of vertices per blade (1 side)
+    const unsigned int BLADE_VERTS = (BLADE_SEGS + 1) * 2 ;// # of vertices per blade (1 side)
     const int BLADE_INDICES = BLADE_SEGS * 12;
     const float BLADE_WIDTH = 0.15;
     const float BLADE_HEIGHT_MIN = 2.25;
     const float BLADE_HEIGHT_MAX = 3.0;
 
-    int numBlades = 5000;
-    float radius = 50; // half the width of the square
+    int numBlades = 50000;
+    float radius = 10; // half the width of the square
     glm::vec3 fogColor = glm::vec3(0.74f, 0.77f, 0.91f);
-    glm::vec3 grassColor = glm::vec3(0.45f, 0.46f, 0.19f);
-    float fogFar = radius * 20, grassFogFar = radius * 2, transitionLow = 0.31, transitionHigh = 0.36, windIntensity;
-    glm::vec3 heightMapScale = glm::vec3(1/3072.0f,1/3072.0f,3072.0f);
+//    glm::vec3 grassColor = glm::vec3(0.45f, 0.46f, 0.19f);
+    glm::vec3 grassColor = glm::vec3(0.55f, 0.0, 0.0f);
+    float fogFar = radius * 20, grassFogFar = radius * 2, transitionLow = 0.31, transitionHigh = 0.36, windIntensity = 1.5;
+    glm::vec3 heightMapScale = glm::vec3(1/3072.0f,1/3072.0f,180.0f);
 
     GLuint texture, heightMap;
     Shader *shader;
     std::vector<float> vindex,shape,offset;
-    std::vector<GLuint > index;
+    std::vector<GLuint> index;
 
     GLuint VAO,vindexVBO,shapeVBO,offsetVBO,EBO;
 
@@ -38,11 +39,12 @@ public:
         heightMap = TextureManager::loadTexture2D(
                 Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg");
         shader = ShaderManager::getShader("grass/grass");
-        vindex = std::vector<float>(BLADE_VERTS*2*1);
+        vindex = std::vector<float>(BLADE_VERTS*2);
+//        vindex = std::vector<float>(numBlades);
         shape = std::vector<float>(4*numBlades);
         offset = std::vector<float>(4*numBlades);
         index = std::vector<GLuint>(BLADE_INDICES);
-        initBladeIndexVerts();
+        initBladeIndices();
         initBladeOffsetVerts();
         initBladeShapeVerts();
         initBladeIndexVerts();
@@ -60,7 +62,7 @@ public:
 
     float randomGen();
 
-    void update();
+    void prepare();
 
     void bindVertice();
 
