@@ -129,7 +129,7 @@ void main() {
 //	vpos *= degenerate;
 
 	// Vertex color must be brighter because it is multiplied with blade texture
-	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95), 1.0);
+	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95),vec3(1,1,1));
 	altitude *= heightMapScale.z;
 
 	// Compute directional (sun) light for this vertex
@@ -150,8 +150,10 @@ void main() {
 		light * 0.95 + sin(offset.x * 99.0) * 0.05,
 		1.0
 	);
+//	vColor = vec4(1,1,1,1);
 	vColor.rgb = vColor.rgb * LIGHT_COLOR * color;
-	vColor.rgb = min(vColor.rgb + specular, 1.0);
+//	vColor.rgb = min(vColor.rgb + specular, 1.0);
+	vColor.rgb = min(vColor.rgb, vec3(1,1,1));
 
 	// grass texture coordinate for this vertex
 	vUv = vec2(bedge, di * 2.0);
@@ -162,4 +164,7 @@ void main() {
 //	vpos.z += altitude;
 //	vpos.z = 0;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos.xzy, 1.0);
+//	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);
+//    gl_Position = vec4(vpos.xzy,1.0);
+//	gl_Position = projectionMatrix * modelViewMatrix * vec4(0,0,0, 1.0);
 }

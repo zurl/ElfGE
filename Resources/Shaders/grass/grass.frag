@@ -17,7 +17,14 @@ out vec4 FragColor;
 
 void main() {
 ///*
-	vec4 color = vec4(vColor) * texture(map, vUv);
+    FragColor = texture(map,vUv);
+//    FragColor = vColor;
+//    return ;
+    vec4 text = texture(map,vUv);
+    text.g = text.r;
+    text.b = text.r;
+	vec4 color = vec4(vColor) * text;
+//    vec4 color = vColor;
 	vec4 hdata = texture(heightMap, vSamplePos);
 
 	float depth = gl_FragCoord.z / gl_FragCoord.w;
