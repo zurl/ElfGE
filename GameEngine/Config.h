@@ -27,6 +27,12 @@ namespace Config {
 
     }
 
+    namespace Game{
+
+        extern int developerMode;
+
+    }
+
     namespace Hack{
         extern int hack;
     }

@@ -45,15 +45,14 @@ namespace Prefabs {
             return result;
         }
     };
-
     class Cube : public Prefab {
         glm::vec3 position;
     public:
         Cube(const glm::vec3 &position) : position(position) {}
 
         GameObject *instantiate(Scene *scene) override {
-
-            auto result = scene->createGameObject()
+            static int num = 0;
+            auto result = scene->createGameObject("cube" + std::to_string(num++))
                     ->createComponent<DefaultModel>(
                             new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(

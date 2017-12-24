@@ -2,7 +2,38 @@ cmake_minimum_required(VERSION 3.6)
 project(elfge)
 set(CMAKE_CXX_STANDARD 11)
 
+include_directories("./Dependency")
+include_directories("./GameEngine")
+include_directories("./StandardAssets")
+
+IF (WIN32)
+	find_package (OpenGL REQUIRED)
+	link_libraries (glew32s.lib glfw3.dll  assimp freetype ${OPENGL_LIBRARIES} )
+    MESSAGE(STATUS "Now is windows")
+ELSEIF (APPLE)
+    include_directories("/usr/local/Cellar/freetype/2.7.1/include/freetype2")
+    MESSAGE(STATUS "Now is Apple systems.")
+    find_library(OPENGL OpenGL)
+    find_library(GLFW glfw)
+    find_library(GLEW glew)
+    find_library(ASSIMP assimp)
+    find_library(FREETYPE freetype)
+    link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP} ${FREETYPE})
+ELSEIF (UNIX)
+    include_directories("/usr/include/freetype")
+    find_library(OPENGL OpenGL)
+    find_library(GLFW glfw)
+    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -lGLEW)
+    find_library(ASSIMP assimp)
+    find_library(FREETYPE freetype)
+    link_libraries(${GLFW} ${OPENGL} ${ASSIMP} ${FREETYPE})
+ENDIF ()
+
 set(SOURCE_FILES
+        StandardAssets/Materials/SelectedMaterial.cpp StandardAssets/Materials/SelectedMaterial.h
+        Assets/Prefab/ScrollBar.h Assets/Scripts/DeveloperScript.cpp Assets/Scripts/DeveloperScript.h
         GameEngine/Config.cpp GameEngine/Config.h
         StandardAssets/Water/WaterRenderer.h
         StandardAssets/Water/WaterTile.h
@@ -75,8 +106,8 @@ set(SOURCE_FILES
         GameEngine/Graphics/TextureManager.cpp
         GameEngine/Graphics/TextureManager.h
         GameEngine/Graphics/Texture.h
-        Assets/FuckScript.cpp
-        Assets/FuckScript.h
+        Assets/Scripts/FuckScript.cpp
+        Assets/Scripts/FuckScript.h
         StandardAssets/Physics/Colliders/AABBCollider.cpp
         StandardAssets/Physics/Colliders/AABBCollider.h
         StandardAssets/Physics/Colliders/Collider.h
@@ -107,35 +138,6 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
-
-include_directories("./Dependency")
-include_directories("./GameEngine")
-include_directories("./StandardAssets")
-
-IF (WIN32)
-	find_package (OpenGL REQUIRED)
-	link_libraries (glew32s.lib glfw3.dll  assimp freetype ${OPENGL_LIBRARIES} )
-    MESSAGE(STATUS "Now is windows")
-ELSEIF (APPLE)
-    include_directories("/usr/local/Cellar/freetype/2.7.1/include/freetype2")
-    MESSAGE(STATUS "Now is Apple systems.")
-    find_library(OPENGL OpenGL)
-    find_library(GLFW glfw)
-    find_library(GLEW glew)
-    find_library(ASSIMP assimp)
-    find_library(FREETYPE freetype)
-    link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP} ${FREETYPE})
-ELSEIF (UNIX)
-    include_directories("/usr/include/freetype")
-    find_library(OPENGL OpenGL)
-    find_library(GLFW glfw)
-    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c Assets/Prefab/ScrollBar.h)
-    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
-    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -lGLEW)
-    find_library(ASSIMP assimp)
-    find_library(FREETYPE freetype)
-    link_libraries(${GLFW} ${OPENGL} ${ASSIMP} ${FREETYPE})
-ENDIF ()
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp Assets/Prefab/PlainText.h)
 
 add_executable(elfge ${SOURCE_FILES})

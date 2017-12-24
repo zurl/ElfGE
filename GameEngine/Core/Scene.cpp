@@ -23,11 +23,11 @@ void Scene::addGameObject(GameObject *gameObject) {
 }
 
 Scene::Scene() {
-    rootGameObject = new GameObject();
+    rootGameObject = new GameObject("");
 }
 
-GameObject *Scene::createGameObject() {
-    GameObject *gameObject = new GameObject();
+GameObject *Scene::createGameObject(const std::string & name) {
+    GameObject *gameObject = new GameObject(name);
     addGameObject(gameObject);
     return gameObject;
 }

@@ -8,6 +8,9 @@
 
 void FuckScript::start() {
     text = getGameObject()->getComponent<Text>();
+    cb = std::bind(&FuckScript::onClick, this);
+    Input::attachOnMouseClick(0, Utility::SCREEN_WIDTH, 0, Utility::SCREEN_WIDTH, 0, &cb, nullptr);
+
 }
 
 void FuckScript::update() {
@@ -18,8 +21,6 @@ void FuckScript::update() {
         }
         return;
     }
-    cb = std::bind(&FuckScript::onClick, this);
-    Input::attachOnMouseClick(0, Utility::SCREEN_WIDTH, 0, Utility::SCREEN_WIDTH, 0, &cb, nullptr);
 }
 
 FuckScript::FuckScript(GameObject *human) : human(human) {}
@@ -34,7 +35,6 @@ void FuckScript::onClick() {
         text->setText("NO");
     } else {
         text->setText("YES");
-        //collider->getGameObject()->transform.translate(Transform::up);
     }
     cnt = 5;
 }

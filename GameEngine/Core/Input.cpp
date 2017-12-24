@@ -72,7 +72,7 @@ void Input::processClick() {
         double x = Utility::MOUSE_X, y = Utility::SCREEN_HEIGHT - Utility::MOUSE_Y;
         MouseClickHandler *result = nullptr;
         for (auto &h : mouseClickEventHandlers) {
-            if (h.xl <= x && h.xr >= x && h.yl <= y && h.yr >= y) {
+            if (h.xl <= -1 || (h.xl <= x && h.xr >= x && h.yl <= y && h.yr >= y)) {
                 if (result == nullptr || h.priority > result->priority) {
                     result = &h;
                 }

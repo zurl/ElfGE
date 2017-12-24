@@ -28,8 +28,6 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
             shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
             shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
             LightingManager::update(shader);
-            shader->setFloat("gradient", Config::Fog::gradient);
-            shader->setFloat("density", Config::Fog::density);
             shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->transform.getPosition());
         }
         shader->setMat4("model", getGameObject()->getModelMatrix());
@@ -56,3 +54,11 @@ void Renderer::destroy() {
 
 Renderer::Renderer(Material *material, Shader *shader, bool useShadow) : material(material), shader(shader),
                                                                          useShadow(useShadow) {}
+
+Material *Renderer::getMaterial() const {
+    return material;
+}
+
+void Renderer::setMaterial(Material *material) {
+    Renderer::material = material;
+}

@@ -39,7 +39,7 @@ public:
 
     void addGameObject(GameObject *gameObject);
 
-    GameObject *createGameObject();
+    GameObject *createGameObject(const std::string & name = "");
 
 protected:
     template<typename T, typename... Args>

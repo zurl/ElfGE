@@ -88,3 +88,21 @@ glm::mat4 GameObject::getModelMatrix() {
     if (parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
     else return transform.getModelMatrix(parent->getModelMatrix());
 }
+
+GameObject::GameObject(const std::string &name) : name(name) {}
+
+const std::string &GameObject::getName() const {
+    return name;
+}
+
+void GameObject::setName(const std::string &name) {
+    GameObject::name = name;
+}
+
+const std::list<GameObject *> &GameObject::getChildren() const {
+    return children;
+}
+
+const std::list<Component *> &GameObject::getComponents() const {
+    return components;
+}

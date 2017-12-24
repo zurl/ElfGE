@@ -11,8 +11,10 @@
 
 class Mesh : public Model {
 public:
-    virtual void render(Shader *shader, RenderLayer renderLayer) = 0;
-
+    std::string getName() override {
+        return "mesh";
+    }
+    virtual void render(Shader *shader, RenderLayer renderLayer) override = 0;
     virtual ~Mesh() {}
 };
 

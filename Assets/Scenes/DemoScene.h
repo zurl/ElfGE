@@ -10,7 +10,9 @@
 #include "StandardAssets.h"
 #include "UI/UI.h"
 #include "../Prefabs.h"
-#include "../FuckScript.h"
+#include "../Scripts/FuckScript.h"
+#include "../Prefab/PlainText.h"
+#include "../Scripts/DeveloperScript.h"
 
 using namespace Prefabs;
 
@@ -83,21 +85,21 @@ public:
 
         auto canvas = createGameObject()->createComponent<Canvas>();
 //
-        auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
+        //auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
 //
-        text1->setParent(canvas);
-        text1->transform.translate(glm::vec3(20, 20, 0));
-        text = text1->getComponent<Text>();
-        text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
+//        text1->setParent(canvas);
+//        text1->transform.translate(glm::vec3(20, 20, 0));
+//        text = text1->getComponent<Text>();
+//        text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
+//
 
+//        auto text2 = createGameObject()->createComponent<Text>("hello world!", arialFont);
+//
+//        text2->setParent(canvas);
+//        text2->transform.translate(glm::vec3(40, 40, 0));
+//        text2->createComponent<FuckScript>(human);
 
-        auto text2 = createGameObject()->createComponent<Text>("hello world!", arialFont);
-
-        text2->setParent(canvas);
-        text2->transform.translate(glm::vec3(40, 40, 0));
-        text2->createComponent<FuckScript>(human);
-
-        auto text2Text = text2->getComponent<Text>();
+        //auto text2Text = text2->getComponent<Text>();
 
         auto image1 = createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
@@ -106,28 +108,39 @@ public:
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
-        onclk = [text2Text]() {
-            text2Text->setText("WOW HERE");
-        };
+//        onclk = [text2Text]() {
+//            text2Text->setText("WOW HERE");
+//        };
+//
+//        auto img = TextureManager::loadTexture2D(
+//                Utility::RESOURCE_PREFIX + "Textures/cube_specular.png"
+//        );
+//
+//        auto button = set<ImageButton>(
+//                canvas, img,
+//                glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
 
-        auto img = TextureManager::loadTexture2D(
-                Utility::RESOURCE_PREFIX + "Textures/cube_specular.png"
-        );
+//        oncg = [text2Text](double x) {
+//            text2Text->setText("WOW HERE" + std::to_string(x));
+//        };
 
-        auto button = set<ImageButton>(
-                canvas, img,
-                glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
+//        auto scrollbar = set<ScrollBar>(
+//                canvas, img, img,
+//                glm::vec3(300, 300, 0),
+//                glm::vec2(500, 40), glm::vec2(20, 50),
+//                &oncg
+//        );
 
-        oncg = [text2Text](double x) {
-            text2Text->setText("WOW HERE" + std::to_string(x));
-        };
 
-        auto scrollbar = set<ScrollBar>(
-                canvas, img, img,
-                glm::vec3(300, 300, 0),
-                glm::vec2(500, 40), glm::vec2(20, 50),
-                &oncg
-        );
+        auto dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
+        auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
+        auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
+
+        auto developer = createGameObject()
+        ->createComponent<DeveloperScript>(
+                dt3->getComponent<Text>(),
+                dt2->getComponent<Text>(),
+                dt1->getComponent<Text>());
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/", "jpg");
@@ -148,16 +161,16 @@ public:
     float x = 0;
 
     void update() override {
-        cnt++;
-        dt += Utility::deltaTime;
-        if (dt >= 1.0f) {
-            dt = 0;
-            text->setText("FPS:" + itos(cnt));
-            cnt = 0;
-        }
-
-        x++;
-        if (x > 360000) x = 0;
+//        cnt++;
+//        dt += Utility::deltaTime;
+//        if (dt >= 1.0f) {
+//            dt = 0;
+//            text->setText("FPS:" + itos(cnt));
+//            cnt = 0;
+//        }
+//
+//        x++;
+//        if (x > 360000) x = 0;
 
         Scene::update();
     }

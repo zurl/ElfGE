@@ -12,8 +12,9 @@
 class GameObject {
 private:
     std::list<Component *> components;
-    GameObject *parent;
+    GameObject *parent = nullptr;
     std::list<GameObject *> children;
+    std::string name;
 
     void attachChildren(GameObject *gameObject);
 
@@ -22,6 +23,8 @@ private:
     void detachComponent(Component *component);
 
 public:
+    GameObject(const std::string &name);
+
     Transform transform;
 
     glm::mat4 getModelMatrix();
@@ -84,6 +87,14 @@ public:
     static void destroy(Component *component);
 
     virtual ~GameObject();
+
+    const std::string &getName() const;
+
+    void setName(const std::string &name);
+
+    const std::list<GameObject *> &getChildren() const;
+
+    const std::list<Component *> &getComponents() const;
 
 };
 
