@@ -138,6 +138,39 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp Assets/Prefab/PlainText.h GameEngine/Core/LODGameObject.cpp GameEngine/Core/LODGameObject.h)
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp
+        Assets/Prefab/PlainText.h GameEngine/Core/LODGameObject.cpp GameEngine/Core/LODGameObject.h
+        StandardAssets/Grass/GrassRenderer.h
+        StandardAssets/Grass/GrassRenderer.cpp
+        )
+
+include_directories("./Dependency")
+include_directories("./GameEngine")
+include_directories("./StandardAssets")
+
+IF (WIN32)
+	find_package (OpenGL REQUIRED)
+	link_libraries (glew32s.lib glfw3.dll  assimp freetype ${OPENGL_LIBRARIES} )
+    MESSAGE(STATUS "Now is windows")
+ELSEIF (APPLE)
+    include_directories("/usr/local/Cellar/freetype/2.7.1/include/freetype2")
+    MESSAGE(STATUS "Now is Apple systems.")
+    find_library(OPENGL OpenGL)
+    find_library(GLFW glfw)
+    find_library(GLEW glew)
+    find_library(ASSIMP assimp)
+    find_library(FREETYPE freetype)
+    link_libraries(${GLFW} ${GLEW} ${OPENGL} ${ASSIMP} ${FREETYPE})
+ELSEIF (UNIX)
+    include_directories("/usr/include/freetype")
+    find_library(OPENGL OpenGL)
+    find_library(GLFW glfw)
+    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c Assets/Prefab/ScrollBar.h StandardAssets/Grass/GrassRenderer.cpp StandardAssets/Grass/GrassRenderer.h)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -lGLEW)
+    find_library(ASSIMP assimp)
+    find_library(FREETYPE freetype)
+    link_libraries(${GLFW} ${OPENGL} ${ASSIMP} ${FREETYPE})
+ENDIF ()
 
 add_executable(elfge ${SOURCE_FILES})

@@ -6,7 +6,7 @@
 
 
 void FirstPlayerCamera::update() {
-    float cameraSpeed = (float) (2.5f * Utility::deltaTime);
+    float cameraSpeed = (float) (5.0f * Utility::deltaTime);
     if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS)
         getGameObject()->transform.translate(cameraSpeed * getGameObject()->getWorldForward());
     if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS)

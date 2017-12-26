@@ -73,6 +73,28 @@ public:
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
+        //Config::Hack::hack = 1;
+//        human = createGameObject()
+//                //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
+//                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
+//                ->createComponent<Renderer>(
+//                        &material,
+//                        ShaderManager::getShader("light_with_directional_shadow_anim")
+//                );
+//        Config::Hack::hack = 0;
+////
+//        auto humanModel = human->getComponent<AnimatedModel>();
+////
+//        humanModel->registerAnimation("RUN", 500, 600);
+//        humanModel->playAnimation("RUN");
+////
+//        human->transform.setScale(glm::vec3(0.01f));
+//        human->transform.translate(glm::vec3(3, 1, 0));
+
+
+//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
+//        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
 //        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
@@ -87,7 +109,9 @@ public:
 //        cube4 = set<Cube>(glm::vec3(1,1,7));
 //        cube5 = set<Cube>(glm::vec3(1,1,10));
 
-
+        std::cerr<<"Draw Grass!!"<<std::endl;
+        auto grass = createGameObject()->createComponent<GrassRenderer>();
+//        grass->transform.setScale(glm::vec3(1,1,1));
         auto canvas = createGameObject()->createComponent<Canvas>();
 //
         //auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
