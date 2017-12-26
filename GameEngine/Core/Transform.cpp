@@ -16,7 +16,7 @@ glm::mat4 Transform::getModelMatrix(glm::mat4 model) const {
     return model;
 }
 
-const glm::vec3 &Transform::getPosition() const {
+const glm::vec3 &Transform::getLocalPosition() const {
     return position;
 }
 
@@ -24,7 +24,7 @@ void Transform::setPosition(const glm::vec3 &position) {
     Transform::position = position;
 }
 
-glm::vec3 Transform::getRotation() const {
+glm::vec3 Transform::getLocalRotation() const {
     return glm::eulerAngles(glm::quat_cast(rotation));
 }
 
@@ -40,7 +40,7 @@ void Transform::setRotationEx(const glm::vec3 &eularAngle) {
     lastAngle = eularAngle;
 }
 
-const glm::vec3 &Transform::getScale() const {
+const glm::vec3 &Transform::getLocalScale() const {
     return scale;
 }
 
@@ -52,29 +52,29 @@ void Transform::translate(const glm::vec3 &position) {
     Transform::position += position;
 }
 
-glm::mat4 Transform::getQuatMatrix() const {
+glm::mat4 Transform::getLocalQuatMatrix() const {
     return rotation;
 }
 
-glm::quat Transform::getQuaternion() const {
+glm::quat Transform::getLocalQuaternion() const {
     return glm::quat_cast(rotation);
 }
 
 Transform::Transform() : position(0.0f), rotation(1.0f), scale(1.0f) {}
 
-glm::vec3 Transform::getUp() const {
-    return glm::rotate(getQuaternion(), Transform::up);
+glm::vec3 Transform::getLocalUp() const {
+    return glm::rotate(getLocalQuaternion(), Transform::up);
 }
 
-glm::vec3 Transform::getRight() const {
-    return glm::rotate(getQuaternion(), Transform::right);
+glm::vec3 Transform::getLocalRight() const {
+    return glm::rotate(getLocalQuaternion(), Transform::right);
 }
 
-glm::vec3 Transform::getForward() const {
-    return glm::rotate(getQuaternion(), Transform::forward);
+glm::vec3 Transform::getLocalForward() const {
+    return glm::rotate(getLocalQuaternion(), Transform::forward);
 }
 
 void Transform::rotate(glm::vec3 axis, float angle) {
-    rotation = glm::toMat4(glm::rotate(getQuaternion(), angle, axis));
+    rotation = glm::toMat4(glm::rotate(getLocalQuaternion(), angle, axis));
 }
 

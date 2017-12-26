@@ -9,7 +9,7 @@ std::string PointLighting::getName() {
 }
 
 void PointLighting::update(const std::string &prefix, Shader *shader) {
-    shader->setVec3(prefix + "position", getGameObject()->transform.getPosition());
+    shader->setVec3(prefix + "position", getGameObject()->getWorldPosition());
     shader->setVec3(prefix + "ambient", ambient);
     shader->setVec3(prefix + "diffuse", diffuse);
     shader->setVec3(prefix + "specular", specular);

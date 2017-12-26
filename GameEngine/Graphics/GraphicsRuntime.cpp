@@ -59,9 +59,10 @@ void GraphicsRuntime::update(Scene *scene) {
         scene->updateGraphics(RenderLayer::WORLD_SHADOW);
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glEnable(GL_DEPTH_TEST);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glStencilMask(0x00);
     glViewport(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
     scene->updateGraphics(RenderLayer::WORLD);
 //    debugUtility.shader->use();

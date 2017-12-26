@@ -91,12 +91,12 @@ void AABBCollider::computeBox() {
     max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
     for (auto &x: vertices) {
         glm::vec3 result =
-                glm::rotate(getGameObject()->transform.getQuaternion(), x * getGameObject()->transform.getScale());
+                glm::rotate(getGameObject()->getWorldQuaternion(), x * getGameObject()->getWorldScale());
         min = glm::min(min, result);
         max = glm::max(max, result);
     }
-    min += getGameObject()->transform.getPosition();
-    max += getGameObject()->transform.getPosition();
+    min += getGameObject()->getWorldPosition();
+    max += getGameObject()->getWorldPosition();
 }
 
 AABBCollider::AABBCollider(bool passive) {
@@ -120,7 +120,7 @@ AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float
     float resultDistance = FLT_MAX;
     for (auto target : allColliders) {
         target->computeBox();
-        glm::vec3 pos = target->getGameObject()->transform.getPosition();
+        glm::vec3 pos = target->getGameObject()->getWorldPosition();
         float targetDis = glm::distance(origin, pos);
         if (targetDis < distance
             && check2DRayCast(origin.x, origin.z, direction.x, direction.z,
@@ -133,4 +133,16 @@ AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float
         }
     }
     return result;
+}
+
+std::string AABBCollider::getName() {
+    return "AABBCollider";
+}
+
+const glm::vec3 &AABBCollider::getOffset() const {
+    return offset;
+}
+
+const glm::vec3 &AABBCollider::getSize() const {
+    return size;
 }

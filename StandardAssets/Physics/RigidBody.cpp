@@ -10,8 +10,8 @@ void RigidBody::onCollisionEnter(Collider *collider) {
         auto rb = target->getComponent<RigidBody>();
         if (rb == nullptr) return;
         glm::vec3 directVector;
-        if (rb->isFace) directVector = getGameObject()->transform.forward;
-        else directVector = glm::normalize(target->transform.getPosition() - getGameObject()->transform.getPosition());
+        if (rb->isFace) directVector = getGameObject()->getWorldForward();
+        else directVector = glm::normalize(target->getWorldPosition() - getGameObject()->getWorldPosition());
 
         float va = glm::dot(directVector, velocity);
         float vb = glm::dot(directVector, rb->velocity);
@@ -58,4 +58,8 @@ void RigidBody::start() {
 RigidBody::RigidBody(float mass, const glm::vec3 &velocity, const glm::vec3 &force, float collisionK, bool isTrigger,
                      bool useGravity) : mass(mass), collisionK(collisionK), isTrigger(isTrigger),
                                         useGravity(useGravity), velocity(velocity), force(force) {}
+
+std::string RigidBody::getName() {
+    return "RigidBody";
+}
 

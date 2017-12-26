@@ -27,8 +27,8 @@ FuckScript::FuckScript(GameObject *human) : human(human) {}
 
 void FuckScript::onClick() {
     AABBCollider *collider = AABBCollider::raycast(
-            Runtime::getCamera()->getGameObject()->transform.getPosition(),
-            Runtime::getCamera()->getGameObject()->transform.getForward(),
+            Runtime::getCamera()->getGameObject()->getWorldPosition(),
+            Runtime::getCamera()->getGameObject()->getWorldPosition(),
             100000.0f
     );
     if (collider == nullptr) {

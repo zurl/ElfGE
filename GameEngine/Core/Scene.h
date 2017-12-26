@@ -41,6 +41,8 @@ public:
 
     GameObject *createGameObject(const std::string & name = "");
 
+    GameObject *createLODGameObject(const std::string & name = "");
+
 protected:
     template<typename T, typename... Args>
     GameObject *set(Args &&... args) {

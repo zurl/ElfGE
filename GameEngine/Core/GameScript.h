@@ -20,6 +20,8 @@ protected:
     void enableScrollInput();
 
 public:
+    std::string getName() override;
+
     virtual void onMouseMove(double x, double y) {}
 
     virtual void onScrollMove(double x) {}

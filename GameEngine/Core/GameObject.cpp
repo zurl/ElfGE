@@ -10,7 +10,7 @@ void GameObject::setParent(GameObject *parent) {
         this->parent->detachChildren(this);
     }
     this->parent = parent;
-    this->parent->attachChildren(this);
+    if(this->parent != nullptr) this->parent->attachChildren(this);
 }
 
 void GameObject::attachChildren(GameObject *gameObject) {
@@ -105,4 +105,35 @@ const std::list<GameObject *> &GameObject::getChildren() const {
 
 const std::list<Component *> &GameObject::getComponents() const {
     return components;
+}
+
+glm::vec3 GameObject::getWorldPosition() const {
+    if (parent == nullptr) return transform.getLocalPosition();
+    else return transform.getLocalPosition() + parent->getWorldPosition();
+}
+
+glm::vec3 GameObject::getWorldScale() const {
+    if (parent == nullptr) return transform.getLocalScale();
+    else return transform.getLocalScale() * parent->getWorldScale();
+}
+
+glm::quat GameObject::getWorldQuaternion() const {
+    if (parent == nullptr) return transform.getLocalQuaternion();
+    else return parent->getWorldQuaternion() * transform.getLocalQuaternion();
+}
+
+glm::vec3 GameObject::getWorldForward() const {
+    return glm::rotate(getWorldQuaternion(), Transform::forward);
+}
+
+glm::vec3 GameObject::getWorldUp() const {
+    return glm::rotate(getWorldQuaternion(), Transform::up);
+}
+
+glm::vec3 GameObject::getWorldRight() const {
+    return glm::rotate(getWorldQuaternion(), Transform::right);
+}
+
+glm::vec3 GameObject::getWorldRotation() const {
+    return glm::eulerAngles(getWorldQuaternion());
 }

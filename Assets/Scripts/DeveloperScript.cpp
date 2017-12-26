@@ -7,6 +7,7 @@
 void DeveloperScript::start() {
     enter = std::bind(&DeveloperScript::onClickEnter, this);
     Input::attachOnMouseClick(-10, 0, 0, 0, 0, &enter, nullptr);
+
 }
 
 void DeveloperScript::update() {
@@ -21,8 +22,9 @@ void DeveloperScript::update() {
             components = "";
             auto rnd = target->getComponent<Renderer>();
             if( rnd != nullptr ){
-                rnd->setMaterial(savedMaterial);
+                rnd->setSelected(false);
             }
+            controller->setParent(nullptr);
             target = nullptr;
         }
         else{
@@ -70,35 +72,34 @@ void DeveloperScript::update() {
 void DeveloperScript::onClickEnter() {
     if(!enable) return;
     AABBCollider *collider = AABBCollider::raycast(
-            Runtime::getCamera()->getGameObject()->transform.getPosition(),
-            Runtime::getCamera()->getGameObject()->transform.getForward(),
+            Runtime::getCamera()->getGameObject()->getWorldPosition(),
+            Runtime::getCamera()->getGameObject()->getWorldForward(),
             100000.0f
     );
+    if(collider != nullptr && collider->getGameObject()->getParent() == controller){
+        return;
+    }
+    if(target != nullptr){
+        auto rnd = target->getComponent<Renderer>();
+        if( rnd != nullptr ){
+            rnd->setSelected(false);
+        }
+        controller->setParent(nullptr);
+        target = nullptr;
+    }
     if (collider == nullptr) {
         status = "Selected: None";
         components = "";
-        if(target != nullptr){
-            auto rnd = target->getComponent<Renderer>();
-            if( rnd != nullptr ){
-                rnd->setMaterial(savedMaterial);
-            }
-            target = nullptr;
-        }
         updateText();
     } else {
-        if(target != nullptr){
-            auto rnd = target->getComponent<Renderer>();
-            if( rnd != nullptr ){
-                rnd->setMaterial(savedMaterial);
-            }
-            target = nullptr;
-        }
         target = collider->getGameObject();
+        controller->setParent(target);
+        controller->transform.setPosition(collider->getOffset());
+        controller->transform.setScale(collider->getSize() * 5.5f);
         status = "Selected: ";
         auto rnd = target->getComponent<Renderer>();
         if( rnd != nullptr ){
-            savedMaterial = rnd->getMaterial();
-            rnd->setMaterial(selectMaterial);
+            rnd->setSelected(true);
         }
         if(target->getName() != "") status += target->getName();
         else status += " Nameless Object";
@@ -115,10 +116,10 @@ void DeveloperScript::onClickEnter() {
 void DeveloperScript::updateText() {
     char buf[512];
     if(target){
-        auto pos = target->transform.getPosition();
-        auto rot = target->transform.getRotation();
-        auto sca = target->transform.getScale();
-        sprintf(buf, "P(%0.2f, %0.2f, %0.2f) P(%0.2f, %0.2f, %0.2f) S(%0.2f, %0.2f, %0.2f)",
+        auto pos = target->getWorldPosition();
+        auto rot = target->getWorldRotation();
+        auto sca = target->getWorldScale();
+        sprintf(buf, "P(%0.2f, %0.2f, %0.2f) R(%0.2f, %0.2f, %0.2f) S(%0.2f, %0.2f, %0.2f)",
         pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, sca.x, sca.y, sca.z
         );
         text3->setText(buf);
@@ -128,8 +129,6 @@ void DeveloperScript::updateText() {
     }
     text1->setText(status + components);
 }
-
-DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3) : text1(text1), text2(text2), text3(text3) {}
 
 void DeveloperScript::updateState() {
     state = "";
@@ -150,10 +149,17 @@ void DeveloperScript::adjust(float d) {
     else if(setAxis == 1) delta.y = d;
     else if(setAxis == 2) delta.z = d;
     if(setType == 0) target->transform.translate(delta);
-    else if(setType == 2) target->transform.setScale(target->transform.getScale() + delta);
+    else if(setType == 2) target->transform.setScale(target->transform.getLocalScale() + delta);
     else {
         if(setAxis == 0)target->transform.rotate(Transform::up, d);
-        else if(setAxis == 0)target->transform.rotate(Transform::forward, d);
-        else if(setAxis == 0)target->transform.rotate(Transform::right, d);
+        else if(setAxis == 1)target->transform.rotate(Transform::forward, d);
+        else if(setAxis == 2)target->transform.rotate(Transform::right, d);
     }
 }
+
+DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller) : text1(text1),
+                                                                                                  text2(text2),
+                                                                                                  text3(text3),
+                                                                                                  controller(
+                                                                                                          controller) {}
+

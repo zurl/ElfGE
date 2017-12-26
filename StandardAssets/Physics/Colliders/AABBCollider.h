@@ -29,6 +29,8 @@ class AABBCollider : public Collider {
 
 public:
 
+    std::string getName() override;
+
     AABBCollider(const glm::vec3 &size,
                  const glm::vec3 &offset = glm::vec3(0, 0, 0),
                  bool passive = true
@@ -43,6 +45,10 @@ public:
     void destroy() override;
 
     static AABBCollider *raycast(glm::vec3 origin, glm::vec3 direction, float distance);
+
+    const glm::vec3 &getOffset() const;
+
+    const glm::vec3 &getSize() const;
 
 };
 

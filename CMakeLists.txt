@@ -138,6 +138,6 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp Assets/Prefab/PlainText.h)
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/SphereMesh.cpp  StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp Assets/Prefab/PlainText.h GameEngine/Core/LODGameObject.cpp GameEngine/Core/LODGameObject.h)
 
 add_executable(elfge ${SOURCE_FILES})

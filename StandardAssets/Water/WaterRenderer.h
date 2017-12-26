@@ -64,7 +64,7 @@ public:
         shader->setInt("refractionTexture",1);
         shader->setInt("dudvMap",2);
         shader->setFloat("moveFactor",moveFactor);
-        shader->setVec3("cameraPosition",Runtime::getCamera()->getGameObject()->transform.getPosition());
+        shader->setVec3("cameraPosition",Runtime::getCamera()->getGameObject()->getWorldPosition());
         shader->setVec3("lightPosition",glm::vec3(100,100,100));
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,fbo->getReflectionTexture());
@@ -84,11 +84,11 @@ public:
         moveFactor = moveFactor - floor(moveFactor);
         fbo->bindReflectionFrameBuffer();
         Camera *c = Runtime::getCamera();
-        glm::vec3  position = c->getGameObject()->transform.getPosition();
-        float distance = 2*(c->getGameObject()->transform.getPosition().y
+        glm::vec3  position = c->getGameObject()->transform.getLocalPosition();
+        float distance = 2*(c->getGameObject()->transform.getLocalPosition().y
                             -water->getHeight());
         position.z -= distance;
-        glm::vec3 rotation = c->getGameObject()->transform.getRotation();
+        glm::vec3 rotation = c->getGameObject()->transform.getLocalRotation();
         rotation.z = -1*rotation.z;
         c->getGameObject()->transform.setPosition(position);
         c->getGameObject()->transform.setRotation(rotation);

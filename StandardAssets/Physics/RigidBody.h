@@ -17,6 +17,8 @@ public:
     bool isTrigger, useGravity, isFace = false;
     glm::vec3 velocity, force;
 
+    std::string getName() override;
+
     RigidBody(float mass,
               const glm::vec3 &velocity = glm::vec3(0, 0, 0),
               const glm::vec3 &force = glm::vec3(0, 0, 0),

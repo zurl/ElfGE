@@ -38,9 +38,9 @@ void DirectionalShadowMappingManager::computeMapping() {
     float near_plane = 1.0f, far_plane = 20.5f;
     projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
     shader->setMat4("projection", projection);
-    view = glm::lookAt(directLighting->getGameObject()->transform.getPosition(),
-                       directLighting->getGameObject()->transform.getPosition()
-                       + glm::rotate(directLighting->getGameObject()->transform.getQuaternion(), Transform::forward),
+    view = glm::lookAt(directLighting->getGameObject()->getWorldPosition(),
+                       directLighting->getGameObject()->getWorldPosition()
+                       + glm::rotate(directLighting->getGameObject()->getWorldQuaternion(), Transform::forward),
                        Transform::up);
     shader->setMat4("view", view);
     shader->setInt("enableBones", 1);
@@ -49,7 +49,7 @@ void DirectionalShadowMappingManager::computeMapping() {
 void DirectionalShadowMappingManager::applyMapping(Shader *shader) {
     glActiveTexture(GL_TEXTURE8);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-    shader->setVec3("shadowLightPos", directLighting->getGameObject()->transform.getPosition());
+    shader->setVec3("shadowLightPos", directLighting->getGameObject()->getWorldPosition());
     shader->setInt("shadowMap", 8);
     shader->setMat4("lightSpaceMatrix", projection * view);
 }

@@ -33,9 +33,10 @@ public:
 
     void start() override {
 
+
         light = set<DirLight>(glm::vec3(0, 0, 60));
-        light->transform.translate(-light->transform.getUp() * 5.0f);
-        light->transform.translate(-light->transform.getForward() * 5.0f);
+        light->transform.translate(-light->getWorldUp() * 5.0f);
+        light->transform.translate(-light->getWorldForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
         auto terrain = set<DemoTerrain>();
@@ -65,6 +66,10 @@ public:
 
 
         auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        auto rnd = cube1->getComponent<Renderer>();
+        rnd->setSelected(true);
+
+
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
@@ -131,6 +136,19 @@ public:
 //                &oncg
 //        );
 
+        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
+        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
+        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
+        auto cobj = new GameObject("controller");
+        axisX->setParent(cobj);
+        axisY->setParent(cobj);
+        axisZ->setParent(cobj);
+        cobj->setParent(nullptr);
+        cobj->start();
+
 
         auto dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
         auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
@@ -140,7 +158,9 @@ public:
         ->createComponent<DeveloperScript>(
                 dt3->getComponent<Text>(),
                 dt2->getComponent<Text>(),
-                dt1->getComponent<Text>());
+                dt1->getComponent<Text>(),
+                cobj
+        );
 
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/", "jpg");
