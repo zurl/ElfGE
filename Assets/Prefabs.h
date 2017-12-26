@@ -97,9 +97,20 @@ namespace Prefabs {
     class DemoTerrain : public Prefab {
     public:
         GameObject *instantiate(Scene *scene) override {
+            std::vector<std::string> names = {
+                    "rTex.jpg",
+                    "gTex.jpg",
+                    "bTex.jpg",
+                    "aTex.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "heightmap.jpg"
+            };
             auto terrain = scene->createGameObject()
 //                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
-                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
+                    ->createComponent<Terrain>("heightMap.png","terrain/",names)
                     ->createComponent<Renderer>(
                             &material,
                             ShaderManager::getShader("light_with_directional_shadow")

@@ -13,7 +13,8 @@ class Terrain : public DefaultMesh {
 public:
     Terrain(const std::string &heightMapPath,
             const std::string &texturePath,
-            const std::string &normalPath = "");
+            const std::vector<std::string> &textureNames
+           );
 
     glm::vec3 getNormal(float x, float y) {
         int PosY = x + 512;
@@ -39,6 +40,7 @@ public:
         return -2.75 + (_yA * (1 - frac) + _yB * frac) / 20.0; // 20.0这里是scale大小, -2.75有Translation,这里可以加参数
     }
 
+    void render(Shader *shader, RenderLayer renderLayer);
     virtual ~Terrain();
 };
 
