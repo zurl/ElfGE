@@ -15,7 +15,7 @@ class Transform {
 public:
     Transform();
 
-    glm::mat4 getModelMatrix(glm::mat4 model) const;
+    glm::mat4 getModelMatrix() const;
 
     const glm::vec3 &getLocalPosition() const;
 

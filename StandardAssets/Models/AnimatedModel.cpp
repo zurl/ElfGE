@@ -186,6 +186,10 @@ AnimatedModel::AnimatedModel(const std::string &path) {
     globalInverseTransform = Utility::aiMatrix4x4ToGlm(&scene->mRootNode->mTransformation);
     globalInverseTransform = glm::inverse(globalInverseTransform);
 
+    globalInverseTransform[0][0] = 1.0f;
+    globalInverseTransform[1][1] = 1.0f;
+    globalInverseTransform[2][2] = 1.0f;
+
     pAnimation = scene->mAnimations[0];
     duration = pAnimation->mDuration;
     for (int i = 0; i < scene->mNumAnimations; i++) {

@@ -23,17 +23,19 @@ void AABBCollider::start() {
         }
         offset = (min + max) * 0.5f;
         size = (max - min) * 0.5f;
+        min0 = min;
+        max0 = max;
     }
-    allColliders.emplace_back(this);
-    vertices.emplace_back(offset.x + size.x, offset.y + size.y, offset.z + size.z);
-    vertices.emplace_back(offset.x - size.x, offset.y + size.y, offset.z + size.z);
-    vertices.emplace_back(offset.x + size.x, offset.y - size.y, offset.z + size.z);
-    vertices.emplace_back(offset.x - size.x, offset.y - size.y, offset.z + size.z);
-    vertices.emplace_back(offset.x + size.x, offset.y + size.y, offset.z - size.z);
-    vertices.emplace_back(offset.x - size.x, offset.y + size.y, offset.z - size.z);
-    vertices.emplace_back(offset.x + size.x, offset.y - size.y, offset.z - size.z);
-    vertices.emplace_back(offset.x - size.x, offset.y - size.y, offset.z - size.z);
     computeBox();
+    radius = std::max({
+          std::abs(min.x),
+          std::abs(min.y),
+          std::abs(min.z),
+          std::abs(max.x),
+          std::abs(max.y),
+          std::abs(max.z)
+  }) * 2;
+    allColliders.emplace_back(this);
 }
 
 void AABBCollider::update() {
@@ -41,17 +43,23 @@ void AABBCollider::update() {
     if (!passive) {
         for (auto &x : allColliders) {
             if (x != this) {
-                bool isCollision = checkCollision(x);
+                glm::vec3 pos = x->getGameObject()->getWorldPosition();
+                float targetDis = glm::distance(getGameObject()->getWorldPosition(), pos);
+                float dis = radius + x->radius;
                 bool isOnCollision = onCollision.find(x) != onCollision.end();
+                //if(!isOnCollision && targetDis > dis + 1e-1) continue;
+                //printf("targetDis=%f, radius=%f\n", targetDis, dis);
+                bool isCollision = checkCollision(x);
                 if (isCollision && !isOnCollision) {
-                    onCollision.emplace(this);
+                    glm::vec3 info = getCollisionInfo(x);
+                    onCollision.emplace(x);
                     auto result = this->getGameObject()->getComponents<GameScript>();
                     for (auto &y: result) {
-                        y->onCollisionEnter(x);
+                        y->onCollisionEnter(x, info);
                     }
                 }
                 if (!isCollision && isOnCollision) {
-                    onCollision.erase(this);
+                    onCollision.erase(x);
                     auto result = this->getGameObject()->getComponents<GameScript>();
                     for (auto &y: result) {
                         y->onCollisionExit(x);
@@ -68,38 +76,34 @@ void AABBCollider::destroy() {
 
 AABBCollider::AABBCollider(const glm::vec3 &size,
                            const glm::vec3 &offset,
-                           bool passive
-) : passive(passive), offset(offset), size(size) {
-    for (auto &x: vertices) {
-        min = glm::min(x, min);
-        max = glm::max(x, max);
-    }
+                           bool passive,
+                           bool wall
+) : passive(passive), offset(offset), size(size), wall(wall) {
+    min = offset - size;
+    max = offset + size;
+    min0 = min;
+    max0 = max;
+
 }
 
 bool AABBCollider::checkCollision(AABBCollider *dst) {
-    return checkAxis(this->min.x, this->max.x, dst->min.x, dst->max.x)
+   return checkAxis(this->min.x, this->max.x, dst->min.x, dst->max.x)
            && checkAxis(this->min.y, this->max.y, dst->min.y, dst->max.y)
            && checkAxis(this->min.z, this->max.z, dst->min.z, dst->max.z);
 }
 
 bool AABBCollider::checkAxis(float minA, float maxA, float minB, float maxB) {
-    return (minA >= minB && minA <= maxB) || (minB >= minA && minB <= maxA);
+    return !(maxA < minB || minA > maxB);
 }
 
 void AABBCollider::computeBox() {
-    min = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
-    max = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
-    for (auto &x: vertices) {
-        glm::vec3 result =
-                glm::rotate(getGameObject()->getWorldQuaternion(), x * getGameObject()->getWorldScale());
-        min = glm::min(min, result);
-        max = glm::max(max, result);
-    }
-    min += getGameObject()->getWorldPosition();
-    max += getGameObject()->getWorldPosition();
+    glm::vec3 scale = getGameObject()->getWorldScale();
+    glm::vec3 pos = getGameObject()->getWorldPosition();
+    min = min0 * scale + pos;
+    max = max0 * scale + pos;
 }
 
-AABBCollider::AABBCollider(bool passive) {
+AABBCollider::AABBCollider(bool passive, bool wall) : wall(wall) {
     autogen = true;
     this->passive = passive;
 }
@@ -119,14 +123,11 @@ AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float
     AABBCollider *result = nullptr;
     float resultDistance = FLT_MAX;
     for (auto target : allColliders) {
-        target->computeBox();
         glm::vec3 pos = target->getGameObject()->getWorldPosition();
         float targetDis = glm::distance(origin, pos);
+        target->computeBox();
         if (targetDis < distance
-            && check2DRayCast(origin.x, origin.z, direction.x, direction.z,
-                              target->min.x, target->max.x, target->min.z, target->max.z)
-            && check2DRayCast(origin.x, origin.y, direction.x, direction.y,
-                              target->min.x, target->max.x, target->min.y, target->max.y)
+            && target->testRaycast(origin, direction)
             && targetDis < resultDistance) {
             resultDistance = targetDis;
             result = target;
@@ -145,4 +146,33 @@ const glm::vec3 &AABBCollider::getOffset() const {
 
 const glm::vec3 &AABBCollider::getSize() const {
     return size;
+}
+
+float AABBCollider::getRadius() const {
+    return radius;
+}
+
+bool AABBCollider::testRaycast(glm::vec3 origin, glm::vec3 direction) {
+    return check2DRayCast(origin.x, origin.z, direction.x, direction.z,
+                   this->min.x, this->max.x, this->min.z, this->max.z)
+    && check2DRayCast(origin.x, origin.y, direction.x, direction.y,
+                      this->min.x, this->max.x, this->min.y, this->max.y);
+}
+
+glm::vec3 AABBCollider::getCollisionInfo(AABBCollider *dst) {
+    return glm::vec3(
+            getAxisInfo(this->min.x, this->max.x, dst->min.x, dst->max.x),
+            getAxisInfo(this->min.y, this->max.y, dst->min.y, dst->max.y),
+            getAxisInfo(this->min.z, this->max.z, dst->min.z, dst->max.z)
+    );
+}
+
+int AABBCollider::getAxisInfo(float minA, float maxA, float minB, float maxB) {
+    if(minA >= minB && minA <= maxB) return 1;
+    if(minB >= minA && minB <= maxA) return -1;
+    return 0;
+}
+
+bool AABBCollider::isWall() const {
+    return wall;
 }

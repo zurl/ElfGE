@@ -57,8 +57,7 @@ namespace Prefabs {
                             new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(
                             &material, ShaderManager::getShader("light_ds_pm"))
-                    ->createComponent<AABBCollider>(false)
-                    ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
+                    ->createComponent<AABBCollider>(true);
 
             result->transform.setPosition(position);
             return result;

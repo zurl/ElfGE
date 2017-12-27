@@ -6,16 +6,7 @@
 
 
 void FirstPlayerCamera::update() {
-    float cameraSpeed = (float) (5.0f * Utility::deltaTime);
-    if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS)
-        getGameObject()->transform.translate(cameraSpeed * getGameObject()->getWorldForward());
-    if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS)
-        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->getWorldForward());
-    if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS)
-        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->getWorldRight());
-    if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS)
-        getGameObject()->transform.translate(cameraSpeed * getGameObject()->getWorldRight());
-}
+    }
 
 void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
     Utility::MOUSE_X = xpos;

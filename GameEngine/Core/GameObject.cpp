@@ -85,8 +85,8 @@ void GameObject::destroy(Component *component) {
 }
 
 glm::mat4 GameObject::getModelMatrix() {
-    if (parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
-    else return transform.getModelMatrix(parent->getModelMatrix());
+    if (parent == nullptr) return transform.getModelMatrix();
+    else return parent->getModelMatrix() * transform.getModelMatrix();
 }
 
 GameObject::GameObject(const std::string &name) : name(name) {}

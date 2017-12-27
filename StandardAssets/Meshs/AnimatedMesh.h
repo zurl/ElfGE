@@ -30,6 +30,7 @@ public:
     AnimatedMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory,
                  const std::map<std::string, unsigned int> &bonesMap);
 
+
 };
 
 

@@ -1,65 +1,30 @@
 //
-// Created by 张程易 on 31/10/2017.
+// Created by 张程易 on 26/12/2017.
 //
 
 #include "RigidBody.h"
 
-void RigidBody::onCollisionEnter(Collider *collider) {
-    if (!isTrigger && !isFace) {
-        auto target = collider->getGameObject();
-        auto rb = target->getComponent<RigidBody>();
-        if (rb == nullptr) return;
-        glm::vec3 directVector;
-        if (rb->isFace) directVector = getGameObject()->getWorldForward();
-        else directVector = glm::normalize(target->getWorldPosition() - getGameObject()->getWorldPosition());
-
-        float va = glm::dot(directVector, velocity);
-        float vb = glm::dot(directVector, rb->velocity);
-        float ma = mass;
-        float mb = rb->mass;
-        if (fabs(va) < 1e-4 && fabs(vb) < 1e-4) return;
-        if ((va >= 0 && vb <= 0)
-            || (va >= 0 && vb >= 0 && va >= vb)
-            || (va <= 0 && vb <= 0 && va >= vb)) {
-
-            printf("pz\n");
-            float p = ma * va + mb * vb;
-            float m = ma + mb;
-            float vc = (collisionK * mb * (vb - va) + p) / m;
-            float vd = (collisionK * ma * (va - vb) + p) / m;
-
-            velocity += (vc - va) * directVector;
-            rb->velocity += (vd - vb) * directVector;
-            onCollision = true;
-
-        }
-    }
-    GameScript::onCollisionEnter(collider);
-}
-
-void RigidBody::update() {
-    velocity += (float) Utility::deltaTime / mass * force;
-    if (useGravity) velocity += (float) Utility::deltaTime * g;
-    getGameObject()->transform.translate(velocity);
+void RigidBody::onCollisionEnter(Collider *collider, glm::vec3 info) {
+    AABBCollider * aabb = (AABBCollider * )collider;
+    if(!aabb->isWall())return;
+    this->collider = aabb;
+    this->info = info;
+    GameScript::onCollisionEnter(collider, info);
 }
 
 void RigidBody::onCollisionExit(Collider *collider) {
-    if (!isTrigger) {
-        onCollision = false;
-
-    }
+    this->collider = nullptr;
     GameScript::onCollisionExit(collider);
 }
 
-void RigidBody::start() {
-
+void RigidBody::translate(glm::vec3 x) {
+    if(collider != nullptr){
+        if(x.x * info.x < 0) x.x = 0;
+        if(x.y * info.y < 0) x.y = 0;
+        if(x.z * info.z < 0) x.z = 0;
+        getGameObject()->transform.translate(x);
+    }
+    else{
+        getGameObject()->transform.translate(x);
+    }
 }
-
-RigidBody::RigidBody(float mass, const glm::vec3 &velocity, const glm::vec3 &force, float collisionK, bool isTrigger,
-                     bool useGravity) : mass(mass), collisionK(collisionK), isTrigger(isTrigger),
-                                        useGravity(useGravity), velocity(velocity), force(force) {}
-
-std::string RigidBody::getName() {
-    return "RigidBody";
-}
-

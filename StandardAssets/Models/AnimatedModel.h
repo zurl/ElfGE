@@ -19,6 +19,8 @@ class AnimatedModel : public DefaultModel {
 
     std::vector<BoneInfo> bonesInfo;
 
+
+
     std::map<std::string, unsigned int> bonesMap;
     std::map<std::string, unsigned int> animationMap;
 
@@ -74,6 +76,7 @@ public:
     void registerAnimation(const std::string &name, unsigned int startFrame, unsigned int endFrame);
 
     void playAnimation(const std::string &name);
+
 
 };
 

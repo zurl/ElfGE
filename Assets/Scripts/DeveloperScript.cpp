@@ -93,7 +93,7 @@ void DeveloperScript::onClickEnter() {
         updateText();
     } else {
         target = collider->getGameObject();
-        controller->setParent(target);
+        //controller->setParent(target);
         controller->transform.setPosition(collider->getOffset());
         controller->transform.setScale(collider->getSize() * 5.5f);
         status = "Selected: ";

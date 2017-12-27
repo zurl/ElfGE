@@ -9,7 +9,8 @@ glm::vec3 Transform::forward(1, 0, 0);
 glm::vec3 Transform::right(0, 0, 1);
 
 
-glm::mat4 Transform::getModelMatrix(glm::mat4 model) const {
+glm::mat4 Transform::getModelMatrix() const {
+    glm::mat4 model(1.0f);
     model = glm::translate(model, position);
     model = model * rotation;
     model = glm::scale(model, scale);

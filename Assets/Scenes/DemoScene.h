@@ -13,6 +13,8 @@
 #include "../Scripts/FuckScript.h"
 #include "../Prefab/PlainText.h"
 #include "../Scripts/DeveloperScript.h"
+#include "../LJK/AnimationCond.h"
+#include "../LJK/RealCamera.h"
 
 using namespace Prefabs;
 
@@ -20,7 +22,9 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject *human, *cube1, *cube2, *cube3, *cube4, *cube5, *light;
+    GameObject *dt1, *human, *camera, *cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+
+    RigidBody * humanrg;
 
     DemoScene() {}
 
@@ -39,33 +43,79 @@ public:
         light->transform.translate(-light->getWorldForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
+        //auto terrain = set<DemoTerrain>();
 
-        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
+        //terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
         Config::Hack::hack = 1;
+
+
         human = createGameObject()
-                //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
+                ->createComponent<AnimationCond>()
+                ->createComponent<RigidBody>()
+                ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,
+                                                glm::vec3(0.0f, 1.0f, 0.0f),false)
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
-        Config::Hack::hack = 0;
 
+        //human animation
         auto humanModel = human->getComponent<AnimatedModel>();
 
-        humanModel->registerAnimation("RUN", 500, 600);
-        humanModel->playAnimation("RUN");
+        humanModel->registerAnimation("IDLE", 50, 90);
+        humanModel->registerAnimation("RUN_WITH_GUN", 600, 614);
+        humanModel->registerAnimation("JUMP", 301, 313);
+        humanModel->registerAnimation("SHOOT", 375, 460);
+        humanModel->registerAnimation("DOWN", 330, 350);
+        humanModel->registerAnimation("RUN_DOWN", 471, 488);
+        humanModel->registerAnimation("DIE", 685, 705);
 
-        human->transform.setScale(glm::vec3(0.01f));
+        //humanModel->playAnimation("RUN");
+
+        //human->transform.setScale(glm::vec3(0.01f));
         human->transform.translate(glm::vec3(3, 1, 0));
+        human->transform.rotate(glm::vec3(0,1,0), -glm::half_pi<float>());
+        auto canvas = createGameObject()->createComponent<Canvas>();
+
+        auto image2 = createGameObject()
+                ->createComponent<Image>(TextureManager::loadTexture2D(
+                        Utility::RESOURCE_PREFIX + "Textures/aim.png"
+                ),Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT );
+        image2->setParent(canvas);
+        image2->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
+        image2->transform.translate(glm::vec3(10000,0, 0));
+
+        human->getComponent<AnimationCond>()->play(0);
+
+        humanrg = human->getComponent<RigidBody>();
+
+        camera = createGameObject()->createComponent<RealCamera>();
+        camera->getComponent<RealCamera>()->setPlayerImage(human, image2);
+        setCamera(camera->getComponent<RealCamera>());
+
+        camera->transform.setPosition(glm::vec3(0, 6, 0));
+
+        foller = createGameObject("cube")
+                ->createComponent<DefaultModel>(
+                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+                ->createComponent<Renderer>(
+                        &material, ShaderManager::getShader("light_ds_pm"))
+                ->createComponent<AABBCollider>(true, false);
+
+
+
+        Config::Hack::hack = 0;
+
 
 
         auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+
+
         auto rnd = cube1->getComponent<Renderer>();
         rnd->setSelected(true);
 
@@ -73,62 +123,11 @@ public:
         auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
         auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
-        //Config::Hack::hack = 1;
-//        human = createGameObject()
-//                //->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/Jarvan/run.DAE")
-//                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
-//                ->createComponent<Renderer>(
-//                        &material,
-//                        ShaderManager::getShader("light_with_directional_shadow_anim")
-//                );
-//        Config::Hack::hack = 0;
-////
-//        auto humanModel = human->getComponent<AnimatedModel>();
-////
-//        humanModel->registerAnimation("RUN", 500, 600);
-//        humanModel->playAnimation("RUN");
-////
-//        human->transform.setScale(glm::vec3(0.01f));
-//        human->transform.translate(glm::vec3(3, 1, 0));
 
 
-//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
-//        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
 
-//        plane->transform.setScale(glm::vec3(10));
         auto arialFont = FontManager::loadFont("Arial");
-//        auto water = createGameObject()
-//                ->createComponent<WaterRenderer>();
-//        water->transform.setPosition(glm::vec3(0,0,0));
-//        water->transform.rotate(Transform::right, glm::pi<float>());
-        auto camera = set<Prefabs::Camera>();
 
-        camera->transform.setPosition(glm::vec3(-2, 2, 0));
-
-//        cube4 = set<Cube>(glm::vec3(1,1,7));
-//        cube5 = set<Cube>(glm::vec3(1,1,10));
-
-        std::cerr<<"Draw Grass!!"<<std::endl;
-        auto grass = createGameObject()->createComponent<GrassRenderer>();
-//        grass->transform.setScale(glm::vec3(1,1,1));
-        auto canvas = createGameObject()->createComponent<Canvas>();
-//
-        //auto text1 = createGameObject()->createComponent<Text>("hello world!", arialFont);
-//
-//        text1->setParent(canvas);
-//        text1->transform.translate(glm::vec3(20, 20, 0));
-//        text = text1->getComponent<Text>();
-//        text->setFontColor(glm::vec3(0.5f, 0.5f, 0.0f));
-//
-
-//        auto text2 = createGameObject()->createComponent<Text>("hello world!", arialFont);
-//
-//        text2->setParent(canvas);
-//        text2->transform.translate(glm::vec3(40, 40, 0));
-//        text2->createComponent<FuckScript>(human);
-
-        //auto text2Text = text2->getComponent<Text>();
 
         auto image1 = createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
@@ -137,28 +136,6 @@ public:
         image1->setParent(canvas);
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
-//        onclk = [text2Text]() {
-//            text2Text->setText("WOW HERE");
-//        };
-//
-//        auto img = TextureManager::loadTexture2D(
-//                Utility::RESOURCE_PREFIX + "Textures/cube_specular.png"
-//        );
-//
-//        auto button = set<ImageButton>(
-//                canvas, img,
-//                glm::vec2(20.0f, 20.0f), glm::vec3(150, 150, 0), &onclk);
-
-//        oncg = [text2Text](double x) {
-//            text2Text->setText("WOW HERE" + std::to_string(x));
-//        };
-
-//        auto scrollbar = set<ScrollBar>(
-//                canvas, img, img,
-//                glm::vec3(300, 300, 0),
-//                glm::vec2(500, 40), glm::vec2(20, 50),
-//                &oncg
-//        );
 
         auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
         auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -171,10 +148,10 @@ public:
         axisY->setParent(cobj);
         axisZ->setParent(cobj);
         cobj->setParent(nullptr);
-        cobj->start();
+        //cobj->start();
 
 
-        auto dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
+        dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
         auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
         auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
 
@@ -186,8 +163,8 @@ public:
                 cobj
         );
 
-        auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+//        auto skybox = createGameObject()
+//                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
         Scene::start();
     }
@@ -203,18 +180,80 @@ public:
     }
 
     float x = 0;
+    float humanspeed = 0.05f;
 
     void update() override {
-//        cnt++;
-//        dt += Utility::deltaTime;
-//        if (dt >= 1.0f) {
-//            dt = 0;
-//            text->setText("FPS:" + itos(cnt));
-//            cnt = 0;
-//        }
-//
-//        x++;
-//        if (x > 360000) x = 0;
+//        dt1->getComponent<Text>()->setText(
+//                "Position : " + std::to_string(human->getWorldPosition().x) + ","
+//                + std::to_string(human->getWorldPosition().y) + ","
+//                + std::to_string(human->getWorldPosition().z) + ",");
+
+        if (glfwGetKey(Utility::window, GLFW_KEY_U) == GLFW_PRESS){
+            auto cld = human->getComponent<AABBCollider>();
+            auto offset = (cld->min + cld->max) * 0.5f;
+            auto size = (cld->max - cld->min) * 0.5f;
+            auto t = size.z;
+            size.z = size.x;
+            size.z = t;
+            foller->transform.setPosition(offset);
+            foller->transform.setScale(size * 2.0f);
+        }
+
+        //human move
+        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
+            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+                human->getComponent<AnimationCond>()->play(5);
+                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
+                    human->transform.translate(humanspeed * human->transform.getLocalRight());
+                }
+                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
+                    human->transform.translate(-humanspeed * human->transform.getLocalRight());
+                }
+                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
+                    human->transform.translate(humanspeed * human->transform.getLocalForward());
+                }
+                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+                    human->transform.translate(-humanspeed * human->transform.getLocalForward());
+                }
+            }
+            else{
+                human->getComponent<AnimationCond>()->play(4);
+            }
+
+        }
+        else{
+            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
+               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+                human->getComponent<AnimationCond>()->play(1);
+                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
+                    humanrg->translate(humanspeed * human->transform.getLocalRight());
+                }
+                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
+                    humanrg->translate(-humanspeed * human->transform.getLocalRight());
+                }
+
+                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
+                    humanrg->translate(humanspeed * human->transform.getLocalForward());
+                }
+                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+                    humanrg->translate(-humanspeed * human->transform.getLocalForward());
+                }
+            }
+            else if(glfwGetKey(Utility::window, GLFW_KEY_SPACE) == GLFW_PRESS){
+                human->getComponent<AnimationCond>()->play(2);
+            }
+            else{
+                human->getComponent<AnimationCond>()->play(0);
+            }
+
+        }
+
+
 
         Scene::update();
     }

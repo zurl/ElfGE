@@ -26,7 +26,7 @@ public:
 
     virtual void onScrollMove(double x) {}
 
-    virtual void onCollisionEnter(Collider *collider) {}
+    virtual void onCollisionEnter(Collider *collider, glm::vec3 info) {}
 
     virtual void onCollisionExit(Collider *collider) {}
 
