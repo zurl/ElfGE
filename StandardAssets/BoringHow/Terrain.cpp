@@ -4,7 +4,8 @@
 
 #include "Terrain.h"
 
-Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePath, const std::string &normalPath) {
+Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePath,
+                 const std::vector<std::string> &textureNames) {
     const int size = 1024;
     heightMap = TextureManager::loadHeightMap(Utility::RESOURCE_PREFIX + "Textures/" + heightMapPath);
     vertices.reserve(size * size);
@@ -69,22 +70,59 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
         }
     }
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath),
-            "diffuse"
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[0]),
+            "rTex"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath),
-            "specular"
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[1]),
+            "gTex"
     );
-    if (normalPath != "") {
-        textures.emplace_back(
-                TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + normalPath),
-                "normal"
-        );
-    }
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[2]),
+            "bTex"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[3]),
+            "aTex"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[3]),
+            "rNormal"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[4]),
+            "gNormal"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[5]),
+            "bNormal"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[6]),
+            "aNormal"
+    );
+    textures.emplace_back(
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[7]),
+            "mix"
+    );
     bindVertice();
 }
 
 Terrain::~Terrain() {
     delete heightMap;
+}
+
+void Terrain::render(Shader *shader, RenderLayer renderLayer) {
+    if (renderLayer == RenderLayer::WORLD) {
+        for (unsigned int i = 0; i < textures.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + i); // 在绑定之前激活相应的纹理单元
+            // 获取纹理序号（diffuse_textureN 中的 N）
+            std::string name = textures[i].type;
+            shader->setInt(("material." + name).c_str(), i);
+            glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        }
+    }
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }

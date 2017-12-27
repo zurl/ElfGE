@@ -84,8 +84,8 @@ void GrassRenderer::prepare() {
     dumpGLErrorLog(__LINE__);
     shader->use();
     dumpGLErrorLog(__LINE__);
-    shader->setFloat("time",(float)time*0.01);
-    time += fmod(Utility::deltaTime,20000000000);
+    shader->setFloat("time",(float)time);
+    time = fmod(time + Utility::deltaTime,20000000000);
 //    time+=Utility::deltaTime;
     dumpGLErrorLog(__LINE__);
     GameObject * cameraT = Runtime::getCamera()->getGameObject();
