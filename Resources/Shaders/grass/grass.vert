@@ -1,20 +1,14 @@
+#version 330 core
 // LICENSE: MIT
 // Copyright (c) 2017 by Mike Linkovich
 
-precision highp float;
 
 #define PI 3.141592654
 
 // These define values should be replaced by app before compiled
-#define PATCH_SIZE (%%PATCH_SIZE%%)
-#define BLADE_SEGS (%%BLADE_SEGS%%) // # of blade segments
-#define BLADE_HEIGHT_TALL (%%BLADE_HEIGHT_TALL%%) // height of a tall blade
+// *** In this version set them to constant
 
-#define BLADE_DIVS (BLADE_SEGS + 1.0)  // # of divisions
-#define BLADE_VERTS (BLADE_DIVS * 2.0) // # of vertices (per side, so 1/2 total)
 
-#define TRANSITION_LOW   (%%TRANSITION_LOW%%)  // elevation of beach-grass transition (start)
-#define TRANSITION_HIGH  (%%TRANSITION_HIGH%%) // (end)
 #define TRANSITION_NOISE 0.06                  // transition noise scale
 
 const vec3 LIGHT_COLOR = vec3(1.0, 1.0, 0.99);
@@ -22,7 +16,15 @@ const vec3 SPECULAR_COLOR = vec3(1.0, 1.0, 0.0);
 
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
-uniform vec3 lightDir;
+
+uniform float BLADE_HEIGHT_TALL;
+uniform float BLADE_SEGS;
+uniform float PATCH_SIZE;
+uniform float TRANSITION_LOW;
+uniform float TRANSITION_HIGH;
+
+//uniform vec3 lightDir;
+const vec3 lightDir = normalize(vec3(0,0,100));
 uniform vec3 camDir; // direction cam is looking at
 uniform vec2 drawPos; // centre of where we want to draw
 uniform float time;  // used to animate blades
@@ -31,13 +33,13 @@ uniform vec3 heightMapScale;
 uniform vec3 grassColor;
 uniform float windIntensity;
 
-attribute float vindex; // Which vertex are we drawing - the main thing we need to know
-attribute vec4 offset; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
-attribute vec4 shape; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
+layout  (location = 0) in float vindex ; // Which vertex are we drawing - the main thing we need to know
+layout (location = 1) in vec4 shape ; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
+layout (location = 2) in vec4 offset ; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
 
-varying vec2 vSamplePos;
-varying vec4 vColor;
-varying vec2 vUv;
+out vec2 vSamplePos;
+out vec4 vColor;
+out vec2 vUv;
 
 // Rotate by an angle
 vec2 rotate (float x, float y, float r) {
@@ -52,6 +54,8 @@ vec2 rotate (float x, float y, vec2 r) {
 }
 
 void main() {
+    float BLADE_DIVS  = (BLADE_SEGS + 1.0);  // # of divisions
+    float BLADE_VERTS = (BLADE_DIVS * 2.0);// # of vertices (per side, so 1/2 total)
 	float vi = mod(vindex, BLADE_VERTS); // vertex index for this side of the blade
 	float di = floor(vi / 2.0);  // div index (0 .. BLADE_DIVS)
 	float hpct = di / BLADE_SEGS;  // percent of height of blade this vertex is at
@@ -97,9 +101,9 @@ void main() {
 
 	// Compute wind effect
 	// Using the lighting channel as noise seems make the best looking wind for some reason!
-	float wind = texture2D(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 200.0) * 6.0).g;
-	//float wind = texture2D(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 100.0) * 6.0).r;
-	//float wind = texture2D(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 100.0) * 4.0).b;
+	float wind = texture(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 200.0) * 6.0).g;
+	//float wind = texture(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 100.0) * 6.0).r;
+	//float wind = texture(heightMap, vec2(vSamplePos.x - time / 2500.0, vSamplePos.y - time / 100.0) * 4.0).b;
 	// Apply some exaggeration to wind
 	//wind = (clamp(wind, 0.125, 0.875) - 0.125) * (1.0 / 0.75);
 	wind = (clamp(wind, 0.25, 1.0) - 0.25) * (1.0 / 0.75);
@@ -112,7 +116,7 @@ void main() {
 	normal.yz = rotate(normal.y, normal.z, rotv);
 
 	// Sample the heightfield data texture to get altitude for this blade position
-	vec4 hdata = texture2D(heightMap, vSamplePos);
+	vec4 hdata = texture(heightMap, vSamplePos);
 	float altitude = hdata.r;
 
 	// Determine if we want the grass to appear or not
@@ -122,10 +126,10 @@ void main() {
 		* (1.0 / (TRANSITION_HIGH - TRANSITION_LOW));
 
 	// Transition geometry toward degenerate as we approach beach altitude
-	vpos *= degenerate;
+//	vpos *= degenerate;
 
 	// Vertex color must be brighter because it is multiplied with blade texture
-	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95), 1.0);
+	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95),vec3(1,1,1));
 	altitude *= heightMapScale.z;
 
 	// Compute directional (sun) light for this vertex
@@ -146,8 +150,10 @@ void main() {
 		light * 0.95 + sin(offset.x * 99.0) * 0.05,
 		1.0
 	);
+//	vColor = vec4(1,1,1,1);
 	vColor.rgb = vColor.rgb * LIGHT_COLOR * color;
-	vColor.rgb = min(vColor.rgb + specular, 1.0);
+//	vColor.rgb = min(vColor.rgb + specular, 1.0);
+	vColor.rgb = min(vColor.rgb, vec3(1,1,1));
 
 	// grass texture coordinate for this vertex
 	vUv = vec2(bedge, di * 2.0);
@@ -155,7 +161,10 @@ void main() {
 	// Translate to world coordinates
 	vpos.x += bladePos.x;
 	vpos.y += bladePos.y;
-	vpos.z += altitude;
-
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);
+//	vpos.z += altitude;
+//	vpos.z = 0;
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos.xzy, 1.0);
+//	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);
+//    gl_Position = vec4(vpos.xzy,1.0);
+//	gl_Position = projectionMatrix * modelViewMatrix * vec4(0,0,0, 1.0);
 }
