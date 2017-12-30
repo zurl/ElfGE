@@ -66,7 +66,9 @@ public:
                 );
 
         auto pfobj = createGameObject()
-                ->createComponent<ParticleFactory>(human, 1.0f, glm::vec3(5.0f, 0, 0));
+                ->createComponent<ParticleFactory>();
+
+        pfobj->setParent(human);
 
         pf = pfobj->getComponent<ParticleFactory>();
 

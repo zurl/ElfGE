@@ -18,8 +18,8 @@ void ParticleFactory::updateGraphics(RenderLayer renderLayer) {
         shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
         shader->setMat4("ortho", ortho);
     }
-    shader->setVec3("anchor", anchor->getWorldPosition() + offset);
-    shader->setFloat("size", scale);
+    shader->setVec3("anchor", getGameObject()->getWorldPosition());
+    shader->setFloat("size", getGameObject()->getWorldScale().x);
     for (auto it = bundles.begin();it != bundles.end();) {
 
         it->draw( shader );
@@ -45,8 +45,6 @@ void ParticleFactory::start() {
     );
 
 }
-
-ParticleFactory::ParticleFactory(GameObject *anchor, float scale, glm::vec3 offset) : anchor(anchor), scale(scale), offset(offset) {}
 
 void ParticleFactory::addExplosion() {
     if (bundles.size() < 2) {
