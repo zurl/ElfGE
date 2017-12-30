@@ -12,17 +12,14 @@ void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
     Utility::MOUSE_X = xpos;
     Utility::MOUSE_Y = ypos;
 
-    static double lastX= Utility::SCREEN_WIDTH / 2, lastY = Utility::SCREEN_HEIGHT / 2;
+    static double lastY = Utility::SCREEN_HEIGHT / 2;
 
-    double xoffset =  xpos - lastX;
-    double yoffset =  lastY - ypos; // reversed since y-coordinates go from bottom to top
-    lastX = xpos;
+    double yoffset =  lastY - ypos;
+
     lastY = ypos;
 
-    xoffset *= mouseSensitivity;
-    yoffset *= mouseSensitivity;
+    yoffset *= mouseSensitivity ;
 
-    getGameObject()->transform.rotate(Transform::up, -xoffset);
     getGameObject()->transform.rotate(Transform::right, yoffset);
 }
 

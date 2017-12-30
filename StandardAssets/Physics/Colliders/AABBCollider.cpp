@@ -101,6 +101,7 @@ void AABBCollider::computeBox() {
     glm::vec3 pos = getGameObject()->getWorldPosition();
     min = min0 * scale + pos;
     max = max0 * scale + pos;
+    //printf("%f %f %f %f %f %f\n", min.x, min.y, min.z, max.x, max.y, max.z);
 }
 
 AABBCollider::AABBCollider(bool passive, bool wall) : wall(wall) {

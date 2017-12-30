@@ -6,7 +6,26 @@
 #define ELFGE_CHARACTERCONTROLLER_H
 
 
-class CharacterController {
+#include "GameEngine.h"
+#include "RigidBody.h"
+
+class CharacterController: public GameScript {
+
+    float mouseSensitivity;
+
+    float speed;
+
+    RigidBody * rigidBody;
+
+public:
+
+    CharacterController(float mouseSensitivity = 0.002f, float speed = 0.05f);
+
+    void start() override;
+
+    void update() override;
+
+    void onMouseMove(double x, double y) override;
 
 };
 

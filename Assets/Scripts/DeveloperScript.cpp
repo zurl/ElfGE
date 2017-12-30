@@ -20,9 +20,11 @@ void DeveloperScript::update() {
             enable = false;
             status = "Developer Mode: OFF";
             components = "";
-            auto rnd = target->getComponent<Renderer>();
-            if( rnd != nullptr ){
-                rnd->setSelected(false);
+            if(target != nullptr) {
+                auto rnd = target->getComponent<Renderer>();
+                if (rnd != nullptr) {
+                    rnd->setSelected(false);
+                }
             }
             controller->setParent(nullptr);
             target = nullptr;

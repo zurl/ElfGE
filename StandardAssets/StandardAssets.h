@@ -24,4 +24,5 @@
 #include "Water/WaterRenderer.h"
 #include "Materials/SelectedMaterial.h"
 #include "Grass/GrassRenderer.h"
+#include "Physics/CharacterController.h"
 #endif //ELFGE_STANDARDASSETS_H

@@ -11,9 +11,15 @@ class RealCamera : public FirstPlayerCamera{
 public:
     GameObject * Player;
     GameObject * Image;
+    GameObject * fuck;
     void setPlayerImage(GameObject * player, GameObject * image){
         Player = player;
         Image = image;
+    }
+
+    void start() override {
+        fuck = instantiate<Prefabs::Cube>(glm::vec3(0));
+        DefaultCamera::start();
     }
 
 
@@ -41,22 +47,29 @@ public:
 
         }
         delay++;
+        static float lastY = 0;
+        if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS) {
+            printf("%f %f %f %f %f\n", axisUp, lastY,
+                   Player->transform.getLocalRight().x, Player->transform.getLocalRight().y,
+                   Player->transform.getLocalRight().z);
+        }
+        if(fabs(axisUp - lastY) > 1e-3) {
+            Player->transform.rotate(Transform::up, axisUp - lastY);
+            lastY = axisUp;
+        }
+        //Player->transform.rotate(glm::vec3(0,1,0), 0.001f);
 
-        if(isAim)
-            getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x + Player->transform.getLocalRight().x * 1.0f,
-                                                             Player->transform.getLocalPosition().y + getGameObject()->transform.getLocalForward().y * 1.0f + 2.0f,
-                                                             Player->transform.getLocalPosition().z + Player->transform.getLocalRight().z * 1.0f)
-            );
-        else
+//        if(isAim)
+//            getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x + Player->transform.getLocalRight().x * 1.0f,
+//                                                             Player->transform.getLocalPosition().y + 4.0f,
+//                                                             Player->transform.getLocalPosition().z + Player->transform.getLocalRight().z * 1.0f)
+//            );
+//        else
 
-            getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x - Player->transform.getLocalRight().x * 5.0f,
-                                                             Player->transform.getLocalPosition().y - getGameObject()->transform.getLocalForward().y * 5.0f + 2.0f,
-                                                             Player->transform.getLocalPosition().z - Player->transform.getLocalRight().z * 5.0f)
-            );
-        static float lastY = glm::pi<float>();
-        //printf("%f\n", camera->transform.getRotation().y - lastY);
-        Player->transform.rotate(glm::vec3(0,1,0), getGameObject()->transform.getLocalPosition().y - lastY );
-        lastY = getGameObject()->transform.getLocalPosition().y;
+        getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x - Player->transform.getLocalRight().x * 15.0f,
+                                                         Player->transform.getLocalPosition().y - Player->transform.getLocalRight().y * 15.0f + 4.0f,
+                                                         Player->transform.getLocalPosition().z - Player->transform.getLocalRight().z * 15.0f)
+        );
 
     }
 

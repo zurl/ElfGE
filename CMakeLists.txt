@@ -145,6 +145,6 @@ set(SOURCE_FILES
         StandardAssets/Grass/GrassRenderer.h
         StandardAssets/Grass/GrassRenderer.cpp
         StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h
-        )
+        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h)
 
 add_executable(elfge ${SOURCE_FILES})

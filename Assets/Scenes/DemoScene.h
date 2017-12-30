@@ -22,7 +22,7 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject *dt1, *human, *camera, *cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+    GameObject *dt1, *human, *realhuman, *camera, *cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
 
     RigidBody * humanrg;
 
@@ -43,9 +43,9 @@ public:
         light->transform.translate(-light->getWorldForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        //auto terrain = set<DemoTerrain>();
+        auto terrain = set<DemoTerrain>();
 
-        //terrain->transform.translate(glm::vec3(0, -1.5f, 0));
+        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -53,12 +53,10 @@ public:
         Config::Hack::hack = 1;
 
 
+
         human = createGameObject()
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
                 ->createComponent<AnimationCond>()
-                ->createComponent<RigidBody>()
-                ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,
-                                                glm::vec3(0.0f, 1.0f, 0.0f),false)
                 ->createComponent<Renderer>(
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
@@ -75,11 +73,14 @@ public:
         humanModel->registerAnimation("RUN_DOWN", 471, 488);
         humanModel->registerAnimation("DIE", 685, 705);
 
-        //humanModel->playAnimation("RUN");
+        humanModel->playAnimation("RUN_WITH_GUN");
 
-        //human->transform.setScale(glm::vec3(0.01f));
-        human->transform.translate(glm::vec3(3, 1, 0));
-        human->transform.rotate(glm::vec3(0,1,0), -glm::half_pi<float>());
+
+        human->transform.rotate(glm::vec3(0,1,0), glm::half_pi<float>());
+
+
+
+
         auto canvas = createGameObject()->createComponent<Canvas>();
 
         auto image2 = createGameObject()
@@ -92,13 +93,29 @@ public:
 
         human->getComponent<AnimationCond>()->play(0);
 
+
+        realhuman = createGameObject("human")
+                ->createComponent<CharacterController>()
+                ->createComponent<RigidBody>()
+                ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,
+                                                glm::vec3(0.0f, 1.0f, 0.0f),false);
+
+        realhuman->transform.translate(glm::vec3(3, 1, 0));
+        human->setParent(realhuman);
+
         humanrg = human->getComponent<RigidBody>();
 
-        camera = createGameObject()->createComponent<RealCamera>();
-        camera->getComponent<RealCamera>()->setPlayerImage(human, image2);
-        setCamera(camera->getComponent<RealCamera>());
+        camera = createGameObject()
+                ->createComponent<FirstPlayerCamera>();
+        setCamera(camera->getComponent<FirstPlayerCamera>());
+        camera->setParent(realhuman);
 
-        camera->transform.setPosition(glm::vec3(0, 6, 0));
+
+//        camera = createGameObject()->createComponent<RealCamera>();
+//        camera->getComponent<RealCamera>()->setPlayerImage(human, image2);
+//        setCamera(camera->getComponent<RealCamera>());
+//
+//        camera->transform.setPosition(glm::vec3(0, 6, 0));
 
         foller = createGameObject("cube")
                 ->createComponent<DefaultModel>(
@@ -163,8 +180,8 @@ public:
                 cobj
         );
 
-//        auto skybox = createGameObject()
-//                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+        auto skybox = createGameObject()
+                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
         Scene::start();
     }
@@ -189,7 +206,7 @@ public:
 //                + std::to_string(human->getWorldPosition().z) + ",");
 
         if (glfwGetKey(Utility::window, GLFW_KEY_U) == GLFW_PRESS){
-            auto cld = human->getComponent<AABBCollider>();
+            auto cld = realhuman->getComponent<AABBCollider>();
             auto offset = (cld->min + cld->max) * 0.5f;
             auto size = (cld->max - cld->min) * 0.5f;
             auto t = size.z;
@@ -199,59 +216,52 @@ public:
             foller->transform.setScale(size * 2.0f);
         }
 
+        camera->transform.setPosition(
+                - realhuman->getWorldForward() * 5.0f + glm::vec3(0.0f, 2.0f, 0.0f)
+        );
+
         //human move
-        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
-            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-                human->getComponent<AnimationCond>()->play(5);
-                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
-                    human->transform.translate(humanspeed * human->transform.getLocalRight());
-                }
-                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
-                    human->transform.translate(-humanspeed * human->transform.getLocalRight());
-                }
-                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
-                    human->transform.translate(humanspeed * human->transform.getLocalForward());
-                }
-                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-                    human->transform.translate(-humanspeed * human->transform.getLocalForward());
-                }
-            }
-            else{
-                human->getComponent<AnimationCond>()->play(4);
-            }
-
-        }
-        else{
-            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
-               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-                human->getComponent<AnimationCond>()->play(1);
-                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
-                    humanrg->translate(humanspeed * human->transform.getLocalRight());
-                }
-                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
-                    humanrg->translate(-humanspeed * human->transform.getLocalRight());
-                }
-
-                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
-                    humanrg->translate(humanspeed * human->transform.getLocalForward());
-                }
-                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-                    humanrg->translate(-humanspeed * human->transform.getLocalForward());
-                }
-            }
-            else if(glfwGetKey(Utility::window, GLFW_KEY_SPACE) == GLFW_PRESS){
-                human->getComponent<AnimationCond>()->play(2);
-            }
-            else{
-                human->getComponent<AnimationCond>()->play(0);
-            }
-
-        }
+//        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
+//            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+//                human->getComponent<AnimationCond>()->play(5);
+//
+//            }
+//            else{
+//                human->getComponent<AnimationCond>()->play(4);
+//            }
+//
+//        }
+//        else{
+//            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
+//               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+//                human->getComponent<AnimationCond>()->play(1);
+//                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
+//                    humanrg->translate(humanspeed * human->transform.getLocalRight());
+//                }
+//                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
+//                    humanrg->translate(-humanspeed * human->transform.getLocalRight());
+//                }
+//
+//                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
+//                    humanrg->translate(humanspeed * human->transform.getLocalForward());
+//                }
+//                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
+//                    humanrg->translate(-humanspeed * human->transform.getLocalForward());
+//                }
+//            }
+//            else if(glfwGetKey(Utility::window, GLFW_KEY_SPACE) == GLFW_PRESS){
+//                human->getComponent<AnimationCond>()->play(2);
+//            }
+//            else{
+//                human->getComponent<AnimationCond>()->play(0);
+//            }
+//
+//        }
 
 
 
