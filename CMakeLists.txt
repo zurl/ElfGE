@@ -3,6 +3,9 @@ project(elfge)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
+        GameEngine/Core/LODGameObject.cpp
+        StandardAssets/Physics/CharacterController.cpp
+        Assets/Scripts/FuckScript.cpp
         Assets/Scripts/DeveloperScript.cpp
         StandardAssets/Materials/SelectedMaterial.cpp
         StandardAssets/Materials/SelectedMaterial.h
@@ -73,8 +76,6 @@ set(SOURCE_FILES
         GameEngine/Graphics/TextureManager.cpp
         GameEngine/Graphics/TextureManager.h
         GameEngine/Graphics/Texture.h
-        Assets/FuckScript.cpp
-        Assets/FuckScript.h
         StandardAssets/Physics/Colliders/AABBCollider.cpp
         StandardAssets/Physics/Colliders/AABBCollider.h
         StandardAssets/Physics/Colliders/Collider.h
@@ -105,7 +106,7 @@ set(SOURCE_FILES
         StandardAssets/Models/AnimatedModel.cpp
         StandardAssets/Models/AnimatedModel.h
         StandardAssets/Meshs/AnimatedMesh.cpp
-        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/WRC/Sphere.h StandardAssets/Meshs/SphereMesh.cpp StandardAssets/Meshs/SphereMesh.h StandardAssets/WRC/RTTexture.h StandardAssets/WRC/RTTexture.cpp StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
+        StandardAssets/Meshs/AnimatedMesh.h StandardAssets/Meshs/PlaneMesh.h StandardAssets/Meshs/PlaneMesh.cpp)
 
 include_directories("./Dependency")
 include_directories("./GameEngine")

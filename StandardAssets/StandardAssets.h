@@ -9,7 +9,6 @@
 #include "Lightings/DirectLighting.h"
 #include "Lightings/PointLighting.h"
 #include "Materials/BlankMaterial.h"
-#include "Materials/SelectedMaterial.h"
 #include "Materials/StandardMaterial.h"
 #include "Meshs/CubeMesh.h"
 #include "Meshs/PlaneMesh.h"
@@ -22,8 +21,8 @@
 #include "ShadowMapping/OmnidirectionalShadowMappingManager.h"
 #include "BoringHow/Terrain.h"
 #include "BoringHow/SkyBox.h"
-#include "WRC/RTTexture.h"
-#include "LJK/EnemyCond.h"
-#include "LJK/AnimationCond.h"
-
+#include "Water/WaterRenderer.h"
+#include "Materials/SelectedMaterial.h"
+#include "Grass/GrassRenderer.h"
+#include "Physics/CharacterController.h"
 #endif //ELFGE_STANDARDASSETS_H

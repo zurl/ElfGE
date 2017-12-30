@@ -16,14 +16,12 @@ class DeveloperScript: public GameScript {
     std::string status, components, state;
     int keyCounter = 0;
     GameObject * target = nullptr;
-    Material * savedMaterial = nullptr,
-            * selectMaterial = new SelectedMaterial();
+    GameObject * controller = nullptr;
+    Collider *x, *y, *z;
     int setType = 0, setAxis = 0;
     float len = 0.5;
 public:
-
-
-    DeveloperScript(Text *text1, Text *text2, Text *text3);
+    DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller);
 
     void onClickEnter();
 

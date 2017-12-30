@@ -3,6 +3,7 @@
 //
 
 #include "Scene.h"
+#include "LODGameObject.h"
 
 Camera *Scene::getCamera() const {
     return camera;
@@ -28,6 +29,12 @@ Scene::Scene() {
 
 GameObject *Scene::createGameObject(const std::string & name) {
     GameObject *gameObject = new GameObject(name);
+    addGameObject(gameObject);
+    return gameObject;
+}
+
+GameObject *Scene::createLODGameObject(const std::string & name) {
+    GameObject *gameObject = new LODGameObject(name);
     addGameObject(gameObject);
     return gameObject;
 }

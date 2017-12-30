@@ -29,6 +29,20 @@ public:
 
     glm::mat4 getModelMatrix();
 
+    glm::vec3 getWorldPosition() const;
+
+    glm::quat getWorldQuaternion() const;
+
+    glm::vec3 getWorldScale() const;
+
+    glm::vec3 getWorldForward() const;
+
+    glm::vec3 getWorldUp() const;
+
+    glm::vec3 getWorldRight() const;
+
+    glm::vec3 getWorldRotation() const;
+
     virtual void start();
 
     virtual void update();

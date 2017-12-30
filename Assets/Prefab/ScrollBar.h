@@ -30,7 +30,7 @@ namespace Prefabs {
 
             void update() override {
                 if (onPressed) {
-                    double x = Utility::MOUSE_X - getGameObject()->transform.getPosition().x;
+                    double x = Utility::MOUSE_X - getGameObject()->transform.getLocalPosition().x;
                     if (x < xsl) x = xsl;
                     if (x > xsr) x = xsr;
                     double value = (x - xsl) / (xsr - xsl);
@@ -39,8 +39,8 @@ namespace Prefabs {
                         callback->operator()(value);
                         unit->transform.setPosition(glm::vec3(
                                 x,
-                                unit->transform.getPosition().y,
-                                unit->transform.getPosition().z
+                                unit->transform.getLocalPosition().y,
+                                unit->transform.getLocalPosition().z
                         ));
                     }
                 }
@@ -91,8 +91,8 @@ namespace Prefabs {
             auto result = scene->createGameObject();
             result->setParent(canvas);
             result->transform.setPosition(position);
-            double px = result->transform.getPosition().x;
-            double py = result->transform.getPosition().y;
+            double px = result->transform.getLocalPosition().x;
+            double py = result->transform.getLocalPosition().y;
 
             auto unit = scene->createGameObject();
             unit->setParent(result);

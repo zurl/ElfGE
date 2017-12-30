@@ -20,11 +20,13 @@ protected:
     void enableScrollInput();
 
 public:
+    std::string getName() override;
+
     virtual void onMouseMove(double x, double y) {}
 
     virtual void onScrollMove(double x) {}
 
-    virtual void onCollisionEnter(Collider *collider) {}
+    virtual void onCollisionEnter(Collider *collider, glm::vec3 info) {}
 
     virtual void onCollisionExit(Collider *collider) {}
 

@@ -12,6 +12,7 @@ class AABBCollider : public Collider {
     static std::list<AABBCollider *> allColliders;
 
     bool autogen = false;
+    bool wall = true;
     bool passive;
 
     std::set<AABBCollider *> onCollision;
@@ -19,22 +20,30 @@ class AABBCollider : public Collider {
     glm::vec3 offset;
     glm::vec3 size;
     std::vector<glm::vec3> vertices;
-    glm::vec3 min, max;
+
+    float radius;
 
     void computeBox();
 
     bool checkAxis(float minA, float maxA, float minB, float maxB);
 
+    int getAxisInfo(float minA, float maxA, float minB, float maxB);
+
     bool checkCollision(AABBCollider *dst);
+
+    glm::vec3 getCollisionInfo(AABBCollider *dst);
 
 public:
 
+    std::string getName() override;
+
     AABBCollider(const glm::vec3 &size,
                  const glm::vec3 &offset = glm::vec3(0, 0, 0),
-                 bool passive = true
+                 bool passive = true,
+                 bool wall = true
     );
 
-    AABBCollider(bool passive = true);
+    AABBCollider(bool passive = true, bool wall = true);
 
     void start() override;
 
@@ -42,8 +51,20 @@ public:
 
     void destroy() override;
 
+    bool testRaycast(glm::vec3 origin, glm::vec3 direction);
+
     static AABBCollider *raycast(glm::vec3 origin, glm::vec3 direction, float distance);
 
+    const glm::vec3 &getOffset() const;
+
+    const glm::vec3 &getSize() const;
+
+    float getRadius() const;
+
+    bool isWall() const;
+
+    glm::vec3 min, max;
+    glm::vec3 min0, max0;
 };
 
 

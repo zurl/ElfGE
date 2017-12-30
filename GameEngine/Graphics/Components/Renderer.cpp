@@ -28,15 +28,35 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
             shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
             shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
             LightingManager::update(shader);
-            shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->transform.getPosition());
+            shader->setVec3("viewPos", Runtime::getCamera()->getGameObject()->getWorldPosition());
         }
         shader->setMat4("model", getGameObject()->getModelMatrix());
         if (material != nullptr) material->use(shader);
-        model->render(shader, renderLayer);
+
+        if ( isSelected ) {
+            glEnable(GL_STENCIL_TEST);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glClear(GL_STENCIL_BUFFER_BIT);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilMask(0xFF);
+            model->render(shader, renderLayer);
+            glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+            ShaderManager::useShader(borderShader);
+            borderShader->use();
+            borderShader->setMat4("model", getGameObject()->getModelMatrix());
+            borderShader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
+            borderShader->setMat4("view", Runtime::getCamera()->getViewMatrix());
+            model->render(borderShader, renderLayer);
+            glDisable(GL_STENCIL_TEST);
+        }
+        else{
+            model->render(shader, renderLayer);
+        }
     }
 }
 
 void Renderer::start() {
+    borderShader = ShaderManager::getShader("border");
     if (getGameObject() == nullptr) {
         throw Exception("A MeshRender Without Parents");
     }
@@ -61,4 +81,16 @@ Material *Renderer::getMaterial() const {
 
 void Renderer::setMaterial(Material *material) {
     Renderer::material = material;
+}
+
+std::string Renderer::getName() {
+    return "renderer";
+}
+
+bool Renderer::getSelected() const {
+    return isSelected;
+}
+
+void Renderer::setSelected(bool isSelected) {
+    Renderer::isSelected = isSelected;
 }

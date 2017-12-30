@@ -6,9 +6,9 @@
 
 
 glm::mat4 DefaultCamera::getViewMatrix() {
-    return glm::lookAt(getGameObject()->transform.getPosition(),
-                       getGameObject()->transform.getPosition()
-                       + glm::rotate(getGameObject()->transform.getQuaternion(), Transform::forward),
+    return glm::lookAt(getGameObject()->getWorldPosition(),
+                       getGameObject()->getWorldPosition()
+                       + glm::rotate(getGameObject()->getWorldQuaternion(), Transform::forward),
                        Transform::up);
 }
 

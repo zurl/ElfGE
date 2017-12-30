@@ -9,6 +9,8 @@
 
 
 class FirstPlayerCamera : public DefaultCamera {
+protected:
+    float axisUp = 0, axisRight = 0;
 
 public:
     enum class Direction {
@@ -23,6 +25,8 @@ public:
     void onScrollMove(double x) override;
 
     void update() override;
+
+
 
 };
 

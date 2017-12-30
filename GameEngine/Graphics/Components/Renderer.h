@@ -13,11 +13,14 @@
 
 class Renderer : public Component {
     Material *material;
-    Shader *shader;
+    Shader *shader, *borderShader;
     Model *model;
     bool useShadow;
+    bool isSelected = false;
 public:
     Renderer(Material *material, Shader *shader, bool useShadow = true);
+
+    std::string getName() override;
 
     void start() override;
 
@@ -28,6 +31,10 @@ public:
     Material *getMaterial() const;
 
     void setMaterial(Material *material);
+
+    bool getSelected() const;
+
+    void setSelected(bool isSelected);
 };
 
 

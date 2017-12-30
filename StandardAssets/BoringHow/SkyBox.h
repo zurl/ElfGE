@@ -14,16 +14,15 @@ class SkyBox : public Component {
     std::vector<std::string> faces;
     Shader *shader;
 public:
-    SkyBox(const std::string &path)
-            : faces({
-                            Utility::RESOURCE_PREFIX + path + "right.jpg",
-                            Utility::RESOURCE_PREFIX + path + "left.jpg",
-                            Utility::RESOURCE_PREFIX + path + "top.jpg",
-                            Utility::RESOURCE_PREFIX + path + "bottom.jpg",
-                            Utility::RESOURCE_PREFIX + path + "back.jpg",
-                            Utility::RESOURCE_PREFIX + path + "front.jpg"
-                    }) {};
-
+    SkyBox(const std::string & path,const std::string & ext)
+    :faces({
+                Utility::RESOURCE_PREFIX + path + "right."+ext,
+                Utility::RESOURCE_PREFIX + path + "left."+ext,
+                Utility::RESOURCE_PREFIX + path + "top."+ext,
+                Utility::RESOURCE_PREFIX + path + "bottom."+ext,
+                Utility::RESOURCE_PREFIX + path + "back."+ext,
+                Utility::RESOURCE_PREFIX + path + "front."+ext
+        }){};
     void start() override;
 
     void updateGraphics(RenderLayer renderLayer) override;

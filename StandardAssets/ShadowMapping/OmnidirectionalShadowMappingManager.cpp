@@ -40,7 +40,7 @@ void OmnidirectionalShadowMappingManager::computeMapping() {
     GLfloat far = 25.0f;
     glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, near, far);
     std::vector<glm::mat4> shadowViews;
-    glm::vec3 lightPos = pointLighting->getGameObject()->transform.getPosition();
+    glm::vec3 lightPos = pointLighting->getGameObject()->getWorldPosition();
     shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
     shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
     shadowViews.push_back(glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)));
@@ -52,7 +52,7 @@ void OmnidirectionalShadowMappingManager::computeMapping() {
         shader->setMat4("views[" + std::to_string(i) + "]", shadowViews[i]);
     }
     glViewport(0, 0, resolution, resolution);
-    shader->setVec3("shadowLightPos", pointLighting->getGameObject()->transform.getPosition());
+    shader->setVec3("shadowLightPos", pointLighting->getGameObject()->getWorldPosition());
     shader->setFloat("far_plane", 25.0f);
     shader->setInt("enableBones", 0);
 }
@@ -61,7 +61,7 @@ void OmnidirectionalShadowMappingManager::applyMapping(Shader *shader) {
     glActiveTexture(GL_TEXTURE8);
     glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
     shader->setInt("shadowMap", 8);
-    shader->setVec3("shadowLightPos", pointLighting->getGameObject()->transform.getPosition());
+    shader->setVec3("shadowLightPos", pointLighting->getGameObject()->getWorldPosition());
     shader->setFloat("far_plane", 25.0f);
 }
 

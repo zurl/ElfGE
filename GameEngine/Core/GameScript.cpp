@@ -25,3 +25,7 @@ void GameScript::destroy() {
     if (scrollHandler != nullptr) Input::detachOnScrollMove(&scrollHandler);
 }
 
+std::string GameScript::getName() {
+    return "GameScript";
+}
+

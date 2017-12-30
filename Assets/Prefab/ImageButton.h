@@ -61,8 +61,8 @@ namespace Prefabs{
             auto result = scene->createGameObject();
             result->setParent(canvas);
             result->transform.setPosition(position);
-            double px = result->transform.getPosition().x;
-            double py = result->transform.getPosition().y;
+            double px = result->transform.getLocalPosition().x;
+            double py = result->transform.getLocalPosition().y;
             result->createComponent<Image>(image, size.x, size.y);
             result->createComponent<ImageButtonScript>(
                     px - size.x / 2, px + size.x / 2,

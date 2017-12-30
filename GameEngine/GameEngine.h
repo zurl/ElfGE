@@ -10,6 +10,7 @@
 #include "Config.h"
 
 #include "Core/Utility.h"
+#include "Core/LODGameObject.h"
 #include "Core/GameObject.h"
 #include "Core/Scene.h"
 #include "Core/Input.h"

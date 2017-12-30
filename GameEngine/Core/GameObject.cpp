@@ -9,10 +9,8 @@ void GameObject::setParent(GameObject *parent) {
     if (this->parent != nullptr) {
         this->parent->detachChildren(this);
     }
-    if(parent) {
-        this->parent = parent;
-        this->parent->attachChildren(this);
-    }
+    this->parent = parent;
+    if(this->parent != nullptr) this->parent->attachChildren(this);
 }
 
 void GameObject::attachChildren(GameObject *gameObject) {
@@ -87,8 +85,8 @@ void GameObject::destroy(Component *component) {
 }
 
 glm::mat4 GameObject::getModelMatrix() {
-    if (parent == nullptr) return transform.getModelMatrix(glm::mat4(1.0f));
-    else return transform.getModelMatrix(parent->getModelMatrix());
+    if (parent == nullptr) return transform.getModelMatrix();
+    else return parent->getModelMatrix() * transform.getModelMatrix();
 }
 
 GameObject::GameObject(const std::string &name) : name(name) {}
@@ -107,4 +105,35 @@ const std::list<GameObject *> &GameObject::getChildren() const {
 
 const std::list<Component *> &GameObject::getComponents() const {
     return components;
+}
+
+glm::vec3 GameObject::getWorldPosition() const {
+    if (parent == nullptr) return transform.getLocalPosition();
+    else return transform.getLocalPosition() + parent->getWorldPosition();
+}
+
+glm::vec3 GameObject::getWorldScale() const {
+    if (parent == nullptr) return transform.getLocalScale();
+    else return transform.getLocalScale() * parent->getWorldScale();
+}
+
+glm::quat GameObject::getWorldQuaternion() const {
+    if (parent == nullptr) return transform.getLocalQuaternion();
+    else return parent->getWorldQuaternion() * transform.getLocalQuaternion();
+}
+
+glm::vec3 GameObject::getWorldForward() const {
+    return glm::rotate(getWorldQuaternion(), Transform::forward);
+}
+
+glm::vec3 GameObject::getWorldUp() const {
+    return glm::rotate(getWorldQuaternion(), Transform::up);
+}
+
+glm::vec3 GameObject::getWorldRight() const {
+    return glm::rotate(getWorldQuaternion(), Transform::right);
+}
+
+glm::vec3 GameObject::getWorldRotation() const {
+    return glm::eulerAngles(getWorldQuaternion());
 }

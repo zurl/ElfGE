@@ -9,7 +9,8 @@
 #include "GameEngine.h"
 #include "StandardAssets.h"
 #include <random>
-#include "RealCamera.h"
+#include "Prefab/ScrollBar.h"
+#include "Prefab/ImageButton.h"
 
 namespace Prefabs {
 
@@ -44,22 +45,19 @@ namespace Prefabs {
             return result;
         }
     };
-
     class Cube : public Prefab {
         glm::vec3 position;
     public:
         Cube(const glm::vec3 &position) : position(position) {}
 
         GameObject *instantiate(Scene *scene) override {
-            static int no = 0;
-            auto result = scene->createGameObject("cube" + std::to_string(no++))
+            static int num = 0;
+            auto result = scene->createGameObject("cube" + std::to_string(num++))
                     ->createComponent<DefaultModel>(
                             new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(
                             &material, ShaderManager::getShader("light_ds_pm"))
-                    ->createComponent<AABBCollider>(false)
-                    ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
-
+                    ->createComponent<AABBCollider>(true);
 
             result->transform.setPosition(position);
             return result;
@@ -84,11 +82,11 @@ namespace Prefabs {
     };
 
 
-    class Camera : public Prefab {
+    class Camera: public Prefab{
     public:
         GameObject *instantiate(Scene *scene) override {
             auto camera = scene->createGameObject()
-                    ->createComponent<RealCamera>();
+                    ->createComponent<FirstPlayerCamera>();
 
             scene->setCamera(camera->getComponent<FirstPlayerCamera>());
             return camera;
@@ -98,8 +96,20 @@ namespace Prefabs {
     class DemoTerrain : public Prefab {
     public:
         GameObject *instantiate(Scene *scene) override {
+            std::vector<std::string> names = {
+                    "rTex.jpg",
+                    "gTex.jpg",
+                    "bTex.jpg",
+                    "aTex.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "Normal.jpg",
+                    "heightmap.jpg"
+            };
             auto terrain = scene->createGameObject()
-                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
+//                    ->createComponent<Terrain>("heightMap.png", "brickwall.jpg", "brickwall_normal.jpg")
+                    ->createComponent<Terrain>("heightMap.png","terrain/",names)
                     ->createComponent<Renderer>(
                             &material,
                             ShaderManager::getShader("light_with_directional_shadow")
@@ -109,134 +119,6 @@ namespace Prefabs {
     };
 
 
-    class ImageButton : public Prefab {
-
-        class ImageButtonScript : public Component {
-            double xl, xr, yl, yr;
-            std::function<void()> *callback, onenter, onexit;
-        public:
-            ImageButtonScript(double xl, double xr, double yl, double yr, std::function<void()> *callback) : xl(xl),
-                                                                                                             xr(xr),
-                                                                                                             yl(yl),
-                                                                                                             yr(yr),
-                                                                                                             callback(
-                                                                                                                     callback) {}
-
-            void onEnter() {
-                if (callback != nullptr) callback->operator()();
-                getGameObject()->transform.setScale(glm::vec3(0.8));
-            }
-
-            void onExit() {
-                getGameObject()->transform.setScale(glm::vec3(1.0));
-            }
-
-            void start() override {
-                onenter = std::bind(&ImageButtonScript::onEnter, this);
-                onexit = std::bind(&ImageButtonScript::onExit, this);
-
-                Input::attachOnMouseClick(xl, xr, yl, yr, 10, &onenter, &onexit);
-
-                Component::start();
-            }
-
-            void destroy() override {
-                Input::detachOnMouseClick(&onenter);
-                Component::destroy();
-            }
-        };
-
-        GameObject *canvas;
-        unsigned int image;
-        glm::vec2 size;
-        glm::vec3 position;
-        std::function<void()> *callback;
-
-    public:
-        ImageButton(GameObject *canvas, unsigned int image, const glm::vec2 &size, const glm::vec3 &position,
-                    std::function<void()> *callback) : canvas(canvas), image(image), size(size), position(position),
-                                                       callback(callback) {}
-
-        GameObject *instantiate(Scene *scene) override {
-            auto result = scene->createGameObject();
-            result->setParent(canvas);
-            result->transform.setPosition(position);
-            double px = result->transform.getPosition().x;
-            double py = result->transform.getPosition().y;
-            result->createComponent<Image>(image, size.x, size.y);
-            result->createComponent<ImageButtonScript>(
-                    px - size.x / 2, px + size.x / 2,
-                    py - size.y / 2, py + size.y / 2,
-                    callback
-            );
-            return result;
-        }
-    };
-
-
-/*
-    class ScrollBar: public Prefab{
-
-        class ImageButtonScript: public Component {
-            double xl, xr, yl, yr;
-            std::function<void(double)> * callback;
-            std::function<void()> onenter, onexit;
-        public:
-            ImageButtonScript(double xl, double xr, double yl, double yr, std::function<void(double)> *callback) : xl(xl),
-                                                                                                             xr(xr),
-                                                                                                             yl(yl),
-                                                                                                             yr(yr),
-                                                                                                             callback(
-                                                                                                                     callback) {}
-            void onEnter(){
-                //if(callback != nullptr) callback->operator()();
-                getGameObject()->transform.setScale(glm::vec3(0.8));
-            }
-
-            void onExit(){
-                getGameObject()->transform.setScale(glm::vec3(1.0));
-            }
-
-            void start() override {
-                onenter = std::bind(&ImageButtonScript::onEnter, this);
-                onexit = std::bind(&ImageButtonScript::onExit, this);
-
-                Input::attachOnMouseClick(xl, xr, yl, yr, 10,&onenter, &onexit);
-
-                Component::start();
-            }
-
-            void destroy() override {
-                Input::detachOnMouseClick(callback);
-                Component::destroy();
-            }
-        };
-        GameObject * canvas;
-        unsigned int image;
-        glm::vec2 size;
-        glm::vec3 position;
-        std::function<void()> * callback;
-
-    public:
-        ScrollBar(GameObject *canvas, unsigned int image, const glm::vec2 &size, const glm::vec3 &position,
-                    std::function<void(double)> *callback) : canvas(canvas), image(image), size(size), position(position),
-                                                       callback(callback) {}
-
-        GameObject *instantiate(Scene *scene) override {
-            auto result = scene->createGameObject();
-            result->setParent(canvas);
-            result->transform.setPosition(position);
-            double px = result->transform.getPosition().x;
-            double py = result->transform.getPosition().y;
-            result->createComponent<Image>( image, size.x, size.y );
-            result->createComponent<ImageButtonScript>(
-                    px - size.x / 2, px + size.x / 2,
-                    py - size.y / 2, py + size.y / 2,
-                    callback
-            );
-            return result;
-        }
-    };*/
 
 };
 

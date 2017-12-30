@@ -15,35 +15,35 @@ class Transform {
 public:
     Transform();
 
-    glm::mat4 getModelMatrix(glm::mat4 model) const;
+    glm::mat4 getModelMatrix() const;
 
-    const glm::vec3 &getPosition() const;
+    const glm::vec3 &getLocalPosition() const;
 
     void setPosition(const glm::vec3 &position);
 
     void translate(const glm::vec3 &position);
 
-    glm::vec3 getRotation() const;
+    glm::vec3 getLocalRotation() const;
 
     void setRotation(const glm::vec3 &eularAngle);
 
     void setRotationEx(const glm::vec3 &eularAngle);
 
-    glm::mat4 getQuatMatrix() const;
+    glm::mat4 getLocalQuatMatrix() const;
 
-    glm::quat getQuaternion() const;
+    glm::quat getLocalQuaternion() const;
 
-    const glm::vec3 &getScale() const;
+    const glm::vec3 &getLocalScale() const;
 
     void setScale(const glm::vec3 &scale);
 
     static glm::vec3 up, forward, right;
 
-    glm::vec3 getForward() const;
+    glm::vec3 getLocalForward() const;
 
-    glm::vec3 getRight() const;
+    glm::vec3 getLocalRight() const;
 
-    glm::vec3 getUp() const;
+    glm::vec3 getLocalUp() const;
 
     void rotate(glm::vec3 axis, float angle);
 
