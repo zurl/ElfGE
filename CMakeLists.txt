@@ -3,6 +3,11 @@ project(elfge)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
+        Assets/Scripts/DeveloperScript.cpp
+        StandardAssets/Materials/SelectedMaterial.cpp
+        StandardAssets/Materials/SelectedMaterial.h
+        GameEngine/Config.cpp
+        GameEngine/Config.h
         GameEngine/Core/GameObject.cpp
         GameEngine/Core/GameObject.h
         GameEngine/Common.h
@@ -123,7 +128,7 @@ ELSEIF (UNIX)
     include_directories("/usr/include/freetype")
     find_library(OPENGL OpenGL)
     find_library(GLFW glfw)
-    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c)
+    set(SOURCE_FILES ${SOURCE_FILES} GameEngine/glad.c StandardAssets/LJK/EnemyCond.h StandardAssets/LJK/AnimationCond.h Assets/RealCamera.h)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -lGLEW)
     find_library(ASSIMP assimp)

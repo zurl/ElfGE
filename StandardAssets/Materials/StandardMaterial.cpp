@@ -6,4 +6,6 @@
 
 void StandardMaterial::use(Shader *shader) {
     shader->setFloat("material.shininess", 20.0f);
+    shader->setFloat("gradient", Config::Fog::gradient);
+    shader->setFloat("density", Config::Fog::density);
 }

@@ -9,6 +9,7 @@
 #include "GameEngine.h"
 #include "StandardAssets.h"
 #include <random>
+#include "RealCamera.h"
 
 namespace Prefabs {
 
@@ -50,14 +51,15 @@ namespace Prefabs {
         Cube(const glm::vec3 &position) : position(position) {}
 
         GameObject *instantiate(Scene *scene) override {
-
-            auto result = scene->createGameObject()
+            static int no = 0;
+            auto result = scene->createGameObject("cube" + std::to_string(no++))
                     ->createComponent<DefaultModel>(
                             new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                     ->createComponent<Renderer>(
                             &material, ShaderManager::getShader("light_ds_pm"))
                     ->createComponent<AABBCollider>(false)
                     ->createComponent<RigidBody>(1.0f, glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), 1.0, false);
+
 
             result->transform.setPosition(position);
             return result;
@@ -86,7 +88,7 @@ namespace Prefabs {
     public:
         GameObject *instantiate(Scene *scene) override {
             auto camera = scene->createGameObject()
-                    ->createComponent<FirstPlayerCamera>();
+                    ->createComponent<RealCamera>();
 
             scene->setCamera(camera->getComponent<FirstPlayerCamera>());
             return camera;
@@ -170,6 +172,8 @@ namespace Prefabs {
             return result;
         }
     };
+
+
 /*
     class ScrollBar: public Prefab{
 

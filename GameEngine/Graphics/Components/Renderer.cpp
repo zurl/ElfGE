@@ -3,6 +3,7 @@
 //
 
 #include <Graphics/ShaderManager.h>
+#include <Config.h>
 #include "Renderer.h"
 #include "Core/Runtime.h"
 #include "Graphics/LightingManager.h"
@@ -53,3 +54,11 @@ void Renderer::destroy() {
 
 Renderer::Renderer(Material *material, Shader *shader, bool useShadow) : material(material), shader(shader),
                                                                          useShadow(useShadow) {}
+
+Material *Renderer::getMaterial() const {
+    return material;
+}
+
+void Renderer::setMaterial(Material *material) {
+    Renderer::material = material;
+}

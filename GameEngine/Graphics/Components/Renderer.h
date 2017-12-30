@@ -24,6 +24,10 @@ public:
     void updateGraphics(RenderLayer renderLayer) override;
 
     void destroy() override;
+
+    Material *getMaterial() const;
+
+    void setMaterial(Material *material);
 };
 
 

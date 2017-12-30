@@ -30,11 +30,21 @@ void FuckScript::onClick() {
             Runtime::getCamera()->getGameObject()->transform.getForward(),
             100000.0f
     );
+
+    //auto cube = set<Cube>(glm::vec3(0.0f, 1.0f, 0.0))->createComponent<EnemyCond>(5,1, human);
+    human->getComponent<AnimationCond>()->play(3);
     if (collider == nullptr) {
         text->setText("NO");
     } else {
         text->setText("YES");
-        //collider->getGameObject()->transform.translate(Transform::up);
+
+        EnemyCond * thisEnmey = collider->getGameObject()->getComponent<EnemyCond>();
+
+        if(thisEnmey->Health-- <= 0){
+            thisEnmey->die();
+        }
+
+
     }
     cnt = 5;
 }

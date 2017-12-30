@@ -7,6 +7,7 @@
 
 #include "Exception.h"
 #include "Common.h"
+#include "Config.h"
 
 #include "Core/Utility.h"
 #include "Core/GameObject.h"

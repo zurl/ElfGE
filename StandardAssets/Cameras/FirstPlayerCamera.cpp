@@ -6,15 +6,35 @@
 
 
 void FirstPlayerCamera::update() {
-    float cameraSpeed = (float) (2.5f * Utility::deltaTime);
-    if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS)
-        getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getForward());
-    if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS)
-        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->transform.getForward());
-    if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS)
-        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->transform.getRight());
-    if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS)
-        getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getRight());
+//    static bool isAim = false;
+//    static int delay = 0;
+//    if (glfwGetKey(Utility::window, GLFW_KEY_F) == GLFW_PRESS){
+//        if(delay > 5){
+//            if(isAim){
+//                zoom = 45.0f;
+//                getGameObject()->transform.translate(-getGameObject()->transform.getForward() * 1.0f);
+//            }
+//            else{
+//                zoom = 10.0f;
+//                getGameObject()->transform.translate(getGameObject()->transform.getForward() * 1.0f);
+//            }
+//            isAim = !isAim;
+//            delay=0;
+//        }
+//
+//
+//    }
+//    delay++;
+//    float cameraSpeed = (float) (2.5f * Utility::deltaTime);
+//    if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS)
+//        getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getForward());
+//    if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS)
+//        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->transform.getForward());
+//    if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS)
+//        getGameObject()->transform.translate(-cameraSpeed * getGameObject()->transform.getRight());
+//    if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS)
+//        getGameObject()->transform.translate(cameraSpeed * getGameObject()->transform.getRight());
+
 }
 
 void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
@@ -29,6 +49,9 @@ void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
 
     lastX = xpos;
     lastY = ypos;
+
+//    getGameObject()->transform.rotate(glm::vec3(0,1,0), xoffset*mouseSensitivity);
+//    getGameObject()->transform.rotate(glm::vec3(0,0,1), yoffset*mouseSensitivity);
 
     glm::vec3 rotation = getGameObject()->transform.getRotation();
 

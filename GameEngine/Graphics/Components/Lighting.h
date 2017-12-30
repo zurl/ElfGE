@@ -12,7 +12,7 @@
 class Lighting : public Component {
 public:
 
-    virtual std::string getName() = 0;
+    virtual std::string getName() override = 0;
 
     void start() override;
 

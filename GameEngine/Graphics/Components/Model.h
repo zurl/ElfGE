@@ -11,6 +11,10 @@
 
 class Model : public Component {
 public:
+    std::string getName() override {
+        return "model";
+    }
+
     virtual void render(Shader *shader, RenderLayer renderLayer) = 0;
 };
 

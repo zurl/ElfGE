@@ -3,6 +3,8 @@
 #define NR_DIR_LIGHTS 1
 #define NR_POINT_LIGHTS 4
 #define NR_SPOT_LIGHTS 1
+in float visibility;
+const vec3 skyColor = vec3(0.5, 0.5, 0.5);
 
 out vec4 FragColor;
 
@@ -114,12 +116,12 @@ void main(){
 
     vec3 viewDir   = normalize(TangentViewPos - TangentFragPos);
     vec2 texCoords = ParallaxMapping(TexCoords,  viewDir);
-//    if(texCoords.x > 1.0)texCoords.x = 1.0;
-//    if(texCoords.x < 0.0)texCoords.x = 0.0;
-//    if(texCoords.y > 1.0)texCoords.y = 1.0;
-//    if(texCoords.y < 0.0)texCoords.y = 0.0;
-    if(texCoords.x > 1.0 || texCoords.y > 1.0 || texCoords.x < 0.0 || texCoords.y < 0.0)
-    discard;
+    if(texCoords.x > 1.0)texCoords.x = 1.0;
+    if(texCoords.x < 0.0)texCoords.x = 0.0;
+    if(texCoords.y > 1.0)texCoords.y = 1.0;
+    if(texCoords.y < 0.0)texCoords.y = 0.0;
+    //if(texCoords.x > 1.0 || texCoords.y > 1.0 || texCoords.x < 0.0 || texCoords.y < 0.0)
+    //discard;
     vec3 normal = texture(material.normal, texCoords).rgb;
     vec3 norm = normalize(normal * 2.0 - 1.0);
     //vec3 viewDir = TBN * normalize(viewPos - FragPos);
@@ -135,6 +137,7 @@ void main(){
     //FragColor = vec4(vec3(LinearizeDepth(gl_FragCoord.z)), 1.0);
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
+    FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
 }
 
 // calculates the color when using a directional light.

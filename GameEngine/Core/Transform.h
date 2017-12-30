@@ -11,6 +11,7 @@ class Transform {
     glm::vec3 position;
     glm::mat4 rotation;
     glm::vec3 scale;
+    glm::vec3 lastAngle = glm::vec3(0.0f);
 public:
     Transform();
 
@@ -25,6 +26,8 @@ public:
     glm::vec3 getRotation() const;
 
     void setRotation(const glm::vec3 &eularAngle);
+
+    void setRotationEx(const glm::vec3 &eularAngle);
 
     glm::mat4 getQuatMatrix() const;
 

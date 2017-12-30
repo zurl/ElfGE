@@ -31,3 +31,7 @@ void Component::updateGraphics(RenderLayer renderLayer) {
 Component::~Component() {
 
 }
+
+std::string Component::getName() {
+    return "component";
+}

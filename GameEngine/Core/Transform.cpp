@@ -32,6 +32,14 @@ void Transform::setRotation(const glm::vec3 &eularAngle) {
     rotation = glm::toMat4(glm::quat(eularAngle));
 }
 
+void Transform::setRotationEx(const glm::vec3 &eularAngle) {
+    glm::vec3 delta = eularAngle - lastAngle;
+    if( fabs(delta.x) > 1e-3 )rotate(Transform::forward, delta.x);
+    if( fabs(delta.y) > 1e-3 )rotate(Transform::up, delta.y);
+    if( fabs(delta.z) > 1e-3 )rotate(Transform::right, delta.z);
+    lastAngle = eularAngle;
+}
+
 const glm::vec3 &Transform::getScale() const {
     return scale;
 }

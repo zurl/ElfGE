@@ -12,26 +12,49 @@ class AnimationCond: public Component {
 public:
     int now;
     int previous;
-
+    int timeforplay;
     AnimationCond(){
-        now = previous = 0;
-        getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
+        now = previous = timeforplay = 0;
+        //getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
     }
 
     void play(int state){
-        previous = now;
-        now = state;
-        if(now != previous){
-            switch(now){
-                case 0:
-                    getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
-                    break;
-                case 1:
-                    getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN_WITH_GUN");
-                    break;
+        if(timeforplay == 0){
+            previous = now;
+            now = state;
+            if(now != previous){
+                switch(now){
+                    case 0:
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
+                        break;
+                    case 1:
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN_WITH_GUN");
+                        break;
+                    case 2:
+                        timeforplay = 30;
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("JUMP");
+                        break;
+                    case 3:
+                        timeforplay = 200;
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("SHOOT");
+                        break;
+                    case 4:
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("DOWN");
+                        break;
+                    case 5:
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN_DOWN");
+                        break;
+                    case 6:
+                        timeforplay = 200;
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("DIE");
+                        break;
+
+                }
             }
         }
-
+        else{
+            timeforplay--;
+        }
     }
 
 };

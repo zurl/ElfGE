@@ -17,6 +17,9 @@ class Component {
     friend class GameObject;
 
 public:
+
+    virtual std::string getName();
+
     virtual void start();
 
     virtual void update();

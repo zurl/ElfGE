@@ -9,7 +9,7 @@
 
 static unsigned int indices_array_plane[] = {
         0, 1, 2,
-        2, 3, 1,
+        2, 1, 3,
 };
 
 static float vertices_array[] = {

@@ -3,6 +3,8 @@
 #define NR_DIR_LIGHTS 1
 #define NR_POINT_LIGHTS 4
 #define NR_SPOT_LIGHTS 1
+in float visibility;
+const vec3 skyColor = vec3(0.5, 0.5, 0.5);
 
 out vec4 FragColor;
 
@@ -47,6 +49,7 @@ in vec3 FragPos;
 in vec2 TexCoords;
 in vec4 FragPosLightSpace;
 in mat3 TBN;
+
 
 uniform vec3 shadowLightPos;
 uniform vec3 viewPos;
@@ -115,6 +118,7 @@ void main(){
     //FragColor = vec4(vec3(LinearizeDepth(gl_FragCoord.z)), 1.0);
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
+        FragColor = mix(vec4(skyColor, 1.0),FragColor, visibility);
 }
 
 // calculates the color when using a directional light.
