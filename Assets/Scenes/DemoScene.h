@@ -51,7 +51,8 @@ public:
 
         Config::Hack::hack = 1;
 
-
+        printf("123");
+        printf("1234");
 
         human = createGameObject()
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
