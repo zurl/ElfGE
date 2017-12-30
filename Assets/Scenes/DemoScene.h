@@ -31,10 +31,14 @@ public:
 
     Text *text;
 
+    ParticleFactory * pf;
+
     std::function<void()> onclk;
     std::function<void(double)> oncg;
 
     void start() override {
+        auto skybox = createGameObject()
+                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
 
         light = set<DirLight>(glm::vec3(0, 0, 60));
@@ -42,9 +46,9 @@ public:
         light->transform.translate(-light->getWorldForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
-
-        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
+//        auto terrain = set<DemoTerrain>();
+//
+//        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -60,6 +64,12 @@ public:
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
+
+        auto pfobj = createGameObject()
+                ->createComponent<ParticleFactory>(human, 1.0f, glm::vec3(5.0f, 0, 0));
+
+        pf = pfobj->getComponent<ParticleFactory>();
+
 
         //human animation
         auto humanModel = human->getComponent<AnimatedModel>();
@@ -129,58 +139,56 @@ public:
 
 
 
-        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//
+//
+//        auto rnd = cube1->getComponent<Renderer>();
+//        rnd->setSelected(true);
+//
+//
+//        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
+//        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
+//
+//
+//
+//
+//        auto arialFont = FontManager::loadFont("Arial");
+//
+//
+//        auto image1 = createGameObject()
+//                ->createComponent<Image>(TextureManager::loadTexture2D(
+//                        Utility::RESOURCE_PREFIX + "Textures/brickwall.jpg"
+//                ), 20.0f, 20.0f);
+//        image1->setParent(canvas);
+//        image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
+//
 
-
-        auto rnd = cube1->getComponent<Renderer>();
-        rnd->setSelected(true);
-
-
-        auto cube2 = set<Cube>(glm::vec3(2.0f, 3.0f, 1.0));
-        auto cube3 = set<Cube>(glm::vec3(-1.0f, 3.0f, 2.0));
-
-
-
-
-        auto arialFont = FontManager::loadFont("Arial");
-
-
-        auto image1 = createGameObject()
-                ->createComponent<Image>(TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Textures/brickwall.jpg"
-                ), 20.0f, 20.0f);
-        image1->setParent(canvas);
-        image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
-
-
-        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
-        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
-        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
-        auto cobj = new GameObject("controller");
-        axisX->setParent(cobj);
-        axisY->setParent(cobj);
-        axisZ->setParent(cobj);
-        cobj->setParent(nullptr);
-        //cobj->start();
-
-
-        dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
-        auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
-        auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
-
-        auto developer = createGameObject()
-        ->createComponent<DeveloperScript>(
-                dt3->getComponent<Text>(),
-                dt2->getComponent<Text>(),
-                dt1->getComponent<Text>(),
-                cobj
-        );
-
-        auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+//        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
+//        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
+//        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
+//        auto cobj = new GameObject("controller");
+//        axisX->setParent(cobj);
+//        axisY->setParent(cobj);
+//        axisZ->setParent(cobj);
+//        cobj->setParent(nullptr);
+//        //cobj->start();
+//
+//
+//        dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
+//        auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
+//        auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
+//
+//        auto developer = createGameObject()
+//        ->createComponent<DeveloperScript>(
+//                dt3->getComponent<Text>(),
+//                dt2->getComponent<Text>(),
+//                dt1->getComponent<Text>(),
+//                cobj
+//        );
+//
 
         Scene::start();
     }
@@ -204,7 +212,7 @@ public:
 //                + std::to_string(human->getWorldPosition().y) + ","
 //                + std::to_string(human->getWorldPosition().z) + ",");
 
-        if (glfwGetKey(Utility::window, GLFW_KEY_U) == GLFW_PRESS){
+        if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS){
             auto cld = realhuman->getComponent<AABBCollider>();
             auto offset = (cld->min + cld->max) * 0.5f;
             auto size = (cld->max - cld->min) * 0.5f;
@@ -218,6 +226,10 @@ public:
         camera->transform.setPosition(
                 - realhuman->getWorldForward() * 5.0f + glm::vec3(0.0f, 2.0f, 0.0f)
         );
+
+        if(glfwGetKey(Utility::window, GLFW_KEY_U) == GLFW_PRESS){
+            pf->addExplosion();
+        }
 
         //human move
 //        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
