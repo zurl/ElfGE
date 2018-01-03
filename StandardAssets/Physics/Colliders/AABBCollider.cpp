@@ -37,8 +37,9 @@ void AABBCollider::start() {
   }) * 2;
     allColliders.emplace_back(this);
 }
-
+int cnt = 0;
 void AABBCollider::update() {
+    cnt++;
     computeBox();
     if (!passive) {
         for (auto &x : allColliders) {
@@ -48,7 +49,7 @@ void AABBCollider::update() {
                 float dis = radius + x->radius;
                 bool isOnCollision = onCollision.find(x) != onCollision.end();
                 //if(!isOnCollision && targetDis > dis + 1e-1) continue;
-                //printf("targetDis=%f, radius=%f\n", targetDis, dis);
+
                 bool isCollision = checkCollision(x);
                 if (isCollision && !isOnCollision) {
                     glm::vec3 info = getCollisionInfo(x);
@@ -182,4 +183,8 @@ int AABBCollider::getAxisInfo(float minA, float maxA, float minB, float maxB) {
 
 bool AABBCollider::isWall() const {
     return wall;
+}
+
+void AABBCollider::setWall(bool w) {
+    wall = w;
 }

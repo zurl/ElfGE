@@ -46,6 +46,7 @@ const glm::vec3 &Transform::getLocalScale() const {
 }
 
 void Transform::setScale(const glm::vec3 &scale) {
+    assert(scale.x > 0 && scale.y >0 && scale.z > 0);
     Transform::scale = scale;
 }
 

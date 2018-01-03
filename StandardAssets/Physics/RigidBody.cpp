@@ -5,6 +5,7 @@
 #include "RigidBody.h"
 
 void RigidBody::onCollisionEnter(Collider *collider, glm::vec3 info) {
+    printf(("in" + collider->getGameObject()->getName() + "\n").c_str());
     AABBCollider * aabb = (AABBCollider * )collider;
     if(!aabb->isWall())return;
     this->collider = aabb;

@@ -38,6 +38,34 @@ void DeveloperScript::update() {
         keyCounter = 100;
     }
     if(target != nullptr){
+        if (glfwGetKey(Utility::window, GLFW_KEY_B) == GLFW_PRESS){
+//            auto cld = realhuman->getComponent<AABBCollider>();
+            printf("%s, targetDis=%f, radius=%f\n", target->getName().c_str(), glm::distance(target->getWorldPosition(), human->getWorldPosition()));
+            auto cld =  target->getComponent<AABBCollider>();
+            auto cld2 =  human->getComponent<AABBCollider>();
+            printf("minx=%f, maxx=%f, miny=%f, maxy=%f, minz=%f, maxz=%f, minz0=%f, maxz0=%f, wz=%f, wp = %f, lz=%f\n",
+                   cld->min.x, cld->max.x,cld->min.y, cld->max.y,cld->min.z, cld->max.z, cld->min0.z, cld->max0.z
+                , target->getWorldScale().z, target->getWorldPosition().z,
+                target->transform.getLocalScale().z
+            );
+            printf("minx=%f, maxx=%f, miny=%f, maxy=%f, minz=%f, maxz=%f\n",
+                   cld2->min.x, cld2->max.x,cld2->min.y, cld2->max.y,cld2->min.z, cld2->max.z);
+            printf("check x = %d y = %d z = %d fuckz=%d fuckz2=%d\n",
+                   AABBCollider::checkAxis(cld->min.x, cld->max.x,cld2->min.x, cld2->max.x),
+                   AABBCollider::checkAxis(cld->min.y, cld->max.y,cld2->min.y, cld2->max.y),
+                   AABBCollider::checkAxis(cld->min.z, cld->max.z,cld2->min.z, cld2->max.z),
+                   cld->max.z < cld2->min.z, cld->min.z > cld2->max.z
+            );
+//            auto cld = target->getComponent<AABBCollider>();
+//            auto offset = (cld->min + cld->max) * 0.5f;
+//            auto size = (cld->max - cld->min) * 0.5f;
+//            auto t = size.z;
+//            size.z = size.x;
+//            size.z = t;
+//            getGameObject()->transform.setPosition(offset);
+//            getGameObject()->transform.setScale(size * 3.0f);
+        }
+
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
             setType = 0; updateState(); keyCounter = 5;
         }
@@ -76,7 +104,8 @@ void DeveloperScript::onClickEnter() {
     AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldForward(),
-            100000.0f
+            100000.0f,
+            human->getComponent<AABBCollider>()
     );
     if(collider != nullptr && collider->getGameObject()->getParent() == controller){
         return;
@@ -159,9 +188,10 @@ void DeveloperScript::adjust(float d) {
     }
 }
 
-DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller) : text1(text1),
+DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller, GameObject *human) : text1(text1),
                                                                                                   text2(text2),
                                                                                                   text3(text3),
+                                                                                                                     human(human),
                                                                                                   controller(
                                                                                                           controller) {}
 

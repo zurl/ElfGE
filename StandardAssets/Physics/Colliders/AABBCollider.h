@@ -9,6 +9,7 @@
 
 class AABBCollider : public Collider {
 
+public:
     static std::list<AABBCollider *> allColliders;
 
     bool autogen = false;
@@ -25,7 +26,7 @@ class AABBCollider : public Collider {
 
     void computeBox();
 
-    bool checkAxis(float minA, float maxA, float minB, float maxB);
+    static bool checkAxis(float minA, float maxA, float minB, float maxB);
 
     int getAxisInfo(float minA, float maxA, float minB, float maxB);
 
@@ -70,6 +71,8 @@ public:
 
     glm::vec3 min, max;
     glm::vec3 min0, max0;
+
+    void setWall(bool w);
 };
 
 
