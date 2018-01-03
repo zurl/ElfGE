@@ -177,3 +177,7 @@ int AABBCollider::getAxisInfo(float minA, float maxA, float minB, float maxB) {
 bool AABBCollider::isWall() const {
     return wall;
 }
+
+void AABBCollider::setWall(bool w) {
+    wall = w;
+}

@@ -65,6 +65,8 @@ public:
 
     glm::vec3 min, max;
     glm::vec3 min0, max0;
+
+    void setWall(bool w);
 };
 
 

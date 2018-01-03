@@ -21,7 +21,7 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject *dt1, *human, *realhuman, *camera, *cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+    GameObject *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
 
     RigidBody * humanrg;
 
@@ -56,6 +56,56 @@ public:
         Config::Hack::hack = 1;
 
 
+        house = createGameObject()
+                ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj")
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("house/light_with_directional_shadow")
+                );
+        door = createGameObject()
+                ->createComponent<DoorModel>(Utility::RESOURCE_PREFIX + "Models/house/door.obj")
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("house/light_with_directional_shadow")
+                )
+        ->createComponent<AABBCollider>(true,false);
+        door->setParent(house);
+        door->transform.setScale(glm::vec3(1.1f,1.05f,1.0f));
+        door->transform.setPosition(glm::vec3(2.6f,1.0f,2.2f));
+
+        auto wall1 = createGameObject()
+                        ->createComponent<AABBCollider>(
+                                glm::vec3(1.5f,5.0f,6.5f),
+                                glm::vec3(6.2f,3.0f,-1.0f),
+                                true,true);
+        wall1->setParent(house);
+//        cube1->transform.setPosition(glm::vec3(6.2f,3.0f,-1.0f));
+//        cube1->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
+//
+        auto cube2 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        cube2->setParent(house);
+        cube2->transform.setPosition(glm::vec3(-6.2f,3.0f,-1.0f));
+        cube2->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
+//
+        auto cube3 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        cube3->setParent(house);
+        cube3->transform.setPosition(glm::vec3(0,3.0f,-4.0f));
+        cube3->transform.setScale(glm::vec3(13.2f,4.6f,-1.2f));
+
+        auto cube4 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        cube4->setParent(house);
+        cube4->transform.setPosition(glm::vec3(1.5,3.0f,1.9f));
+        cube4->transform.setScale(glm::vec3(1.7f,4.6f,-1.2f));
+
+        auto cube5 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        cube5->setParent(house);
+        cube5->transform.setPosition(glm::vec3(-3.8,3.0f,1.9f));
+        cube5->transform.setScale(glm::vec3(5.0f,4.6f,-1.2f));
+//
+        auto cube6 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+        cube6->setParent(house);
+        cube6->transform.setPosition(glm::vec3(5.4f,3.0f,1.9f));
+        cube6->transform.setScale(glm::vec3(2.5f,4.6f,-1.2f));
 
         human = createGameObject()
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
@@ -64,6 +114,7 @@ public:
                         &material,
                         ShaderManager::getShader("light_with_directional_shadow_anim")
                 );
+        Config::Hack::hack = 0;
 
         auto pfobj = createGameObject()
                 ->createComponent<ParticleFactory>();
@@ -133,7 +184,7 @@ public:
                         new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
                 ->createComponent<Renderer>(
                         &material, ShaderManager::getShader("light_ds_pm"))
-                ->createComponent<AABBCollider>(true, false);
+                ->createComponent<AABBCollider>(true, true);
 
 
 
@@ -141,7 +192,6 @@ public:
 
 
 
-//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
 //
 //
 //        auto rnd = cube1->getComponent<Renderer>();
@@ -154,7 +204,7 @@ public:
 //
 //
 //
-//        auto arialFont = FontManager::loadFont("Arial");
+        auto arialFont = FontManager::loadFont("Arial");
 //
 //
 //        auto image1 = createGameObject()
@@ -165,31 +215,31 @@ public:
 //        image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 //
 
-//        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-//        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-//        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-//        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
-//        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
-//        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
-//        auto cobj = new GameObject("controller");
-//        axisX->setParent(cobj);
-//        axisY->setParent(cobj);
-//        axisZ->setParent(cobj);
-//        cobj->setParent(nullptr);
-//        //cobj->start();
+        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
+        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
+        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
+        auto cobj = new GameObject("controller");
+        axisX->setParent(cobj);
+        axisY->setParent(cobj);
+        axisZ->setParent(cobj);
+        cobj->setParent(nullptr);
+        cobj->start();
 //
 //
-//        dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
-//        auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
-//        auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
+        dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
+        auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
+        auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
 //
-//        auto developer = createGameObject()
-//        ->createComponent<DeveloperScript>(
-//                dt3->getComponent<Text>(),
-//                dt2->getComponent<Text>(),
-//                dt1->getComponent<Text>(),
-//                cobj
-//        );
+        auto developer = createGameObject()
+        ->createComponent<DeveloperScript>(
+                dt3->getComponent<Text>(),
+                dt2->getComponent<Text>(),
+                dt1->getComponent<Text>(),
+                cobj
+        );
 //
 
         Scene::start();
@@ -215,7 +265,8 @@ public:
 //                + std::to_string(human->getWorldPosition().z) + ",");
 
         if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS){
-            auto cld = realhuman->getComponent<AABBCollider>();
+//            auto cld = realhuman->getComponent<AABBCollider>();
+            auto cld = door->getComponent<AABBCollider>();
             auto offset = (cld->min + cld->max) * 0.5f;
             auto size = (cld->max - cld->min) * 0.5f;
             auto t = size.z;
@@ -233,6 +284,12 @@ public:
             pf->addExplosion();
         }
 
+        if(glfwGetKey(Utility::window, GLFW_KEY_Q) == GLFW_PRESS){
+            static bool open = true;
+            if(open) door->getComponent<DoorModel>()->openDoor();
+            else door->getComponent<DoorModel>()->closeDoor();
+            open = !open;
+        }
         //human move
 //        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
 //            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
