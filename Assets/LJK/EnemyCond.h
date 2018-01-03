@@ -6,6 +6,7 @@
 #define ELFGE_ENEMYCOND_H
 
 #include "GameEngine.h"
+#include "../LJK/AnimationCond.h"
 #include <time.h>
 
 class EnemyCond: public Component {
@@ -32,6 +33,7 @@ public:
         printf("fuck2\n");
 
     }
+
     void die(){
         //EnemyGroup.remove(getGameObject());
         //GameObject::destroy(getGameObject());
@@ -42,10 +44,12 @@ public:
 
 
     void move(){
-        printf("isin\n");
-        glm::vec3 dis = Human->transform.getPosition() - getGameObject()->transform.getPosition();
+
+        getGameObject()->getComponent<AnimationCond>()->play(1);
+        //Human->transform.getLocalPosition()
+        glm::vec3 dis = Human->getWorldPosition() - getGameObject()->getWorldPosition();
         if(dis.x * dis.x + dis.z * dis.z < 10){
-            getGameObject()->transform.translate(movespeed * (Human->transform.getPosition() - getGameObject()->transform.getPosition()));
+            getGameObject()->transform.translate(movespeed * (Human->getWorldPosition() - getGameObject()->getWorldPosition()));
         }
 
         else{
@@ -59,7 +63,9 @@ public:
             }
 
             //printf("%d %d\n", randX, randY);
-            getGameObject()->transform.translate(movespeed * glm::vec3(randX,0,randY));
+
+            getGameObject()->getComponent<RigidBody>()->translate((movespeed * glm::vec3(randX,0,randY)));
+//            getGameObject()->transform.translate(movespeed * glm::vec3(randX,0,randY));
             timeCnt ++;
         }
     }
