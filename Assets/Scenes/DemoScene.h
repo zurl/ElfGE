@@ -54,7 +54,14 @@ public:
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
         Config::Hack::hack = 1;
+        auto tree = createGameObject()
+                ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/tree/Tree.obj")
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("light_with_directional_shadow")
+                );
 
+        tree->transform.setScale(glm::vec3(0.5f));
 
 
         human = createGameObject()
@@ -128,13 +135,13 @@ public:
 //
 //        camera->transform.setPosition(glm::vec3(0, 6, 0));
 
-        foller = createGameObject("cube")
-                ->createComponent<DefaultModel>(
-                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
-                ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light_ds_pm"))
-                ->createComponent<AABBCollider>(true, false);
-
+//        foller = createGameObject("cube")
+//                ->createComponent<DefaultModel>(
+//                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+//                ->createComponent<Renderer>(
+//                        &material, ShaderManager::getShader("light_ds_pm"))
+//                ->createComponent<AABBCollider>(true, false);
+//
 
 
         Config::Hack::hack = 0;

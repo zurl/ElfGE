@@ -23,9 +23,6 @@ namespace Prefabs {
 
         GameObject *instantiate(Scene *scene) override {
             auto ret = scene->createGameObject()
-                    ->createComponent<CubeMesh>("brickwall.jpg", "brickwall.jpg", "brickwall_normal.jpg")
-                    ->createComponent<Renderer>(
-                            &material, ShaderManager::getShader("light_with_directional_shadow"))
                     ->createComponent<DirectLighting>();
             ret->transform.setRotation(rotation);
             return ret;

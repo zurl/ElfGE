@@ -6,7 +6,6 @@
 
 void RigidBody::onCollisionEnter(Collider *collider, glm::vec3 info) {
     AABBCollider * aabb = (AABBCollider * )collider;
-    //printf("enter!");
     if(!aabb->isWall())return;
     this->collider = aabb;
     this->info = info;

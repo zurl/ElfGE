@@ -119,6 +119,7 @@ void main(){
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
     FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
+    FragColor.w = texture(material.diffuse, TexCoords).w;
 }
 
 // calculates the color when using a directional light.
