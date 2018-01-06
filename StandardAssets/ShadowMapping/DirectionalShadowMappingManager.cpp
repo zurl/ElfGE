@@ -47,10 +47,10 @@ void DirectionalShadowMappingManager::computeMapping() {
 }
 
 void DirectionalShadowMappingManager::applyMapping(Shader *shader) {
-    glActiveTexture(GL_TEXTURE8);
+    glActiveTexture(GL_TEXTURE13);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
     shader->setVec3("shadowLightPos", directLighting->getGameObject()->getWorldPosition());
-    shader->setInt("shadowMap", 8);
+    shader->setInt("shadowMap", 13);
     shader->setMat4("lightSpaceMatrix", projection * view);
 }
 

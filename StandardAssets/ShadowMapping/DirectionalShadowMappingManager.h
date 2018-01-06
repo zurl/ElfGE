@@ -17,7 +17,7 @@ class DirectionalShadowMappingManager: public ShadowMappingManager {
     Shader * shader;
     glm::mat4 projection, view;
 public:
-    DirectionalShadowMappingManager(DirectLighting * directLighting, int resolution = 256);
+    DirectionalShadowMappingManager(DirectLighting * directLighting, int resolution = 2048);
 
     void initialize() override ;
 

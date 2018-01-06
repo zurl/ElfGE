@@ -201,7 +201,7 @@ vec4 CalcTexture(vec2 TexCoords){
     vec4 res = textureR*m.r+textureG*m.g+textureB*m.b+textureA*m.a;
     return res;
 }
-vec4 CalcTexture(vec2 TexCoords){
+vec4 CalcNormal(vec2 TexCoords){
     vec4 m = texture(material.mix,TexCoords);
     vec4 normalR = texture(material.rNormal,TexCoords);
     vec4 normalG = texture(material.gNormal,TexCoords);

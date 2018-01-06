@@ -14,7 +14,7 @@ public:
 
     DirectLighting(const glm::vec3 &ambient = glm::vec3(0.5f, 0.5f, 0.5f),
                    const glm::vec3 &diffuse = glm::vec3(5.0f, 5.0f, 5.0f),
-                   const glm::vec3 &specular = glm::vec3(1.0f, 1.0f, 1.0f));
+                   const glm::vec3 &specular = glm::vec3(0.4f, 0.4f, 0.4f));
 
     std::string getName() override;
 

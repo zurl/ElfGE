@@ -23,7 +23,11 @@ namespace Prefabs {
 
         GameObject *instantiate(Scene *scene) override {
             auto ret = scene->createGameObject()
-                    ->createComponent<DirectLighting>();
+                    ->createComponent<DirectLighting>(
+                            glm::vec3(0.5f, 0.5f, 0.5f),
+                            glm::vec3(0.5f, 0.5f, 0.5f),
+                            glm::vec3(0.5f, 0.5f, 0.5f)
+                    );
             ret->transform.setRotation(rotation);
             return ret;
         }
@@ -109,7 +113,7 @@ namespace Prefabs {
                     ->createComponent<Terrain>("heightMap.png","terrain/",names)
                     ->createComponent<Renderer>(
                             &material,
-                            ShaderManager::getShader("light_with_directional_shadow")
+                            ShaderManager::getShader("terrain/terrain")
                     );
             return terrain;
         }
