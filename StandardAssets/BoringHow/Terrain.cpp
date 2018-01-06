@@ -3,10 +3,14 @@
 //
 
 #include "Terrain.h"
+const int size = 1024;
+float nlz(float x){
+    return x / 10 - 15;
+}
 
 Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePath,
                  const std::vector<std::string> &textureNames) {
-    const int size = 1024;
+
     heightMap = TextureManager::loadHeightMap(Utility::RESOURCE_PREFIX + "Textures/" + heightMapPath);
     vertices.reserve(size * size);
     for (int i = 0; i < size; i++) {
@@ -14,7 +18,7 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
             float add = 0;
             vertices.emplace_back(
                     glm::vec3((i) - (size / 2),
-                              heightMap[(i * size + j) * 3] / 100.0, (j) - (size / 2)),
+                              nlz(heightMap[(i * size + j) * 3]), (j) - (size / 2)),
                     glm::vec3(0, 1, 0),
                     glm::vec2(i / 8.0 + add / 2.0, j / 8.0 + add / 10.0));
         }
@@ -125,4 +129,14 @@ void Terrain::render(Shader *shader, RenderLayer renderLayer) {
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+float Terrain::getHeight(float x, float y) {
+    int PosY = x + 512;
+    int PosX = y + 512;
+    float frac = x + 512 - PosY;
+    int pos = PosY * 1024 + PosX;
+    float _yA = heightMap[pos * 3] * (1 - frac) + heightMap[pos * 3 + 1024 * 3] * (frac);
+    float _yB = heightMap[pos * 3 + 3] * (1 - frac) + heightMap[pos * 3 + 1025 * 3] * (frac);
+    return nlz(_yA * (1 - frac) + _yB * frac); // 20.0这里是scale大小, -2.75有Translation,这里可以加参数
 }

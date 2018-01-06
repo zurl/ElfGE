@@ -39,31 +39,13 @@ void DeveloperScript::update() {
     }
     if(target != nullptr){
         if (glfwGetKey(Utility::window, GLFW_KEY_B) == GLFW_PRESS){
-//            auto cld = realhuman->getComponent<AABBCollider>();
-            printf("%s, targetDis=%f, radius=%f\n", target->getName().c_str(), glm::distance(target->getWorldPosition(), human->getWorldPosition()));
-            auto cld =  target->getComponent<AABBCollider>();
-            auto cld2 =  human->getComponent<AABBCollider>();
-            printf("minx=%f, maxx=%f, miny=%f, maxy=%f, minz=%f, maxz=%f, minz0=%f, maxz0=%f, wz=%f, wp = %f, lz=%f\n",
-                   cld->min.x, cld->max.x,cld->min.y, cld->max.y,cld->min.z, cld->max.z, cld->min0.z, cld->max0.z
-                , target->getWorldScale().z, target->getWorldPosition().z,
-                target->transform.getLocalScale().z
+            auto s = target->getWorldScale();
+            DefaultCamera * ca = (DefaultCamera *) Runtime::getCamera();
+            float a = 85 * std::min(
+                    std::min(s.x, s.y), s.z
             );
-            printf("minx=%f, maxx=%f, miny=%f, maxy=%f, minz=%f, maxz=%f\n",
-                   cld2->min.x, cld2->max.x,cld2->min.y, cld2->max.y,cld2->min.z, cld2->max.z);
-            printf("check x = %d y = %d z = %d fuckz=%d fuckz2=%d\n",
-                   AABBCollider::checkAxis(cld->min.x, cld->max.x,cld2->min.x, cld2->max.x),
-                   AABBCollider::checkAxis(cld->min.y, cld->max.y,cld2->min.y, cld2->max.y),
-                   AABBCollider::checkAxis(cld->min.z, cld->max.z,cld2->min.z, cld2->max.z),
-                   cld->max.z < cld2->min.z, cld->min.z > cld2->max.z
-            );
-//            auto cld = target->getComponent<AABBCollider>();
-//            auto offset = (cld->min + cld->max) * 0.5f;
-//            auto size = (cld->max - cld->min) * 0.5f;
-//            auto t = size.z;
-//            size.z = size.x;
-//            size.z = t;
-//            getGameObject()->transform.setPosition(offset);
-//            getGameObject()->transform.setScale(size * 3.0f);
+            printf("%lf\n", a);
+            ca->zoom = a;
         }
 
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
@@ -180,7 +162,11 @@ void DeveloperScript::adjust(float d) {
     else if(setAxis == 1) delta.y = d;
     else if(setAxis == 2) delta.z = d;
     if(setType == 0) target->transform.translate(delta);
-    else if(setType == 2) target->transform.setScale(target->transform.getLocalScale() + delta);
+    else if(setType == 2) {
+        auto dst = target->transform.getLocalScale() + delta;
+        if(dst.x > 0 && dst.y > 0 && dst.z > 0)
+        target->transform.setScale(dst);
+    }
     else {
         if(setAxis == 0)target->transform.rotate(Transform::up, d);
         else if(setAxis == 1)target->transform.rotate(Transform::forward, d);

@@ -24,10 +24,10 @@ void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
 }
 
 void FirstPlayerCamera::onScrollMove(double x) {
-    if (zoom >= 1.0f && zoom <= 45.0f)
+    if (zoom >= 0.0f && zoom <= 45.0f)
         zoom -= x;
-    if (zoom <= 1.0f)
-        zoom = 1.0f;
+    if (zoom <= 0.0f)
+        zoom = 0.0f;
     if (zoom >= 45.0f)
         zoom = 45.0f;
 }

@@ -5,7 +5,9 @@
 #ifndef ELFGE_DEMOSCENE_H
 #define ELFGE_DEMOSCENE_H
 
-
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#include "stb_image.h"
 #include "GameEngine.h"
 #include "StandardAssets.h"
 #include "UI/UI.h"
@@ -22,9 +24,11 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject *ib, *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+    GameObject  *ib, *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
 
     RigidBody * humanrg;
+
+    Terrain * tr;
 
     DemoScene() {}
 
@@ -47,7 +51,8 @@ public:
         light->transform.translate(-light->getWorldForward() * 5.0f);
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-//        auto terrain = set<DemoTerrain>();
+        auto terrain = set<DemoTerrain>();
+        tr = terrain->getComponent<Terrain>();
 //
 //        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
@@ -166,7 +171,14 @@ public:
 
 
         onclk = [](){
-            printf("hehe");
+            int len = Utility::SCREEN_WIDTH * Utility::SCREEN_HEIGHT * 3;
+            void * screenData = malloc(len);
+            glReadPixels(0, 0,
+                         Utility::SCREEN_WIDTH,
+                         Utility::SCREEN_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, screenData);
+            stbi_write_png("saved.png",
+                           Utility::SCREEN_WIDTH,
+                           Utility::SCREEN_HEIGHT, 3, screenData, 0);
         };
 
         ib = set<ImageButton>(
@@ -332,11 +344,15 @@ public:
             foller->transform.setPosition(offset);
             foller->transform.setScale(size * 2.0f);
         }
-
-        camera->transform.setPosition(
-                - realhuman->getWorldForward() * 5.0f + glm::vec3(0.0f, 2.0f, 0.0f)
+        float x = realhuman->transform.getLocalPosition().x;
+        float z = realhuman->transform.getLocalPosition().z;
+        realhuman->transform.setPosition(
+               glm::vec3( x,tr->getHeight(x, z) ,z)
         );
 
+        camera->transform.setPosition(
+                - realhuman->getWorldForward() * 5.0f + glm::vec3(0.0f, 6.0f, 0.0f)
+        );
         if(glfwGetKey(Utility::window, GLFW_KEY_U) == GLFW_PRESS){
             pf->addExplosion();
         }

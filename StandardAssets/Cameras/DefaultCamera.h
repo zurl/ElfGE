@@ -14,7 +14,7 @@ const float ZOOM = 45.0f;
 
 
 class DefaultCamera : public Camera {
-protected:
+public:
     float movementSpeed;
     float mouseSensitivity;
     float zoom;

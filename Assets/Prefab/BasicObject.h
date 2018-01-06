@@ -36,7 +36,7 @@ namespace Prefabs {
             for (int i = 0; i < 6; i++) {
                 go[i]->setParent(group);
                 go[i]->createComponent<AABBCollider>(true);
-                go[i]->transform.setScale(glm::vec3(0.1f));
+                go[i]->transform.setScale(glm::vec3(0.03f * i + 0.03f));
                 go[i]->createComponent<Renderer>(&material,
                                                  ShaderManager::getShader("light_with_directional_shadow"));
                 go[i]->transform.setPosition(glm::vec3(i * 3, 0, 0));
