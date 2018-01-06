@@ -26,6 +26,10 @@ public:
 
     virtual void destroy();
 
+    virtual void sleep();
+
+    virtual void awake();
+
     virtual void updateGraphics(RenderLayer renderLayer);
 
     GameObject *getGameObject() const;

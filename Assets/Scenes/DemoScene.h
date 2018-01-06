@@ -14,6 +14,7 @@
 #include "../Scripts/DeveloperScript.h"
 #include "../Scripts/FuckScript.h"
 #include "../LJK/AnimationCond.h"
+#include "../Prefab/BasicObject.h"
 
 using namespace Prefabs;
 
@@ -21,7 +22,7 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+    GameObject *ib, *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
 
     RigidBody * humanrg;
 
@@ -52,6 +53,9 @@ public:
         auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
         auto l2p = light2->getComponent<PointLighting>();
         l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+
+
+        auto sample = set<BasicObject>();
 
         Config::Hack::hack = 1;
 //        auto tree = createGameObject()
@@ -86,34 +90,34 @@ public:
 //                                glm::vec3(6.2f,3.0f,-1.0f),
 //                                true,true);
 //        wall1->setParent(house);
-        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube1->transform.setPosition(glm::vec3(6.2f,3.0f,-1.0f));
-        cube1->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
-        cube1->setParent(house);
-        auto cube2 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube2->transform.setPosition(glm::vec3(-6.2f,3.0f,-1.0f));
-        cube2->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
-        cube2->setParent(house);
-
-        auto cube3 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube3->transform.setPosition(glm::vec3(0.0f,3.0f,-4.0f));
-        cube3->transform.setScale(glm::vec3(13.2f,4.6f,1.2f));
-        cube3->setParent(house);
-
-        auto cube4 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube4->setParent(house);
-        cube4->transform.setPosition(glm::vec3(1.5f,3.0f,1.9f));
-        cube4->transform.setScale(glm::vec3(1.7f,4.6f,1.2f));
-
-        auto cube5 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube5->setParent(house);
-        cube5->transform.setPosition(glm::vec3(-3.8f,3.0f,1.9f));
-        cube5->transform.setScale(glm::vec3(5.0f,4.6f,1.2f));
+//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube1->transform.setPosition(glm::vec3(6.2f,3.0f,-1.0f));
+//        cube1->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
+//        cube1->setParent(house);
+//        auto cube2 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube2->transform.setPosition(glm::vec3(-6.2f,3.0f,-1.0f));
+//        cube2->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
+//        cube2->setParent(house);
 //
-        auto cube6 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-        cube6->setParent(house);
-        cube6->transform.setPosition(glm::vec3(5.4f,3.0f,1.9f));
-        cube6->transform.setScale(glm::vec3(2.5f,4.6f,1.2f));
+//        auto cube3 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube3->transform.setPosition(glm::vec3(0.0f,3.0f,-4.0f));
+//        cube3->transform.setScale(glm::vec3(13.2f,4.6f,1.2f));
+//        cube3->setParent(house);
+//
+//        auto cube4 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube4->setParent(house);
+//        cube4->transform.setPosition(glm::vec3(1.5f,3.0f,1.9f));
+//        cube4->transform.setScale(glm::vec3(1.7f,4.6f,1.2f));
+//
+//        auto cube5 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube5->setParent(house);
+//        cube5->transform.setPosition(glm::vec3(-3.8f,3.0f,1.9f));
+//        cube5->transform.setScale(glm::vec3(5.0f,4.6f,1.2f));
+////
+//        auto cube6 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
+//        cube6->setParent(house);
+//        cube6->transform.setPosition(glm::vec3(5.4f,3.0f,1.9f));
+//        cube6->transform.setScale(glm::vec3(2.5f,4.6f,1.2f));
 
         human = createGameObject()
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
@@ -159,6 +163,22 @@ public:
                         Utility::RESOURCE_PREFIX + "Textures/aim.png"
                 ),Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT );
         image2->setParent(canvas);
+
+
+        onclk = [](){
+            printf("hehe");
+        };
+
+        ib = set<ImageButton>(
+                canvas,
+                TextureManager::loadTexture2D(
+                        Utility::RESOURCE_PREFIX + "Textures/brick2.png"
+                ),
+                glm::vec2(50, 50),
+                glm::vec3(100, 100, 0),
+                &onclk
+        );
+
         image2->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
         image2->transform.translate(glm::vec3(10000,0, 0));
 
@@ -188,12 +208,12 @@ public:
 //
 //        camera->transform.setPosition(glm::vec3(0, 6, 0));
 
-        foller = createGameObject("cube")
-                ->createComponent<DefaultModel>(
-                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
-                ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light_ds_pm"))
-                ->createComponent<AABBCollider>(true, true);
+//        foller = createGameObject("cube")
+//                ->createComponent<DefaultModel>(
+//                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+//                ->createComponent<Renderer>(
+//                        &material, ShaderManager::getShader("light_ds_pm"))
+//                ->createComponent<AABBCollider>(true, true);
 
 
         Config::Hack::hack = 0;
@@ -223,16 +243,16 @@ public:
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
 
-        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
-        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
-        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
-        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
+//        auto axisX = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        auto axisY = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        auto axisZ = set<Cube>(glm::vec3(0.0f, 0.0f, 0.0f));
+//        axisX->transform.setScale(glm::vec3(1.0f, 0.05f, 0.05f));
+//        axisY->transform.setScale(glm::vec3(0.05f, 1.0f, 0.05f));
+//        axisZ->transform.setScale(glm::vec3(0.05f, 0.05f, 1.0f));
         auto cobj = new GameObject("controller");
-        axisX->setParent(cobj);
-        axisY->setParent(cobj);
-        axisZ->setParent(cobj);
+//        axisX->setParent(cobj);
+//        axisY->setParent(cobj);
+//        axisZ->setParent(cobj);
         cobj->setParent(nullptr);
         cobj->start();
 //
@@ -243,10 +263,10 @@ public:
 //
 //
         auto cb = createGameObject()
-                ->createComponent<DefaultModel>(
-                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
-                ->createComponent<Renderer>(
-                        &material, ShaderManager::getShader("light_ds_pm"))
+//                ->createComponent<DefaultModel>(
+//                        new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+//                ->createComponent<Renderer>(
+//                        &material, ShaderManager::getShader("light_ds_pm"))
 
         ->createComponent<DeveloperScript>(
                 dt3->getComponent<Text>(),
@@ -256,6 +276,10 @@ public:
                 realhuman
         );
         Scene::start();
+
+
+        ib->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+
     }
 
     float dir = 0.01f;
@@ -271,7 +295,27 @@ public:
     float x = 0;
     float humanspeed = 0.05f;
 
+    int mode = 1;
+    int mode_timer = 0;
+
     void update() override {
+        if(mode_timer > 0) mode_timer --;
+        if (glfwGetKey(Utility::window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            if(mode_timer == 0){
+                if (mode == 0) {
+                    mode = 1;
+                    mode_timer = 50;
+                    ib->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+                    glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                } else {
+                    mode = 0;
+                    mode_timer = 50;
+                    ib->setStatus(STATUS_NORMAL);
+                    glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                }
+            }
+        }
+
 //        dt1->getComponent<Text>()->setText(
 //                "Position : " + std::to_string(human->getWorldPosition().x) + ","
 //                + std::to_string(human->getWorldPosition().y) + ","
@@ -348,7 +392,7 @@ public:
 
 
 
-        Scene::update();
+        if(mode) Scene::update();
     }
 };
 

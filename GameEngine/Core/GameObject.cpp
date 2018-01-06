@@ -35,6 +35,7 @@ GameObject::~GameObject() {
 }
 
 void GameObject::update() {
+    if( status & STATUS_STOP_UPDATE) return;
     for (auto &x : components) {
         x->update();
     }
@@ -44,6 +45,7 @@ void GameObject::update() {
 }
 
 void GameObject::updateGraphics(RenderLayer renderLayer) {
+    if( status & STATUS_STOP_RENDER) return;
     for (auto &x : components) {
         x->updateGraphics(renderLayer);
     }
@@ -58,6 +60,24 @@ void GameObject::start() {
     }
     for (auto &x : children) {
         x->start();
+    }
+}
+
+void GameObject::sleep() {
+    for (auto &x : components) {
+        x->sleep();
+    }
+    for (auto &x : children) {
+        x->sleep();
+    }
+}
+
+void GameObject::awake() {
+    for (auto &x : components) {
+        x->awake();
+    }
+    for (auto &x : children) {
+        x->awake();
     }
 }
 
@@ -136,4 +156,20 @@ glm::vec3 GameObject::getWorldRight() const {
 
 glm::vec3 GameObject::getWorldRotation() const {
     return glm::eulerAngles(getWorldQuaternion());
+}
+
+int GameObject::getStatus() const {
+    return status;
+}
+
+void GameObject::setStatus(int status) {
+    if(!(GameObject::status & STATUS_STOP_UPDATE)
+       && (status & STATUS_STOP_UPDATE)){
+        sleep();
+    }
+    if((GameObject::status & STATUS_STOP_UPDATE)
+       && !(status & STATUS_STOP_UPDATE)){
+        awake();
+    }
+    GameObject::status = status;
 }

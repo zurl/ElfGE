@@ -11,10 +11,13 @@
 
 class GameObject {
 private:
+
     std::list<Component *> components;
     GameObject *parent = nullptr;
     std::list<GameObject *> children;
     std::string name;
+
+    int status = 0;
 
     void attachChildren(GameObject *gameObject);
 
@@ -23,6 +26,7 @@ private:
     void detachComponent(Component *component);
 
 public:
+
     GameObject(const std::string &name);
 
     Transform transform;
@@ -48,6 +52,10 @@ public:
     virtual void update();
 
     virtual void destroy();
+
+    virtual void sleep();
+
+    virtual void awake();
 
     virtual void updateGraphics(RenderLayer renderLayer);
 
@@ -85,6 +93,20 @@ public:
         return this;
     }
 
+    template<typename T>
+    void removeComponent(
+            typename std::enable_if<std::is_base_of<Component, T>::value>::type * = 0
+    ) {
+        for (auto &x: components) {
+            auto ptr = dynamic_cast<T *>(x);
+            if (ptr != nullptr) {
+                x->destroy();
+                delete x;
+                components.remove(x);
+            }
+        }
+    }
+
     template<typename T, typename... Args>
     GameObject *createComponent(Args &&... args) {
         return addComponent(new T(std::forward<Args>(args)...));
@@ -109,6 +131,10 @@ public:
     const std::list<GameObject *> &getChildren() const;
 
     const std::list<Component *> &getComponents() const;
+
+    int getStatus() const;
+
+    void setStatus(int status);
 
 };
 

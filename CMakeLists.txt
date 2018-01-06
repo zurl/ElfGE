@@ -32,6 +32,7 @@ ELSEIF (UNIX)
 ENDIF ()
 
 set(SOURCE_FILES
+        Assets/Prefab/BasicObject.h
         GameEngine/Core/LODGameObject.cpp
         StandardAssets/Physics/CharacterController.cpp
         Assets/Scripts/FuckScript.cpp

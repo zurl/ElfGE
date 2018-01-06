@@ -36,9 +36,19 @@ namespace Prefabs{
                 onexit = std::bind(&ImageButtonScript::onExit, this);
 
                 Input::attachOnMouseClick(xl, xr, yl, yr, 10, &onenter, &onexit);
-
                 Component::start();
             }
+
+            void sleep() override {
+                printf("sleep");
+                Input::detachOnMouseClick(&onenter);
+            }
+
+            void awake() override {
+                printf("awake");
+                Input::attachOnMouseClick(xl, xr, yl, yr, 10, &onenter, &onexit);
+            }
+
 
             void destroy() override {
                 Input::detachOnMouseClick(&onenter);
