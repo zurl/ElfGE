@@ -8,12 +8,14 @@
 #include "GameEngine.h"
 #include "StandardAssets.h"
 #include "../LJK/AnimationCond.h"
+#include "../Scripts/KeepHeight.h"
 
 class Human : public Prefab {
     std::string path;
+    Terrain * terrain;
 
 public:
-    Human(const std::string &path) : path(path) {}
+    Human(const std::string &path, Terrain *terrain) : path(path), terrain(terrain) {}
 
     GameObject *instantiate(Scene *scene) override {
         Config::Hack = 1;
@@ -27,6 +29,7 @@ public:
                 );
 
         auto realHuman = scene->createGameObject("realHuman")
+                ->createComponent<KeepHeight>(terrain)
                 ->createComponent<CharacterController>()
                 ->createComponent<RigidBody>()
                 ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,

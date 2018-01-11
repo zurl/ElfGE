@@ -25,7 +25,7 @@ void ThirdPlayerCamera::update() {
     }
     delay++;
 
-    float k = isAim ? 1.0f : 5.0f;
+    float k = isAim ? 1.0f : -5.0f;
     getGameObject()->transform.setPosition(
             glm::vec3(Player->getWorldForward().x * k,
                       getGameObject()->getWorldForward().y * k + 2.0f,

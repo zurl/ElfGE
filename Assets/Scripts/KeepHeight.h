@@ -16,13 +16,9 @@ public:
     KeepHeight(Terrain *terrain) : terrain(terrain) {}
 
     void update() override {
-        float x = getGameObject()->transform.getLocalPosition().x;
-        float z = getGameObject()->transform.getLocalPosition().z;
-
-        getGameObject()->transform.
-                setPosition(
-                glm::vec3(x, terrain->getHeight(x, z), z)
-        );
+        glm::vec3 pos = getGameObject()->transform.getLocalPosition();
+        pos.z = terrain->getHeight(pos.x, pos.z);
+        getGameObject()->transform.setPosition(pos);
     }
 };
 

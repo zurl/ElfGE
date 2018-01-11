@@ -19,6 +19,7 @@
 #include "../LJK/AnimationCond.h"
 #include "../Game/Human.h"
 #include "../Prefab/BasicObject.h"
+#include "../Game/Land.h"
 
 using namespace Prefabs;
 
@@ -52,14 +53,9 @@ public:
         light->transform.setPosition(glm::vec3(0, 15.0f, 0));
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
-        auto terrain = set<DemoTerrain>();
-        tr = terrain->getComponent<Terrain>();
 
-        auto grass = createGameObject("grass")
-        ->createComponent<GrassRenderer>(
-                Utility::RESOURCE_PREFIX + "Textures/grass/grass.jpg",
-                Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
-        );
+
+        auto terrain = set<Land>();
 
         auto sample = set<BasicObject>();
 
@@ -86,7 +82,8 @@ public:
         //human animation
 
         auto human = set<Human>(
-                Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/human.dae"
+                Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/human.dae",
+                terrain->getComponent<Terrain>()
         );
 
 
@@ -128,12 +125,8 @@ public:
         human->getComponent<AnimationCond>()->play(0);
 
 
-
-
-        humanrg = human->getComponent<RigidBody>();
-
         camera = createGameObject()
-                ->createComponent<ThirdPlayerCamera>(human, image2);
+                ->createComponent<ThirdPlayerCamera>(human->getParent(), image2);
         setCamera(camera->getComponent<ThirdPlayerCamera>());
         camera->setParent(human->getParent());
 
@@ -149,13 +142,6 @@ public:
         image1->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
 
 
-        auto cobj = new GameObject("controller");
-//        axisX->setParent(cobj);
-//        axisY->setParent(cobj);
-//        axisZ->setParent(cobj);
-        cobj->setParent(nullptr);
-        cobj->start();
-//
 //
         dt1 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
         auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
