@@ -47,17 +47,23 @@ public:
 
 
         light = set<DirLight>(glm::vec3(0, 0, 60));
-        light->transform.translate(-light->getWorldUp() * 5.0f);
-        light->transform.translate(-light->getWorldForward() * 5.0f);
+        light->transform.setPosition(glm::vec3(0, 15.0f, 0));
         setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
         getShadowMappingManager()->initialize();
         auto terrain = set<DemoTerrain>();
         tr = terrain->getComponent<Terrain>();
+
+        auto grass = createGameObject("grass")
+        ->createComponent<GrassRenderer>();
+
+
+
+
 //
 //        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
-        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
-        auto l2p = light2->getComponent<PointLighting>();
-        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+//        auto light2 = set<PointLight>(glm::vec3(0, 0, 0));
+//        auto l2p = light2->getComponent<PointLighting>();
+//        l2p->ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
 
         auto sample = set<BasicObject>();
@@ -289,7 +295,6 @@ public:
         );
         Scene::start();
 
-
         ib->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
 
     }
@@ -348,6 +353,10 @@ public:
         float z = realhuman->transform.getLocalPosition().z;
         realhuman->transform.setPosition(
                glm::vec3( x,tr->getHeight(x, z) ,z)
+        );
+
+        light->transform.setPosition(
+                glm::vec3( x + 3.0f,15 ,z + 3.0f)
         );
 
         camera->transform.setPosition(

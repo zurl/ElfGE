@@ -117,7 +117,7 @@ void main() {
 
 	// Sample the heightfield data texture to get altitude for this blade position
 	vec4 hdata = texture(heightMap, vSamplePos);
-	float altitude = hdata.r;
+	float altitude = hdata.r * 255 / 10 - 15;
 
 	// Determine if we want the grass to appear or not
 	// Use the noise channel to perturb the altitude grass starts growing at.
@@ -130,7 +130,7 @@ void main() {
 
 	// Vertex color must be brighter because it is multiplied with blade texture
 	vec3 color = min(vec3(grassColor.r * 1.25, grassColor.g * 1.25, grassColor.b * 0.95),vec3(1,1,1));
-	altitude *= heightMapScale.z;
+	//altitude *= heightMapScale.z;
 
 	// Compute directional (sun) light for this vertex
 	float diffuse = abs(dot(normal, lightDir)); // max(-dot(normal, lightDir), 0.0);
@@ -161,7 +161,7 @@ void main() {
 	// Translate to world coordinates
 	vpos.x += bladePos.x;
 	vpos.y += bladePos.y;
-//	vpos.z += altitude;
+	vpos.z += altitude;
 //	vpos.z = 0;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos.xzy, 1.0);
 //	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);

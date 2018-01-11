@@ -37,7 +37,7 @@ public:
         texture = TextureManager::loadTexture2D(
                 Utility::RESOURCE_PREFIX + "Textures/grass/grass.jpg");
         heightMap = TextureManager::loadTexture2D(
-                Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg");
+                Utility::RESOURCE_PREFIX + "Textures/heightMap.png");
         shader = ShaderManager::getShader("grass/grass");
         vindex = std::vector<float>(BLADE_VERTS*2);
 //        vindex = std::vector<float>(numBlades);

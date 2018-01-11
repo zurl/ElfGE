@@ -127,7 +127,7 @@ void GrassRenderer::prepare() {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D,heightMap);
+    glBindTexture(GL_TEXTURE_2D, heightMap);
 }
 
 void GrassRenderer::bindVertice() {

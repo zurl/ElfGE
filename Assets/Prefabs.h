@@ -22,11 +22,16 @@ namespace Prefabs {
         DirLight(const glm::vec3 &rotation) : rotation(rotation) {}
 
         GameObject *instantiate(Scene *scene) override {
-            auto ret = scene->createGameObject()
+            auto ret = scene->createGameObject("light")
+                    ->createComponent<DefaultModel>(
+                            new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_ds_pm"))
+                    ->createComponent<AABBCollider>(true)
                     ->createComponent<DirectLighting>(
-                            glm::vec3(0.5f, 0.5f, 0.5f),
-                            glm::vec3(0.5f, 0.5f, 0.5f),
-                            glm::vec3(0.5f, 0.5f, 0.5f)
+                            glm::vec3(0.2f, 0.2f, 0.2f),
+                            glm::vec3(0.2f, 0.2f, 0.2f),
+                            glm::vec3(0.2f, 0.2f, 0.2f)
                     );
             ret->transform.setRotation(rotation);
             return ret;

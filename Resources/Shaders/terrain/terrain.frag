@@ -120,13 +120,13 @@ void main(){
         result += CalcDirLight(dirLight[i], norm, viewDir);
     }
     for(int i = 0; i < NR_POINT_LIGHTS; i++){
-        result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
+        //result += CalcPointLight(pointLight[i], norm, FragPos, viewDir);
         //result += CalcSpotLight(spotLight[i], norm, FragPos, viewDir);
     }
     //FragColor = vec4(vec3(LinearizeDepth(gl_FragCoord.z)), 1.0);
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
-    FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
+    //FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
 }
 
 // calculates the color when using a directional light.
