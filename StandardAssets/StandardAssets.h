@@ -27,4 +27,6 @@
 #include "Materials/SelectedMaterial.h"
 #include "Grass/GrassRenderer.h"
 #include "Physics/CharacterController.h"
+#include "Cameras/ThirdPlayerCamera.h"
+
 #endif //ELFGE_STANDARDASSETS_H

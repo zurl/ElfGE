@@ -6,28 +6,8 @@
 
 namespace Config {
 
-    namespace Fog {
-
-        float density = 0.07;
-        float gradient = 1.5;
-
-    };
-
-    namespace LOD {
-
-        float hideDistance;
-
-    };
-
-    namespace Hack{
-
-        int hack = 0;
-    }
-
-
-    namespace Game{
-
-        int developerMode = 0;
-
-    }
+    float HideDistance = 100;
+    float FogDensity = 0.07;
+    float FogGradient = 1.5;
+    int Hack = 0;
 };

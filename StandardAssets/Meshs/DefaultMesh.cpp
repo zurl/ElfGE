@@ -48,7 +48,7 @@ void DefaultMesh::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std:
         texture.id = TextureManager::loadTexture2D(directory + "/" + str.C_Str());
         texture.type = typeName;
         textures.push_back(texture);
-        if (Config::Hack::hack && typeName == "diffuse") {
+        if (Config::Hack && typeName == "diffuse") {
             char fuckbuffer[128];
             strcpy(fuckbuffer, str.C_Str());
             int len = strlen(fuckbuffer);

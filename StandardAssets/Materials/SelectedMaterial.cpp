@@ -6,5 +6,5 @@
 
 void SelectedMaterial::use(Shader *shader) {
     //shader->setFloat("material.shininess", 200.0f);
-    shader->setFloat("density", 100);
+    shader->setFloat("Density", 100);
 }

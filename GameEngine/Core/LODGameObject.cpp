@@ -13,7 +13,7 @@ void LODGameObject::update() {
     float dis = glm::distance(
             getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldPosition());
-    if( dis < Config::LOD::hideDistance)
+    if( dis < Config::HideDistance)
         GameObject::update();
 }
 
@@ -21,6 +21,6 @@ void LODGameObject::updateGraphics(RenderLayer renderLayer) {
     float dis = glm::distance(
             getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldPosition());
-    if( dis < Config::LOD::hideDistance)
+    if( dis < Config::HideDistance)
         GameObject::updateGraphics(renderLayer);
 }

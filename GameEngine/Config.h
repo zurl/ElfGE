@@ -8,34 +8,12 @@
 
 namespace Config {
 
-    namespace Fog {
-
-        extern float density;
-        extern float gradient;
-
-    };
-
-    namespace LOD {
-
-        extern float hideDistance;
-
-    };
-
-    namespace Graphics{
-
-        extern int shadowResolution;
-
-    }
-
-    namespace Game{
-
-        extern int developerMode;
-
-    }
-
-    namespace Hack{
-        extern int hack;
-    }
+    extern float FogDensity;
+    extern float FogGradient;
+    extern float HideDistance;
+    extern int ShadowResolution;
+    extern int DeveloperMode;
+    extern int Hack;
 
 };
 

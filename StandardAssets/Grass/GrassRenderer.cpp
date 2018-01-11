@@ -3,12 +3,7 @@
 //
 
 #include "GrassRenderer.h"
-static void dumpGLErrorLog(int l) {
-    GLenum err;
-    while ((err = glGetError()) != GL_NO_ERROR) {
-        std::cout<<"glError: "<<err<<" line_num:"<<l<<std::endl;
-    }
-}
+
 void GrassRenderer::initBladeIndices(){
     int seg;
     unsigned int vc1 = 0;
@@ -34,9 +29,6 @@ void GrassRenderer::initBladeIndices(){
         index[i++] = vc2 + 2;
         vc2 += 2;
     }
-    for(int i=0;i<index.size();i++){
-//        std::cout<<index[i]<<std::endl;
-    }
 }
 
 void GrassRenderer::initBladeShapeVerts(){
@@ -49,7 +41,6 @@ void GrassRenderer::initBladeShapeVerts(){
         shape[i*4+0] = BLADE_WIDTH + randomGen() * BLADE_WIDTH * 0.5 ;// width
         shape[i*4+1] = (float)(BLADE_HEIGHT_MIN + pow(randomGen(), 4.0) * (BLADE_HEIGHT_MAX - BLADE_HEIGHT_MIN) + // height
                        noise);
-//        shape[i*4+1] = BLADE_HEIGHT_MIN;
         shape[i*4+2] = 0.0 + randomGen() * 0.3; // lean
 //        shape[i*4+3] = 0.05 + randomGen() * 0.3; // curve
         shape[i*4+3] = randomGen() * 0.3; // curve
@@ -80,17 +71,12 @@ float GrassRenderer::randomGen() {  // generate a random value from 0 to 1
 
 void GrassRenderer::prepare() {
     static float time = 0;
-   //printf("hello");
-    dumpGLErrorLog(__LINE__);
     shader->use();
-    dumpGLErrorLog(__LINE__);
     shader->setFloat("time",(float)time);
     time = fmod(time + Utility::deltaTime,20000000000);
 //    time+=Utility::deltaTime;
-    dumpGLErrorLog(__LINE__);
     GameObject * cameraT = Runtime::getCamera()->getGameObject();
     shader->setVec3("camDir",cameraT->getWorldPosition());
-    dumpGLErrorLog(__LINE__);
     glm::vec2 v1,v2;
     v1.x = cameraT->getWorldPosition().x;
     v1.y = cameraT->getWorldPosition().z;
@@ -99,16 +85,13 @@ void GrassRenderer::prepare() {
     v2 = glm::normalize(v2)*radius;
 //    shader->setVec2("drawPos",v1 + v2);
     shader->setVec2("drawPos",glm::vec2(0,0));
-    dumpGLErrorLog(__LINE__);
     shader->setMat4("modelViewMatrix",Runtime::getCamera()->getViewMatrix()*
                                       getGameObject()->getModelMatrix());
-//                                      glm::mat4(1));
-    dumpGLErrorLog(__LINE__);
+
     shader->setMat4("projectionMatrix",Runtime::getCamera()->getProjectionMatrix());
     shader->setInt("map",0);
     shader->setInt("heightMap",1);
 
-    dumpGLErrorLog(__LINE__);
     shader->setFloat("BLADE_HEIGHT_TALL",BLADE_HEIGHT_MAX*1.5);
     shader->setFloat("BLADE_SEGS",BLADE_SEGS);
     shader->setFloat("PATCH_SIZE",radius*2);
@@ -123,7 +106,6 @@ void GrassRenderer::prepare() {
     shader->setVec3("fogColor",fogColor);
     shader->setFloat("windIntensity",windIntensity);
 
-    dumpGLErrorLog(__LINE__);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,texture);
     glActiveTexture(GL_TEXTURE1);
@@ -166,11 +148,23 @@ void GrassRenderer::bindVertice() {
 
 void GrassRenderer::updateGraphics(RenderLayer renderLayer) {
     if(renderLayer != RenderLayer::WORLD) return;
-    dumpGLErrorLog(__LINE__);
     prepare();
-    dumpGLErrorLog(__LINE__);
     glBindVertexArray(VAO);
     glDrawElementsInstanced(GL_TRIANGLES,(GLsizei) index.size(),GL_UNSIGNED_INT,0,numBlades);
-//    glDrawElements(GL_TRIANGLES,(GLsizei)12 ,GL_UNSIGNED_INT,0);
     glBindVertexArray(0);
+}
+
+GrassRenderer::GrassRenderer(const std::string &UV, const std::string &height) {
+    texture = TextureManager::loadTexture2D(UV);
+    heightMap = TextureManager::loadTexture2D(height);
+    shader = ShaderManager::getShader("grass/grass");
+    vindex = std::vector<float>(BLADE_VERTS*2);
+    shape = std::vector<float>(4*numBlades);
+    offset = std::vector<float>(4*numBlades);
+    index = std::vector<GLuint>(BLADE_INDICES);
+    initBladeIndices();
+    initBladeOffsetVerts();
+    initBladeShapeVerts();
+    initBladeIndexVerts();
+    bindVertice();
 }

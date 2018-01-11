@@ -4,8 +4,14 @@
 
 #include "StandardMaterial.h"
 
+StandardMaterial StandardMaterial::instance;
+
 void StandardMaterial::use(Shader *shader) {
     shader->setFloat("material.shininess", 20.0f);
-    shader->setFloat("gradient", Config::Fog::gradient);
-    shader->setFloat("density", Config::Fog::density);
+    shader->setFloat("Gradient", Config::FogGradient);
+    shader->setFloat("Density", Config::FogDensity);
+}
+
+Material * StandardMaterial::getInstance() {
+    return &instance;
 }

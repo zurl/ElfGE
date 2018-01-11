@@ -7,8 +7,13 @@
 #include "GameEngine.h"
 
 class StandardMaterial: public Material {
+
+    static StandardMaterial instance;
+
 public:
     void use(Shader *shader) override;
+
+    static Material * getInstance();
 };
 
 
