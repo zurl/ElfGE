@@ -202,7 +202,7 @@ vec4 CalcTexture(vec2 TexCoords){
     vec4 textureB = texture(material.bTex,TexCoords);
     vec4 textureA = texture(material.aTex,TexCoords);
 
-    return mA * textureA + mB + textureG;
+    return mA * textureA + mB * textureG;
 }
 vec4 CalcNormal(vec2 TexCoords){
    float mA = clamp(height-5, 0, 1);
@@ -211,6 +211,5 @@ vec4 CalcNormal(vec2 TexCoords){
     vec4 normalG = texture(material.gNormal,TexCoords);
     vec4 normalB = texture(material.bNormal,TexCoords);
     vec4 normalA = texture(material.aNormal,TexCoords);
-    vec4 res = normalR*m.r+normalG*m.g+normalB*m.b+normalA*m.a;
-     return mA * normalA + mB + normalG;
+    return mA * normalA + mB * normalG;
 }

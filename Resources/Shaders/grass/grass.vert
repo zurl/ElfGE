@@ -14,7 +14,8 @@
 const vec3 LIGHT_COLOR = vec3(1.0, 1.0, 0.99);
 const vec3 SPECULAR_COLOR = vec3(1.0, 1.0, 0.0);
 
-uniform mat4 modelViewMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 uniform float BLADE_HEIGHT_TALL;
@@ -97,7 +98,9 @@ void main() {
 	vec2 bladePos = vec2(offset.xy + gridOffset);
 
 	// height/light map sample position
-	vSamplePos = bladePos.xy * heightMapScale.xy + vec2(0.5, 0.5);
+	vec4 pos = modelMatrix * vec4(bladePos.y,0,bladePos.x, 1.0);
+//	vec4 hdata = texture(heightMap, vec2(bladePos.y+512,bladePos.x+512)/1024);
+	vSamplePos = (pos.xz+512)/1024;
 
 	// Compute wind effect
 	// Using the lighting channel as noise seems make the best looking wind for some reason!
@@ -112,11 +115,12 @@ void main() {
 	wind = -wind;
 	rotv = vec2(cos(wind), sin(wind));
 	// Wind blows in axis-aligned direction to make things simpler
-	vpos.yz = rotate(vpos.y, vpos.z, rotv);
-	normal.yz = rotate(normal.y, normal.z, rotv);
+//	vpos.yz = rotate(vpos.y, vpos.z, rotv);
+//	normal.yz = rotate(normal.y, normal.z, rotv);
 
 	// Sample the heightfield data texture to get altitude for this blade position
 	vec4 hdata = texture(heightMap, vSamplePos);
+//	vec4 hdata = texture(heightMap, vec2(bladePos.y+512,bladePos.x+512)/1024);
 	float altitude = hdata.r * 255 / 10 - 15;
 
 	// Determine if we want the grass to appear or not
@@ -163,7 +167,7 @@ void main() {
 	vpos.y += bladePos.y;
 	vpos.z += altitude;
 //	vpos.z = 0;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos.xzy, 1.0);
+	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vpos.xzy, 1.0);
 //	gl_Position = projectionMatrix * modelViewMatrix * vec4(vpos, 1.0);
 //    gl_Position = vec4(vpos.xzy,1.0);
 //	gl_Position = projectionMatrix * modelViewMatrix * vec4(0,0,0, 1.0);

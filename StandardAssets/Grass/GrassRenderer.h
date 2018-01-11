@@ -18,7 +18,7 @@ class GrassRenderer : public Component {
     const float BLADE_HEIGHT_MAX = 2.0;
 
     int numBlades = 5000;
-    float radius = 10; // half the width of the square
+    float radius = 20; // half the width of the square
     glm::vec3 fogColor = glm::vec3(0.74f, 0.77f, 0.91f);
     glm::vec3 grassColor = glm::vec3(0.45f, 0.46f, 0.19f);
 

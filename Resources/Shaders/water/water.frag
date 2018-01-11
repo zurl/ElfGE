@@ -55,9 +55,9 @@ void main(void) {
 
     vec4 reflectColour = texture(reflectionTexture, reflectTexCoords);
     vec4 refractColour = texture(refractionTexture, refractTexCoords);
-	out_Color = mix(reflectColour, refractColour,refractiveFactor) + vec4(specularHighlights,0);
+//	out_Color = mix(reflectColour, refractColour,refractiveFactor) + vec4(specularHighlights,0);
 //	out_Color = mix(reflectColour, vec4(0,0.3,0.3,1),0.2);
-//	out_Color = reflectColour;
-//	out_Color = refractColour;
+	out_Color = reflectColour;
+	out_Color = refractColour;
 
 }

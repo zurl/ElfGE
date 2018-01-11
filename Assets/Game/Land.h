@@ -29,16 +29,14 @@ public:
     GameObject *instantiate(Scene *scene) override {
         srand((unsigned)time(NULL));
         auto terrainGO = scene->createGameObject("terrain")
-                ->createComponent<Terrain>("heightMap.png","terrain/", names)
-                ->createComponent<Renderer>(
-                        StandardMaterial::getInstance(),
-                        ShaderManager::getShader("terrain/terrain")
-                );
+                ->createComponent<Terrain>("heightMap.png","terrain/", names);
+
 
         auto grass = scene->createGameObject("grass")
                 ->createComponent<GrassRenderer>(
                         Utility::RESOURCE_PREFIX + "Textures/grass/grass.jpg",
-                        Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
+//                        Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
+                        Utility::RESOURCE_PREFIX + "Textures/heightMap.png"
                 );
 
         auto terrain = terrainGO->getComponent<Terrain>();
@@ -62,7 +60,12 @@ public:
         door->transform.setScale(glm::vec3(1.1f,1.05f,1.0f));
         door->transform.setPosition(glm::vec3(2.6f,1.0f,2.2f));
 
-        house->transform.setPosition(glm::vec3(0, terrain->getHeight(0, 0), 0));
+        house->transform.setPosition(glm::vec3(10000, terrain->getHeight(0, 0), 0));
+
+        auto water = scene->createGameObject()
+                ->createComponent<WaterRenderer>();
+
+        water->transform.translate(glm::vec3(0, 7, 0 ));
 
 
         for(int i = 0; i < 10; i ++){

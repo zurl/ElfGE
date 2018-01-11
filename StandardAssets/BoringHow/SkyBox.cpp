@@ -65,7 +65,7 @@ void SkyBox::start() {
 void SkyBox::updateGraphics(RenderLayer renderLayer) {
     if (renderLayer == RenderLayer::WORLD) {
         // TODO:: Maybe We could use AFTER_WORLD
-        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_LEQUAL);
         ShaderManager::useShader(shader);
         shader->use();
         glm::mat4 view = glm::mat4(glm::mat3(Runtime::getCamera()->getViewMatrix()));
@@ -74,6 +74,6 @@ void SkyBox::updateGraphics(RenderLayer renderLayer) {
         glBindVertexArray(skyboxVAO);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
     }
 }

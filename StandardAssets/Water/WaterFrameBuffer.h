@@ -97,11 +97,11 @@ public:
         glGenTextures(1,&texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
-                0, GL_RGB, GL_UNSIGNED_BYTE,  0);
+                     0, GL_RGB, GL_UNSIGNED_BYTE,  0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                texture, 0);
+                             texture, 0);
         return texture;
     }
 
@@ -110,11 +110,11 @@ public:
         glGenTextures(1,&texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height,
-                0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+                     0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                texture, 0);
+                             texture, 0);
         return texture;
     }
 
@@ -123,9 +123,9 @@ public:
         glGenRenderbuffers(1,&depthBuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width,
-                height);
+                              height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                GL_RENDERBUFFER, depthBuffer);
+                                  GL_RENDERBUFFER, depthBuffer);
         return depthBuffer;
     }
 
