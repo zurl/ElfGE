@@ -10,6 +10,7 @@
 #include "UI/UI.h"
 #include "../Prefab/PlainText.h"
 #include "../Prefabs.h"
+#include "../Game/UIManager.h"
 
 using namespace Prefabs;
 
@@ -38,10 +39,8 @@ class DeveloperScript: public GameScript {
 
     void adjust(float delta);
 
-    void setVisible(bool isVisible); //a// dd by ljk
-
 public:
-    DeveloperScript(GameObject *UIRoot, GameObject *human);
+    DeveloperScript(UIManager * uiManager, GameObject *human, GameObject * light);
 
 private:
 
@@ -61,8 +60,6 @@ private:
     void start() override;
 
     void update() override;
-
-    GameObject *getUIRoot() const;
 
 };
 

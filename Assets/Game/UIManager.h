@@ -65,8 +65,8 @@ public:
         developerUI = scene->createGameObject("developer_ui");
         developerUI->setParent(canvasGO);
 
-        auto devText1GO = createText(scene, glm::vec3(20, 20, 0));
-        auto devText2GO = createText(scene, glm::vec3(20, 20, 0));
+        auto devText1GO = createText(scene, glm::vec3(20, 100, 0));
+        auto devText2GO = createText(scene, glm::vec3(20, 60, 0));
         auto devText3GO = createText(scene, glm::vec3(20, 20, 0));
         devText1 = devText1GO->getComponent<Text>();
         devText2 = devText2GO->getComponent<Text>();

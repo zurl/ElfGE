@@ -8,6 +8,7 @@ void DeveloperScript::start() {
     enter = std::bind(&DeveloperScript::onClickEnter, this);
     Input::attachOnMouseClick(-10, 0, 0, 0, 0, &enter, nullptr);
 
+
     //add by ljk
     auto arialFont = FontManager::loadFont("Arial");
 
@@ -134,7 +135,7 @@ void DeveloperScript::start() {
             }
         }
     };
-
+    UIRoot->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
 }
 
 void DeveloperScript::update() {
@@ -154,10 +155,12 @@ void DeveloperScript::update() {
                 }
             }
             target = nullptr;
+            UIRoot->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
         }
         else{
             enable = true;
             status = "Developer Mode: ON";
+            UIRoot->setStatus(STATUS_NORMAL);
         }
         text2->setText("");
         updateText();
@@ -171,7 +174,6 @@ void DeveloperScript::update() {
                     std::min(s.x, s.y), s.z
             );
             printf("%lf\n", a);
-//            ca->zoom = a;
         }
 
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
@@ -295,23 +297,11 @@ void DeveloperScript::adjust(float d) {
 
 }
 
-GameObject *DeveloperScript::getUIRoot() const {
-    return UIRoot;
+DeveloperScript::DeveloperScript(UIManager *uiManager, GameObject *human, GameObject *light) {
+    this->human = human;
+    this->UIRoot = uiManager->getDeveloperUI();
+    this->text1 = uiManager->getDevText1();
+    this->text2 = uiManager->getDevText2();
+    this->text3 = uiManager->getDevText3();
+    this->light = light;
 }
-void DeveloperScript::setVisible(bool isVisible){
-    if(isVisible){
-        woodButton->setStatus(STATUS_NORMAL);
-        BrickButton->setStatus(STATUS_NORMAL);
-        StoneButton->setStatus(STATUS_NORMAL);
-        MetalButton->setStatus(STATUS_NORMAL);
-    }
-    else{
-        woodButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
-        BrickButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
-        MetalButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
-        StoneButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
-    }
-
-}
-
-DeveloperScript::DeveloperScript(GameObject *UIRoot, GameObject *human) : UIRoot(UIRoot), human(human) {}

@@ -22,6 +22,7 @@
 #include "../Game/Land.h"
 #include "../LJK/EnemyCond.h"
 #include "../Game/UIManager.h"
+#include "../Scripts/ModeSwitch.h"
 
 using namespace Prefabs;
 
@@ -79,30 +80,17 @@ public:
 
 
         auto shit = createGameObject()
-        ->createComponent<DeveloperScript>(ui.getDeveloperUI(), human->getParent());
+        ->createComponent<DeveloperScript>(&ui, human->getParent(), light);
+
+        auto ModeSwitcher = createGameObject()
+        ->createComponent<ModeSwitch>();
 
         Scene::start();
 
 
     }
 
-    float x = 0;
-
-    int mode = 1;
-    int mode_timer = 0;
-    //update
     void update() override {
-        if(mode_timer > 0) mode_timer --;
-        if (glfwGetKey(Utility::window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            if(mode_timer == 0){
-                if (mode == 0) {
-                    mode = 1;
-                    mode_timer = 50;
-                    glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-                }
-            }
-        }
-
         Scene::update();
     }
 };
