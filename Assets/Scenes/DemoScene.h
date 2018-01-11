@@ -57,8 +57,8 @@ public:
         ->createComponent<GrassRenderer>();
 
 
-        printf("123");
-        printf("1234");
+       // printf("123");
+       // printf("1234");
 
 //
 //        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
@@ -70,15 +70,7 @@ public:
         auto sample = set<BasicObject>();
 
         Config::Hack::hack = 1;
-//        auto tree = createGameObject()
-//                ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/tree/Tree.obj")
-//                ->createComponent<Renderer>(
-//                        &material,
-//                        ShaderManager::getShader("light_with_directional_shadow")
-//                );
-//
-//        tree->transform.setScale(glm::vec3(0.5f));
-
+        
         house = createGameObject()
                 ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj")
                 ->createComponent<Renderer>(
@@ -96,40 +88,6 @@ public:
         door->transform.setScale(glm::vec3(1.1f,1.05f,1.0f));
         door->transform.setPosition(glm::vec3(2.6f,1.0f,2.2f));
 
-//        auto wall1 = createGameObject()
-//                        ->createComponent<AABBCollider>(
-//                                glm::vec3(1.5f,5.0f,6.5f),
-//                                glm::vec3(6.2f,3.0f,-1.0f),
-//                                true,true);
-//        wall1->setParent(house);
-//        auto cube1 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube1->transform.setPosition(glm::vec3(6.2f,3.0f,-1.0f));
-//        cube1->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
-//        cube1->setParent(house);
-//        auto cube2 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube2->transform.setPosition(glm::vec3(-6.2f,3.0f,-1.0f));
-//        cube2->transform.setScale(glm::vec3(1.5f,5.0f,6.5f));
-//        cube2->setParent(house);
-//
-//        auto cube3 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube3->transform.setPosition(glm::vec3(0.0f,3.0f,-4.0f));
-//        cube3->transform.setScale(glm::vec3(13.2f,4.6f,1.2f));
-//        cube3->setParent(house);
-//
-//        auto cube4 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube4->setParent(house);
-//        cube4->transform.setPosition(glm::vec3(1.5f,3.0f,1.9f));
-//        cube4->transform.setScale(glm::vec3(1.7f,4.6f,1.2f));
-//
-//        auto cube5 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube5->setParent(house);
-//        cube5->transform.setPosition(glm::vec3(-3.8f,3.0f,1.9f));
-//        cube5->transform.setScale(glm::vec3(5.0f,4.6f,1.2f));
-////
-//        auto cube6 = set<Cube>(glm::vec3(0.0f, 3.0f, 0.0));
-//        cube6->setParent(house);
-//        cube6->transform.setPosition(glm::vec3(5.4f,3.0f,1.9f));
-//        cube6->transform.setScale(glm::vec3(2.5f,4.6f,1.2f));
 
         human = createGameObject()
                 ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/SHIT.dae")
@@ -334,11 +292,6 @@ public:
             }
         }
 
-//        dt1->getComponent<Text>()->setText(
-//                "Position : " + std::to_string(human->getWorldPosition().x) + ","
-//                + std::to_string(human->getWorldPosition().y) + ","
-//                + std::to_string(human->getWorldPosition().z) + ",");
-
         if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS){
             auto cld = realhuman->getComponent<AABBCollider>();
             //auto cld = ->getComponent<AABBCollider>();
@@ -373,48 +326,6 @@ public:
             else door->getComponent<DoorModel>()->closeDoor();
             open = !open;
         }
-        //human move
-//        if (glfwGetKey(Utility::window, GLFW_KEY_C) == GLFW_PRESS){
-//            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-//                human->getComponent<AnimationCond>()->play(5);
-//
-//            }
-//            else{
-//                human->getComponent<AnimationCond>()->play(4);
-//            }
-//
-//        }
-//        else{
-//            if(glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS ||
-//               glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-//                human->getComponent<AnimationCond>()->play(1);
-//                if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
-//                    humanrg->translate(humanspeed * human->transform.getLocalRight());
-//                }
-//                if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
-//                    humanrg->translate(-humanspeed * human->transform.getLocalRight());
-//                }
-//
-//                if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
-//                    humanrg->translate(humanspeed * human->transform.getLocalForward());
-//                }
-//                if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-//                    humanrg->translate(-humanspeed * human->transform.getLocalForward());
-//                }
-//            }
-//            else if(glfwGetKey(Utility::window, GLFW_KEY_SPACE) == GLFW_PRESS){
-//                human->getComponent<AnimationCond>()->play(2);
-//            }
-//            else{
-//                human->getComponent<AnimationCond>()->play(0);
-//            }
-//
-//        }
 
 
 

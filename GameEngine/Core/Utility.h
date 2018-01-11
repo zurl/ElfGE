@@ -26,7 +26,7 @@ public:
     static const char *getTextFromFile(const char *filePath);
 
     static inline glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4 *from) {
-        return glm::transpose(glm::make_mat4(&from->a1));
+        return glm::transpose(glm::make_mat4<float>((float*) from));
     }
 
 };
