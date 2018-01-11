@@ -30,7 +30,7 @@ public:
 
         auto realHuman = scene->createGameObject("realHuman")
                 ->createComponent<KeepHeight>(terrain)
-                ->createComponent<CharacterController>()
+                ->createComponent<CharacterController>(human)
                 ->createComponent<RigidBody>()
                 ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,
                                                 glm::vec3(0.0f, 1.0f, 0.0f), false);
@@ -40,13 +40,13 @@ public:
 
         auto humanModel = human->getComponent<AnimatedModel>();
         humanModel->registerAnimation("IDLE", 50, 90);
-        humanModel->registerAnimation("RUN_WITH_GUN", 600, 614);
+        humanModel->registerAnimation("RUN", 600, 614);
         humanModel->registerAnimation("JUMP", 301, 313);
         humanModel->registerAnimation("SHOOT", 375, 460);
         humanModel->registerAnimation("DOWN", 330, 350);
         humanModel->registerAnimation("RUN_DOWN", 471, 488);
         humanModel->registerAnimation("DIE", 685, 705);
-        humanModel->playAnimation("RUN_WITH_GUN");
+
         human->transform.rotate(glm::vec3(0, 1, 0), glm::half_pi<float>());
 
         Config::Hack = 0;

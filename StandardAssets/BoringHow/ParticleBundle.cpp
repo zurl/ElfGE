@@ -84,7 +84,6 @@ void ParticleBundle::draw(Shader * shader){
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
 
-
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);

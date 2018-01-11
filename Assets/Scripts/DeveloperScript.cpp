@@ -38,16 +38,6 @@ void DeveloperScript::update() {
         keyCounter = 100;
     }
     if(target != nullptr){
-        if (glfwGetKey(Utility::window, GLFW_KEY_B) == GLFW_PRESS){
-            auto s = target->getWorldScale();
-            DefaultCamera * ca = (DefaultCamera *) Runtime::getCamera();
-            float a = 85 * std::min(
-                    std::min(s.x, s.y), s.z
-            );
-            printf("%lf\n", a);
-            ca->zoom = a;
-        }
-
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
             setType = 0; updateState(); keyCounter = 5;
         }
@@ -86,8 +76,7 @@ void DeveloperScript::onClickEnter() {
     AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldForward(),
-            100000.0f,
-            human->getComponent<AABBCollider>()
+            100000.0f
     );
     if(collider != nullptr && collider->getGameObject()->getParent() == controller){
         return;
@@ -133,7 +122,7 @@ void DeveloperScript::updateText() {
         auto rot = target->getWorldRotation();
         auto sca = target->getWorldScale();
         sprintf(buf, "P(%0.2f, %0.2f, %0.2f) R(%0.2f, %0.2f, %0.2f) S(%0.2f, %0.2f, %0.2f)",
-        pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, sca.x, sca.y, sca.z
+                pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, sca.x, sca.y, sca.z
         );
         text3->setText(buf);
     }
@@ -162,11 +151,7 @@ void DeveloperScript::adjust(float d) {
     else if(setAxis == 1) delta.y = d;
     else if(setAxis == 2) delta.z = d;
     if(setType == 0) target->transform.translate(delta);
-    else if(setType == 2) {
-        auto dst = target->transform.getLocalScale() + delta;
-        if(dst.x > 0 && dst.y > 0 && dst.z > 0)
-        target->transform.setScale(dst);
-    }
+    else if(setType == 2) target->transform.setScale(target->transform.getLocalScale() + delta);
     else {
         if(setAxis == 0)target->transform.rotate(Transform::up, d);
         else if(setAxis == 1)target->transform.rotate(Transform::forward, d);
@@ -174,10 +159,8 @@ void DeveloperScript::adjust(float d) {
     }
 }
 
-DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller, GameObject *human) : text1(text1),
+DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller) : text1(text1),
                                                                                                   text2(text2),
                                                                                                   text3(text3),
-                                                                                                                     human(human),
                                                                                                   controller(
                                                                                                           controller) {}
-

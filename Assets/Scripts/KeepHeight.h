@@ -17,7 +17,7 @@ public:
 
     void update() override {
         glm::vec3 pos = getGameObject()->transform.getLocalPosition();
-        pos.z = terrain->getHeight(pos.x, pos.z);
+        pos.y = terrain->getHeight(pos.x, pos.z);
         getGameObject()->transform.setPosition(pos);
     }
 };

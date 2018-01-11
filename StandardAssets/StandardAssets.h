@@ -28,5 +28,5 @@
 #include "Grass/GrassRenderer.h"
 #include "Physics/CharacterController.h"
 #include "Cameras/ThirdPlayerCamera.h"
-
+#include "BoringHow/ParticleFactory.h"
 #endif //ELFGE_STANDARDASSETS_H
