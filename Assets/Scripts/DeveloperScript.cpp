@@ -8,23 +8,132 @@ void DeveloperScript::start() {
     enter = std::bind(&DeveloperScript::onClickEnter, this);
     Input::attachOnMouseClick(-10, 0, 0, 0, 0, &enter, nullptr);
 
-    // create UI
+    //add by ljk
+    auto arialFont = FontManager::loadFont("Arial");
 
-    UIRoot = new GameObject("DeveloperUIRoot");
-    UIRoot->createComponent<Text>();
+    auto textAngle = instantiate<PlainText>(UIRoot, arialFont, "Light Angle", glm::vec3(50, 440, 0), 0.5);
+    auto img = TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/cube_specular.png");
+
+    auto scrollbar = instantiate<ScrollBar>(UIRoot, img, img,
+                                    glm::vec3(300, 400, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg1 );
+
+    auto textDiffuse = instantiate<PlainText>(UIRoot, arialFont, "Diffuse Luminance", glm::vec3(50, 340, 0), 0.5);
+    auto scrollbar2 = instantiate<ScrollBar>(UIRoot, img, img,
+                                     glm::vec3(300, 300, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg2 );
+
+    auto textSpecular = instantiate<PlainText>(UIRoot, arialFont, "Specular Luminance", glm::vec3(50, 240, 0), 0.5);
+    auto scrollbar3 = instantiate<ScrollBar>(UIRoot, img, img,
+                                     glm::vec3(300, 200, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg3 );
+
+    oncg1 = [this](double x){ light->transform.setRotation(glm::vec3(0,0,x*1.0-1.0)); };
+    oncg2 = [this](double x){ light->getComponent<DirectLighting>()->diffuse = glm::vec3(10.0f *x, 10.0f*x, 10.0f*x); };
+    oncg3 = [this](double x){ light->getComponent<DirectLighting>()->specular = glm::vec3(2.0f *x, 2.0f*x, 2.0f*x);  };
 
 
-    auto text1go = new GameObject("text1")
-            ->createComponent<Text>(text, font);
+    // add text button here
+    auto textTexture = instantiate<PlainText>(UIRoot, arialFont, "Textures", glm::vec3(100, 140, 0), 0.5);
 
-    text2->setParent(canvas);
-    text2->transform.translate(pos);
-    text2->transform.setScale(glm::vec3(size));
-    return text2;
+    unsigned int newImage1 = TextureManager::loadTexture2D(
+            Utility::RESOURCE_PREFIX + "Textures/wood.jpg");
+    unsigned int newImage2 = TextureManager::loadTexture2D(
+            Utility::RESOURCE_PREFIX + "Textures/bricks2.jpg");
+    unsigned int newImage3 = TextureManager::loadTexture2D(
+            Utility::RESOURCE_PREFIX + "Textures/dalishi.jpg");
+    unsigned int newImage4 = TextureManager::loadTexture2D(
+            Utility::RESOURCE_PREFIX + "Textures/metal.jpg");
 
-    auto = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
-    auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
-    auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
+    woodButton = instantiate<ImageButton>(
+            UIRoot,
+            TextureManager::loadTexture2D(
+                    Utility::RESOURCE_PREFIX + "Textures/wood.jpg"
+            ),
+            glm::vec2(50, 50),
+            glm::vec3(150, 100, 0),
+            &onclk1
+    );
+
+    onclk1 = [this, newImage1](){
+            GameObject * now = target;
+            if(now != nullptr){
+                if(now->getComponent<DefaultModel>()->meshes.at(0)->textures.size() >=1){
+                    now->getComponent<DefaultModel>()->meshes.at(0)->textures.at(0).id = newImage1;
+                }
+                else{
+                    DefaultMesh::Texture ff(newImage1, "diffuse");
+                    now->getComponent<DefaultModel>()->meshes.at(0)->textures.push_back(ff);
+                }
+            }
+    };
+
+
+    BrickButton = instantiate<ImageButton>(
+            UIRoot,
+            TextureManager::loadTexture2D(
+                    Utility::RESOURCE_PREFIX + "Textures/bricks2.jpg"
+            ),
+            glm::vec2(50, 50),
+            glm::vec3(250, 100, 0),
+            &onclk2
+    );
+
+    onclk2 = [this,newImage2](){
+        GameObject * now = target;
+        if(now != nullptr){
+            if(now->getComponent<DefaultModel>()->meshes.at(0)->textures.size() >=1){
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.at(0).id = newImage2;
+            }
+            else{
+                DefaultMesh::Texture ff(newImage2, "diffuse");
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.push_back(ff);
+            }
+        }
+    };
+
+    MetalButton = instantiate<ImageButton>(
+            UIRoot,
+            TextureManager::loadTexture2D(
+                    Utility::RESOURCE_PREFIX + "Textures/Metal.jpg"
+            ),
+            glm::vec2(50, 50),
+            glm::vec3(350, 100, 0),
+            &onclk3
+    );
+
+    onclk3 = [this,newImage3](){
+        GameObject * now = target;
+        if(now != nullptr){
+            if(now->getComponent<DefaultModel>()->meshes.at(0)->textures.size() >=1){
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.at(0).id = newImage3;
+            }
+            else{
+                DefaultMesh::Texture ff(newImage3, "diffuse");
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.push_back(ff);
+            }
+        }
+    };
+
+    StoneButton = instantiate<ImageButton>(
+            UIRoot,
+            TextureManager::loadTexture2D(
+                    Utility::RESOURCE_PREFIX + "Textures/dalishi.jpg"
+            ),
+            glm::vec2(50, 50),
+            glm::vec3(450, 100, 0),
+            &onclk4
+    );
+
+    onclk4 = [this,newImage4](){
+        GameObject * now = target;
+        if(now != nullptr){
+            if(now->getComponent<DefaultModel>()->meshes.at(0)->textures.size() >=1){
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.at(0).id = newImage4;
+            }
+            else{
+                DefaultMesh::Texture ff(newImage4, "diffuse");
+                now->getComponent<DefaultModel>()->meshes.at(0)->textures.push_back(ff);
+            }
+        }
+    };
 
 }
 
@@ -44,7 +153,6 @@ void DeveloperScript::update() {
                     rnd->setSelected(false);
                 }
             }
-            controller->setParent(nullptr);
             target = nullptr;
         }
         else{
@@ -56,6 +164,16 @@ void DeveloperScript::update() {
         keyCounter = 100;
     }
     if(target != nullptr){
+        if (glfwGetKey(Utility::window, GLFW_KEY_B) == GLFW_PRESS){
+            auto s = target->getWorldScale();
+            DefaultCamera * ca = (DefaultCamera *) Runtime::getCamera();
+            float a = 85 * std::min(
+                    std::min(s.x, s.y), s.z
+            );
+            printf("%lf\n", a);
+//            ca->zoom = a;
+        }
+
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
             setType = 0; updateState(); keyCounter = 5;
         }
@@ -94,13 +212,15 @@ void DeveloperScript::onClickEnter() {
     AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldForward(),
-            100000.0f
+            100000.0f,
+            human->getComponent<AABBCollider>()
     );
     if(target != nullptr){
         auto rnd = target->getComponent<Renderer>();
         if( rnd != nullptr ){
             rnd->setSelected(false);
         }
+        printf("Clicked!\n");
         target = nullptr;
     }
     if (collider == nullptr) {
@@ -162,16 +282,36 @@ void DeveloperScript::adjust(float d) {
     else if(setAxis == 1) delta.y = d;
     else if(setAxis == 2) delta.z = d;
     if(setType == 0) target->transform.translate(delta);
-    else if(setType == 2) target->transform.setScale(target->transform.getLocalScale() + delta);
+    else if(setType == 2) {
+        auto dst = target->transform.getLocalScale() + delta;
+        if(dst.x > 0 && dst.y > 0 && dst.z > 0)
+            target->transform.setScale(dst);
+    }
     else {
         if(setAxis == 0)target->transform.rotate(Transform::up, d);
         else if(setAxis == 1)target->transform.rotate(Transform::forward, d);
         else if(setAxis == 2)target->transform.rotate(Transform::right, d);
     }
-}
 
-DeveloperScript::DeveloperScript(){}
+}
 
 GameObject *DeveloperScript::getUIRoot() const {
     return UIRoot;
 }
+void DeveloperScript::setVisible(bool isVisible){
+    if(isVisible){
+        woodButton->setStatus(STATUS_NORMAL);
+        BrickButton->setStatus(STATUS_NORMAL);
+        StoneButton->setStatus(STATUS_NORMAL);
+        MetalButton->setStatus(STATUS_NORMAL);
+    }
+    else{
+        woodButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+        BrickButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+        MetalButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+        StoneButton->setStatus(STATUS_STOP_UPDATE | STATUS_STOP_RENDER);
+    }
+
+}
+
+DeveloperScript::DeveloperScript(GameObject *UIRoot, GameObject *human) : UIRoot(UIRoot), human(human) {}

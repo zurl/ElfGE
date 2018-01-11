@@ -8,7 +8,7 @@
 #include "UI/UI.h"
 #include "StandardAssets.h"
 
-class UI : public Prefab{
+class UIManager : public Prefab{
 
     Canvas * canvas;
     FontFace * font;
@@ -19,6 +19,7 @@ class UI : public Prefab{
 
     GameObject * createText(Scene *scene, glm::vec3 pos){
         auto textGO = scene
+
                 ->createGameObject()
                 ->createComponent<Text>("hi", font);
 
@@ -32,7 +33,7 @@ public:
     GameObject *instantiate(Scene *scene) override {
 
         // init
-        auto font = FontManager::loadFont("Arial");
+        font = FontManager::loadFont("Arial");
         auto canvasGO = scene
                 ->createGameObject("canvas")
                 ->createComponent<Canvas>();
@@ -45,14 +46,17 @@ public:
 
         auto AIMCrossGO = scene->createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Textures/aim.png"
-                ),Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT );
+                        Utility::RESOURCE_PREFIX + "Textures/fuck.png"
+                ),60.0f, 60.0f );
         AIMCrossGO->setParent(standardUI);
+        AIMCrossGO->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
         AIMCross = AIMCrossGO->getComponent<Image>();
         auto AIMScreenGO = scene->createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
                         Utility::RESOURCE_PREFIX + "Textures/aim.png"
                 ),Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT );
+        AIMScreenGO->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
+        AIMScreenGO->transform.translate(glm::vec3(10000,0, 0));
         AIMScreen = AIMScreenGO->getComponent<Image>();
         AIMScreenGO->setParent(standardUI);
 
@@ -67,7 +71,7 @@ public:
         devText1 = devText1GO->getComponent<Text>();
         devText2 = devText2GO->getComponent<Text>();
         devText3 = devText3GO->getComponent<Text>();
-        
+
 
         return canvasGO;
     }
@@ -90,6 +94,14 @@ public:
 
     Text *getDevText3() const {
         return devText3;
+    }
+
+    GameObject *getStandardUI() const {
+        return standardUI;
+    }
+
+    GameObject *getDeveloperUI() const {
+        return developerUI;
     }
 
 };

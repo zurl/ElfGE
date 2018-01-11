@@ -21,6 +21,8 @@
 #include "../Prefab/BasicObject.h"
 #include "../Game/Land.h"
 #include "../LJK/EnemyCond.h"
+#include "../Game/UIManager.h"
+
 using namespace Prefabs;
 
 class DemoScene : public Scene {
@@ -29,19 +31,10 @@ public:
 
     GameObject  *ib, *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
 
-    RigidBody * humanrg;
-
-    Terrain * tr;
     DemoScene() {}
 
 
-
-    Text *text;
-
-    ParticleFactory * pf;
-
-    std::function<void()> onclk;
-    std::function<void(double)> oncg;
+    UIManager ui;
 
     void start() override {
         auto skybox = createGameObject()
@@ -54,7 +47,6 @@ public:
 
         auto terrain = set<Land>();
 
-        //auto sample = set<BasicObject>();
         house = createGameObject()
                 ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj");
 
@@ -76,62 +68,22 @@ public:
         );
 
 
-        auto canvas = createGameObject()->createComponent<Canvas>();
-        auto arialFont = FontManager::loadFont("Arial");
-
-
-        auto image2 = createGameObject()
-                ->createComponent<Image>(TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Textures/aim.png"
-                ),Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT );
-        image2->setParent(canvas);
-
-        onclk = [](){
-            int len = Utility::SCREEN_WIDTH * Utility::SCREEN_HEIGHT * 3;
-            void * screenData = malloc(len);
-            glReadPixels(0, 0,
-                         Utility::SCREEN_WIDTH,
-                         Utility::SCREEN_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, screenData);
-            stbi_write_png("saved.png",
-                           Utility::SCREEN_WIDTH,
-                           Utility::SCREEN_HEIGHT, 3, screenData, 0);
-        };
-
-        ib = set<ImageButton>(
-                canvas,
-                TextureManager::loadTexture2D(
-                        Utility::RESOURCE_PREFIX + "Textures/brick2.png"
-                ),
-                glm::vec2(50, 50),
-                glm::vec3(100, 100, 0),
-                &onclk
-        );
-
-        image2->transform.translate(glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
-        image2->transform.translate(glm::vec3(10000,0, 0));
-
         human->getComponent<AnimationCond>()->play(0);
 
+        ui.instantiate(this);
 
         camera = createGameObject()
-                ->createComponent<ThirdPlayerCamera>(human->getParent(), image2);
+                ->createComponent<ThirdPlayerCamera>(human->getParent(), ui.getAIMScreen()->getGameObject());
         setCamera(camera->getComponent<ThirdPlayerCamera>());
         camera->setParent(human->getParent());
 
 
+        auto shit = createGameObject()
+        ->createComponent<DeveloperScript>(ui.getDeveloperUI(), human->getParent());
+
         Scene::start();
 
 
-    }
-
-    float dir = 0.01f;
-    int cnt = 0;
-    float dt;
-    int BoomCnt = 0;
-    std::string itos(int i) {
-        std::ostringstream iss;
-        iss << i;
-        return iss.str();
     }
 
     float x = 0;
@@ -150,21 +102,6 @@ public:
                 }
             }
         }
-
-        Scene & s = *this;
-
-//        if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS){
-//            auto cld = realhuman->getComponent<AABBCollider>();
-//            //auto cld = ->getComponent<AABBCollider>();
-//            auto offset = (cld->min + cld->max) * 0.5f;
-//            auto size = (cld->max - cld->min) * 0.5f;
-//            auto t = size.z;
-//            size.z = size.x;
-//            size.z = t;
-//            foller->transform.setPosition(offset);
-//            foller->transform.setScale(size * 2.0f);
-//        }
-
 
         Scene::update();
     }
