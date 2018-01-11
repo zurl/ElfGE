@@ -42,7 +42,6 @@ set(SOURCE_FILES
         GameEngine/Config.cpp
         GameEngine/Config.h
         Assets/LJK/AnimationCond.h
-        Assets/LJK/RealCamera.h
         StandardAssets/Materials/SelectedMaterial.cpp StandardAssets/Materials/SelectedMaterial.h
         Assets/Prefab/ScrollBar.h Assets/Scripts/DeveloperScript.cpp Assets/Scripts/DeveloperScript.h
         GameEngine/Config.cpp GameEngine/Config.h
@@ -152,7 +151,7 @@ set(SOURCE_FILES
         StandardAssets/Grass/GrassRenderer.h
         StandardAssets/Grass/GrassRenderer.cpp
         StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h
-        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h)
+        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h StandardAssets/Cameras/ThirdPlayerCamera.cpp StandardAssets/Cameras/ThirdPlayerCamera.h)
 
 
 add_executable(elfge ${SOURCE_FILES})
