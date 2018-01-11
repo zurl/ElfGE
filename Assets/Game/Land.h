@@ -32,7 +32,8 @@ public:
         auto grass = scene->createGameObject("grass")
                 ->createComponent<GrassRenderer>(
                         Utility::RESOURCE_PREFIX + "Textures/grass/grass.jpg",
-                        Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
+//                        Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
+                        Utility::RESOURCE_PREFIX + "Textures/heightMap.png"
                 );
 
         return terrain;

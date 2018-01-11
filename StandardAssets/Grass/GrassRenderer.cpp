@@ -85,8 +85,10 @@ void GrassRenderer::prepare() {
     v2 = glm::normalize(v2)*radius;
 //    shader->setVec2("drawPos",v1 + v2);
     shader->setVec2("drawPos",glm::vec2(0,0));
-    shader->setMat4("modelViewMatrix",Runtime::getCamera()->getViewMatrix()*
-                                      getGameObject()->getModelMatrix());
+//    shader->setMat4("modelViewMatrix",Runtime::getCamera()->getViewMatrix()*
+//                                      getGameObject()->getModelMatrix());
+    shader->setMat4("modelMatrix",getGameObject()->getModelMatrix());
+    shader->setMat4("viewMatrix",Runtime::getCamera()->getViewMatrix());
 
     shader->setMat4("projectionMatrix",Runtime::getCamera()->getProjectionMatrix());
     shader->setInt("map",0);

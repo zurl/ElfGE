@@ -20,7 +20,7 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
                     glm::vec3((i) - (size / 2),
                               nlz(heightMap[(i * size + j) * 3]), (j) - (size / 2)),
                     glm::vec3(0, 1, 0),
-                    glm::vec2(i / 8.0 + add / 2.0, j / 8.0 + add / 10.0));
+                    glm::vec2(i / 8.0  + add / 2.0, j / 8.0 + add / 10.0));
         }
     }
     for (int i = 1; i < size - 1; i++) {
