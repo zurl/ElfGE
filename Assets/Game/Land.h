@@ -29,8 +29,11 @@ public:
     GameObject *instantiate(Scene *scene) override {
         srand((unsigned)time(NULL));
         auto terrainGO = scene->createGameObject("terrain")
-                ->createComponent<Terrain>("heightMap.png","terrain/", names);
-
+                ->createComponent<Terrain>("heightMap.png","terrain/", names)
+        ->createComponent<Renderer>(
+                &material,
+                ShaderManager::getShader("terrain/terrain")
+        );
 
         auto grass = scene->createGameObject("grass")
                 ->createComponent<GrassRenderer>(

@@ -38,8 +38,8 @@ public:
     UIManager ui;
 
     void start() override {
-//        auto skybox = createGameObject()
-//                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+        auto skybox = createGameObject()
+                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
         light = set<DirLight>(glm::vec3(0, 0, 60));
         light->transform.setPosition(glm::vec3(0, 15.0f, 0));
