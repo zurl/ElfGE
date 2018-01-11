@@ -15,12 +15,12 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
     vertices.reserve(size * size);
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            float add = 0;
+            //float add = 0;
             vertices.emplace_back(
                     glm::vec3((i) - (size / 2),
                               nlz(heightMap[(i * size + j) * 3]), (j) - (size / 2)),
                     glm::vec3(0, 1, 0),
-                    glm::vec2(i / 8.0 + add / 2.0, j / 8.0 + add / 10.0));
+                    glm::vec2(i / 8.0, j / 8.0));
         }
     }
     for (int i = 1; i < size - 1; i++) {

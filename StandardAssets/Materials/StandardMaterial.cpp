@@ -8,8 +8,8 @@ StandardMaterial StandardMaterial::instance;
 
 void StandardMaterial::use(Shader *shader) {
     shader->setFloat("material.shininess", 20.0f);
-    shader->setFloat("Gradient", Config::FogGradient);
-    shader->setFloat("Density", Config::FogDensity);
+    shader->setFloat("gradient", Config::FogGradient);
+    shader->setFloat("density", Config::FogDensity);
 }
 
 Material * StandardMaterial::getInstance() {

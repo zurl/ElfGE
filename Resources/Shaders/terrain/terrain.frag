@@ -52,6 +52,7 @@ struct SpotLight {
     vec3 specular;
 };
 
+in float height;
 in vec3 FragPos;
 in vec2 TexCoords;
 in vec4 FragPosLightSpace;
@@ -126,7 +127,7 @@ void main(){
     //FragColor = vec4(vec3(LinearizeDepth(gl_FragCoord.z)), 1.0);
     //FragColor = texture(material.diffuse, TexCoords);
     FragColor = vec4(result, 1.0);
-    //FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
+    FragColor = mix(vec4(skyColor, 1.0), FragColor, visibility);
 }
 
 // calculates the color when using a directional light.
@@ -193,20 +194,23 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
 }
 
 vec4 CalcTexture(vec2 TexCoords){
-    vec4 m = texture(material.mix,TexCoords);
+    float mA = clamp(height-5, 0, 1);
+    float mB = clamp(6-height, 0, 1);
+
     vec4 textureR = texture(material.rTex,TexCoords);
     vec4 textureG = texture(material.gTex,TexCoords);
     vec4 textureB = texture(material.bTex,TexCoords);
     vec4 textureA = texture(material.aTex,TexCoords);
-    vec4 res = textureR*m.r+textureG*m.g+textureB*m.b+textureA*m.a;
-    return res;
+
+    return mA * textureA + mB + textureG;
 }
 vec4 CalcNormal(vec2 TexCoords){
-    vec4 m = texture(material.mix,TexCoords);
+   float mA = clamp(height-5, 0, 1);
+   float mB = clamp(6-height, 0, 1);
     vec4 normalR = texture(material.rNormal,TexCoords);
     vec4 normalG = texture(material.gNormal,TexCoords);
     vec4 normalB = texture(material.bNormal,TexCoords);
     vec4 normalA = texture(material.aNormal,TexCoords);
     vec4 res = normalR*m.r+normalG*m.g+normalB*m.b+normalA*m.a;
-    return res;
+     return mA * normalA + mB + normalG;
 }

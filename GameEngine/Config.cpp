@@ -6,8 +6,9 @@
 
 namespace Config {
 
-    float HideDistance = 100;
-    float FogDensity = 0.07;
+    float HideDistance = 30;
+    float FogDensity = 0.03;
     float FogGradient = 1.5;
     int Hack = 0;
+
 };

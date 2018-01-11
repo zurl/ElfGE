@@ -10,6 +10,7 @@ out vec2 TexCoords;
 out vec4 FragPosLightSpace;
 out mat3 TBN;
 out float visibility;
+out float height;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
@@ -19,6 +20,8 @@ uniform float gradient;
 
 void main()
 {
+
+    height = aPos.y;
     vec3 T = normalize(vec3(model * vec4(aTangent,   0.0)));
     vec3 B = normalize(vec3(model * vec4(aBitangent, 0.0)));
     vec3 N = normalize(vec3(model * vec4(aNormal,    0.0)));

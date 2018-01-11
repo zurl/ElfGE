@@ -48,21 +48,6 @@ public:
 
         auto terrain = set<Land>();
 
-        house = createGameObject()
-                ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj");
-
-        door = createGameObject()
-                ->createComponent<DoorModel>(Utility::RESOURCE_PREFIX + "Models/house/door.obj")
-                ->createComponent<Renderer>(
-                        &material,
-                        ShaderManager::getShader("house/light_with_directional_shadow")
-                )
-        ->createComponent<AABBCollider>(true,false);
-        door->setParent(house);
-        door->transform.setScale(glm::vec3(1.1f,1.05f,1.0f));
-        door->transform.setPosition(glm::vec3(2.6f,1.0f,2.2f));
-
-
         auto human = set<Human>(
                 Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/human.dae",
                 terrain->getComponent<Terrain>()
