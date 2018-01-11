@@ -11,14 +11,15 @@ class RealCamera : public FirstPlayerCamera{
 public:
     GameObject * Player;
     GameObject * Image;
-    GameObject * fuck;
+
+    //GameObject * fuck;
     void setPlayerImage(GameObject * player, GameObject * image){
         Player = player;
         Image = image;
     }
 
     void start() override {
-        fuck = instantiate<Prefabs::Cube>(glm::vec3(0));
+        //fuck = instantiate<Prefabs::Cube>(glm::vec3(0));
         DefaultCamera::start();
     }
 
@@ -47,16 +48,34 @@ public:
 
         }
         delay++;
-        static float lastY = 0;
-        if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS) {
-            printf("%f %f %f %f %f\n", axisUp, lastY,
-                   Player->transform.getLocalRight().x, Player->transform.getLocalRight().y,
-                   Player->transform.getLocalRight().z);
+
+        if(isAim){
+            getGameObject()->transform.setPosition(
+                    glm::vec3(Player->getWorldForward().x * 1.0f,
+                              getGameObject()->getWorldForward().y * 1.0f + 2.0f,
+                              Player->getWorldForward().z * 1.0f)
+                    //Player->getWorldForward() * 0.1f + glm::vec3(0.0f, 2.0f, 0.0f)
+            );
         }
-        if(fabs(axisUp - lastY) > 1e-3) {
-            Player->transform.rotate(Transform::up, axisUp - lastY);
-            lastY = axisUp;
+        else{
+            getGameObject()->transform.setPosition(
+                    glm::vec3(-Player->getWorldForward().x * 5.0f,
+                              -getGameObject()->getWorldForward().y * 5.0f + 2.0f,
+                              -Player->getWorldForward().z * 5.0f)
+                    //Player->getWorldForward() * 0.1f + glm::vec3(0.0f, 2.0f, 0.0f)
+            );
         }
+
+//        static float lastY = 0;
+//        if (glfwGetKey(Utility::window, GLFW_KEY_K) == GLFW_PRESS) {
+//            printf("%f %f %f %f %f\n", axisUp, lastY,
+//                   Player->transform.getLocalRight().x, Player->transform.getLocalRight().y,
+//                   Player->transform.getLocalRight().z);
+//        }
+//        if(fabs(axisUp - lastY) > 1e-3) {
+//            Player->transform.rotate(Transform::up, axisUp - lastY);
+//            lastY = axisUp;
+//        }
         //Player->transform.rotate(glm::vec3(0,1,0), 0.001f);
 
 //        if(isAim)
@@ -66,10 +85,10 @@ public:
 //            );
 //        else
 
-        getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x - Player->transform.getLocalRight().x * 15.0f,
-                                                         Player->transform.getLocalPosition().y - Player->transform.getLocalRight().y * 15.0f + 4.0f,
-                                                         Player->transform.getLocalPosition().z - Player->transform.getLocalRight().z * 15.0f)
-        );
+//        getGameObject()->transform.setPosition(glm::vec3(Player->transform.getLocalPosition().x - Player->transform.getLocalRight().x * 5.0f,
+//                                                         Player->transform.getLocalPosition().y - Player->transform.getLocalRight().y * 5.0f + 4.0f,
+//                                                         Player->transform.getLocalPosition().z - Player->transform.getLocalRight().z * 5.0f)
+//        );
 
     }
 

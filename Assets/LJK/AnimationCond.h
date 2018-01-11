@@ -14,13 +14,19 @@ public:
     int now;
     int previous;
     int timeforplay;
+    bool die;
     AnimationCond(){
         now = previous = timeforplay = 0;
+        die = false;
         //getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
     }
 
     void play(int state){
         if(timeforplay == 0){
+            if(die){
+                printf("hello!");
+                GameObject::destroy(getGameObject());
+            }
             previous = now;
             now = state;
             if(now != previous){
@@ -29,7 +35,7 @@ public:
                         getGameObject()->getComponent<AnimatedModel>()->playAnimation("IDLE");
                         break;
                     case 1:
-                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN_WITH_GUN");
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN");
                         break;
                     case 2:
                         timeforplay = 30;
@@ -46,8 +52,16 @@ public:
                         getGameObject()->getComponent<AnimatedModel>()->playAnimation("RUN_DOWN");
                         break;
                     case 6:
-                        timeforplay = 200;
+                        timeforplay = 40;
                         getGameObject()->getComponent<AnimatedModel>()->playAnimation("DIE");
+                        die = true;
+                        break;
+                    case 7:
+                        timeforplay = 40;
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("HIT");
+                        break;
+                    case 8:
+                        getGameObject()->getComponent<AnimatedModel>()->playAnimation("WALK");
                         break;
 
                 }

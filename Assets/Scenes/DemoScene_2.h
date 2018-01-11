@@ -12,7 +12,6 @@
 #include "../Prefabs.h"
 #include "../Scripts/DeveloperScript.h"
 #include "../Prefab/PlainText.h"
-#include "../RealCamera.h"
 #include "../FuckScript.h"
 
 using namespace Prefabs;

@@ -53,7 +53,14 @@ public:
 
     bool testRaycast(glm::vec3 origin, glm::vec3 direction);
 
-    static AABBCollider *raycast(glm::vec3 origin, glm::vec3 direction, float distance);
+    //static AABBCollider *raycast(glm::vec3 origin, glm::vec3 direction, float distance);
+
+    static AABBCollider *raycast(
+            glm::vec3 origin,
+            glm::vec3 direction,
+            float distance,
+            AABBCollider * ignore = nullptr
+    );
 
     const glm::vec3 &getOffset() const;
 

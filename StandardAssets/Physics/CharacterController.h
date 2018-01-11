@@ -17,9 +17,11 @@ class CharacterController: public GameScript {
 
     RigidBody * rigidBody;
 
+    GameObject * Human;
+
 public:
 
-    CharacterController(float mouseSensitivity = 0.002f, float speed = 0.05f);
+    CharacterController(GameObject * human,  float mouseSensitivity = 0.002f, float speed = 0.05f);
 
     void start() override;
 

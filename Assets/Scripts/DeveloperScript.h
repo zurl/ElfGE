@@ -9,7 +9,9 @@
 #include "GameEngine.h"
 #include "UI/UI.h"
 
+
 class DeveloperScript: public GameScript {
+public:
     Text * text1, * text2, * text3;
     std::function<void()> enter;
     bool enable = false;
@@ -17,11 +19,16 @@ class DeveloperScript: public GameScript {
     int keyCounter = 0;
     GameObject * target = nullptr;
     GameObject * controller = nullptr;
+
     Collider *x, *y, *z;
     int setType = 0, setAxis = 0;
     float len = 0.5;
-public:
-    DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller);
+
+
+
+
+
+    DeveloperScript();
 
     void onClickEnter();
 
@@ -34,6 +41,8 @@ public:
     void updateState();
 
     void adjust(float delta);
+
+
 
 };
 

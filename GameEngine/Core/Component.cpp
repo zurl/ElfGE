@@ -24,6 +24,14 @@ void Component::update() {
 
 }
 
+void Component::sleep() {
+
+}
+
+void Component::awake() {
+
+}
+
 void Component::updateGraphics(RenderLayer renderLayer) {
 
 }

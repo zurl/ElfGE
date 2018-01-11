@@ -25,4 +25,5 @@
 #include "Materials/SelectedMaterial.h"
 #include "Grass/GrassRenderer.h"
 #include "Physics/CharacterController.h"
+#include "BoringHow/ParticleFactory.h"
 #endif //ELFGE_STANDARDASSETS_H

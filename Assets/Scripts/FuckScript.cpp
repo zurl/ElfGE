@@ -4,23 +4,18 @@
 
 #include "FuckScript.h"
 #include "StandardAssets.h"
+#include "../LJK/EnemyCond.h"
 
 
 void FuckScript::start() {
-    text = getGameObject()->getComponent<Text>();
+    //text = getGameObject()->getComponent<Text>();
     cb = std::bind(&FuckScript::onClick, this);
-    Input::attachOnMouseClick(0, Utility::SCREEN_WIDTH, 0, Utility::SCREEN_WIDTH, 0, &cb, nullptr);
+    Input::attachOnMouseClick(-10, Utility::SCREEN_WIDTH, 0, Utility::SCREEN_WIDTH, 0, &cb, nullptr);
 
 }
 
 void FuckScript::update() {
-    if (cnt != 0) {
-        cnt--;
-        if (cnt == 0) {
-            text->setText("");
-        }
-        return;
-    }
+
 }
 
 FuckScript::FuckScript(GameObject *human) : human(human) {}
@@ -28,15 +23,26 @@ FuckScript::FuckScript(GameObject *human) : human(human) {}
 void FuckScript::onClick() {
     AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->getWorldPosition(),
-            Runtime::getCamera()->getGameObject()->getWorldPosition(),
-            100000.0f
+            Runtime::getCamera()->getGameObject()->getWorldForward(),
+            100000.0f,
+            human->getComponent<AABBCollider>()
     );
     if (collider == nullptr) {
-        text->setText("NO");
+        printf("111");
+
     } else {
-        text->setText("YES");
+
+        printf("%s##fucked!\n", collider->getGameObject()->getName().c_str());
+
+        auto thisEnemy = collider->getGameObject()->getComponent<EnemyCond>();
+        if(thisEnemy){
+            thisEnemy->Health--;
+            thisEnemy->getGameObject()->getComponent<AnimationCond>()->play(7);
+        }
+
+
     }
-    cnt = 5;
+
 }
 
 

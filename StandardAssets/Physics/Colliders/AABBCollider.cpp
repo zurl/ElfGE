@@ -120,6 +120,7 @@ bool check2DRayCast(float ox, float oy, float dx, float dy,
     return !(pyr < yl || pyl > yr);
 }
 
+/*
 AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float distance) {
     AABBCollider *result = nullptr;
     float resultDistance = FLT_MAX;
@@ -136,6 +137,32 @@ AABBCollider *AABBCollider::raycast(glm::vec3 origin, glm::vec3 direction, float
     }
     return result;
 }
+*/
+
+AABBCollider *AABBCollider::raycast(
+        glm::vec3 origin,
+        glm::vec3 direction,
+        float distance,
+        AABBCollider * ignore
+) {
+    AABBCollider *result = nullptr;
+    float resultDistance = FLT_MAX;
+    for (auto target : allColliders) {
+        if(target == ignore) continue;
+        glm::vec3 pos = target->getGameObject()->getWorldPosition();
+        float targetDis = glm::distance(origin, pos);
+        target->computeBox();
+        if (targetDis < distance
+            && target->testRaycast(origin, direction)
+            && targetDis < resultDistance) {
+            resultDistance = targetDis;
+            result = target;
+        }
+    }
+    return result;
+}
+
+
 
 std::string AABBCollider::getName() {
     return "AABBCollider";

@@ -9,8 +9,8 @@
 #include "UI/UI.h"
 
 class FuckScript : public GameScript {
-    int cnt = 0;
-    Text *text;
+    //int cnt = 0;
+    //Text *text;
     GameObject *human;
     std::function<void()> cb;
 public:

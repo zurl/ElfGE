@@ -7,7 +7,6 @@
 void DeveloperScript::start() {
     enter = std::bind(&DeveloperScript::onClickEnter, this);
     Input::attachOnMouseClick(-10, 0, 0, 0, 0, &enter, nullptr);
-
 }
 
 void DeveloperScript::update() {
@@ -16,6 +15,7 @@ void DeveloperScript::update() {
         return;
     }
     if (glfwGetKey(Utility::window, GLFW_KEY_L) == GLFW_PRESS){
+        printf("Press L!\n");
         if(enable){
             enable = false;
             status = "Developer Mode: OFF";
@@ -26,17 +26,18 @@ void DeveloperScript::update() {
                     rnd->setSelected(false);
                 }
             }
-            controller->setParent(nullptr);
+//            controller->setParent(nullptr);
             target = nullptr;
         }
         else{
             enable = true;
             status = "Developer Mode: ON";
         }
-        text2->setText("");
+//        text2->setText("");
         updateText();
         keyCounter = 100;
     }
+
     if(target != nullptr){
         if (glfwGetKey(Utility::window, GLFW_KEY_1) == GLFW_PRESS){
             setType = 0; updateState(); keyCounter = 5;
@@ -73,12 +74,15 @@ void DeveloperScript::update() {
 
 void DeveloperScript::onClickEnter() {
     if(!enable) return;
+
+    printf("Entered!\n");
     AABBCollider *collider = AABBCollider::raycast(
             Runtime::getCamera()->getGameObject()->getWorldPosition(),
             Runtime::getCamera()->getGameObject()->getWorldForward(),
             100000.0f
     );
-    if(collider != nullptr && collider->getGameObject()->getParent() == controller){
+//    if(collider != nullptr && collider->getGameObject()->getParent() == controller){
+    if(collider != nullptr){
         return;
     }
     if(target != nullptr){
@@ -86,7 +90,7 @@ void DeveloperScript::onClickEnter() {
         if( rnd != nullptr ){
             rnd->setSelected(false);
         }
-        controller->setParent(nullptr);
+//        controller->setParent(nullptr);
         target = nullptr;
     }
     if (collider == nullptr) {
@@ -96,13 +100,15 @@ void DeveloperScript::onClickEnter() {
     } else {
         target = collider->getGameObject();
         //controller->setParent(target);
-        controller->transform.setPosition(collider->getOffset());
-        controller->transform.setScale(collider->getSize() * 5.5f);
+//        controller->transform.setPosition(collider->getOffset());
+//        controller->transform.setScale(collider->getSize() * 5.5f);
         status = "Selected: ";
+
         auto rnd = target->getComponent<Renderer>();
         if( rnd != nullptr ){
             rnd->setSelected(true);
         }
+
         if(target->getName() != "") status += target->getName();
         else status += " Nameless Object";
         components = "(";
@@ -124,13 +130,14 @@ void DeveloperScript::updateText() {
         sprintf(buf, "P(%0.2f, %0.2f, %0.2f) R(%0.2f, %0.2f, %0.2f) S(%0.2f, %0.2f, %0.2f)",
         pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, sca.x, sca.y, sca.z
         );
-        text3->setText(buf);
+//        text3->setText(buf);
     }
     else{
-        text3->setText("");
+//        text3->setText("");
     }
-    text1->setText(status + components);
+//    text1->setText(status + components);
 }
+
 
 void DeveloperScript::updateState() {
     state = "";
@@ -142,7 +149,7 @@ void DeveloperScript::updateState() {
     else if(setAxis == 1) state += "Axis: Y";
     else if(setAxis == 2) state += "Axis: Z";
     state += ",Delta: " + std::to_string(len);
-    text2->setText(state);
+//    text2->setText(state);
 }
 
 void DeveloperScript::adjust(float d) {
@@ -159,9 +166,8 @@ void DeveloperScript::adjust(float d) {
     }
 }
 
-DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller) : text1(text1),
-                                                                                                  text2(text2),
-                                                                                                  text3(text3),
-                                                                                                  controller(
-                                                                                                          controller) {}
+
+DeveloperScript::DeveloperScript(){}
+
+//DeveloperScript::DeveloperScript(GameObject * can) : canvas(can) {}
 

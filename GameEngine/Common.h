@@ -49,4 +49,9 @@ enum class RenderLayer {
     SCREEN
 };
 
+const int STATUS_NORMAL = 0;
+const int STATUS_STOP_RENDER = 1;
+const int STATUS_STOP_UPDATE = 2;
+
+
 #endif //ELFGE_COMMON_H
