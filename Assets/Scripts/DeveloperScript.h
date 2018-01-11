@@ -16,18 +16,10 @@ class DeveloperScript: public GameScript {
     std::string status, components, state;
     int keyCounter = 0;
     GameObject * target = nullptr;
-    GameObject * controller = nullptr;
     Collider *x, *y, *z;
     int setType = 0, setAxis = 0;
     float len = 0.5;
-public:
-    DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller);
-
-    void onClickEnter();
-
-    void start() override;
-
-    void update() override;
+    GameObject * UIRoot = nullptr;
 
     void updateText();
 
@@ -35,6 +27,16 @@ public:
 
     void adjust(float delta);
 
+public:
+    DeveloperScript();
+
+    void onClickEnter();
+
+    void start() override;
+
+    void update() override;
+
+    GameObject *getUIRoot() const;
 };
 
 

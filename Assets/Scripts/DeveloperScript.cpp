@@ -8,6 +8,24 @@ void DeveloperScript::start() {
     enter = std::bind(&DeveloperScript::onClickEnter, this);
     Input::attachOnMouseClick(-10, 0, 0, 0, 0, &enter, nullptr);
 
+    // create UI
+
+    UIRoot = new GameObject("DeveloperUIRoot");
+    UIRoot->createComponent<Text>();
+
+
+    auto text1go = new GameObject("text1")
+            ->createComponent<Text>(text, font);
+
+    text2->setParent(canvas);
+    text2->transform.translate(pos);
+    text2->transform.setScale(glm::vec3(size));
+    return text2;
+
+    auto = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 20, 0), 0.5);
+    auto dt2 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 60, 0), 0.5);
+    auto dt3 = set<PlainText>(canvas, arialFont, "hi", glm::vec3(20, 100, 0), 0.5);
+
 }
 
 void DeveloperScript::update() {
@@ -78,15 +96,11 @@ void DeveloperScript::onClickEnter() {
             Runtime::getCamera()->getGameObject()->getWorldForward(),
             100000.0f
     );
-    if(collider != nullptr && collider->getGameObject()->getParent() == controller){
-        return;
-    }
     if(target != nullptr){
         auto rnd = target->getComponent<Renderer>();
         if( rnd != nullptr ){
             rnd->setSelected(false);
         }
-        controller->setParent(nullptr);
         target = nullptr;
     }
     if (collider == nullptr) {
@@ -95,9 +109,6 @@ void DeveloperScript::onClickEnter() {
         updateText();
     } else {
         target = collider->getGameObject();
-        //controller->setParent(target);
-        controller->transform.setPosition(collider->getOffset());
-        controller->transform.setScale(collider->getSize() * 5.5f);
         status = "Selected: ";
         auto rnd = target->getComponent<Renderer>();
         if( rnd != nullptr ){
@@ -159,8 +170,8 @@ void DeveloperScript::adjust(float d) {
     }
 }
 
-DeveloperScript::DeveloperScript(Text *text1, Text *text2, Text *text3, GameObject *controller) : text1(text1),
-                                                                                                  text2(text2),
-                                                                                                  text3(text3),
-                                                                                                  controller(
-                                                                                                          controller) {}
+DeveloperScript::DeveloperScript(){}
+
+GameObject *DeveloperScript::getUIRoot() const {
+    return UIRoot;
+}

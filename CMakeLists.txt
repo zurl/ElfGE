@@ -155,7 +155,7 @@ set(SOURCE_FILES
         StandardAssets/Grass/GrassRenderer.cpp
         StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h
 
-        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h StandardAssets/Cameras/ThirdPlayerCamera.cpp StandardAssets/Cameras/ThirdPlayerCamera.h Assets/Game/Land.h)
+        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h StandardAssets/Cameras/ThirdPlayerCamera.cpp StandardAssets/Cameras/ThirdPlayerCamera.h Assets/Game/Land.h Assets/Game/UI.h)
 
 
 add_executable(elfge ${SOURCE_FILES})
