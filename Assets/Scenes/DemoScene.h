@@ -57,7 +57,8 @@ public:
         ->createComponent<GrassRenderer>();
 
 
-
+        printf("123");
+        printf("1234");
 
 //
 //        terrain->transform.translate(glm::vec3(0, -1.5f, 0));
