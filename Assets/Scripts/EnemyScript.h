@@ -23,7 +23,7 @@ public:
     Enemy enemyFactory;
 
 public:
-    EnemyScript(GameObject * human) : Human(human), enemyFactory(human){}
+    EnemyScript(GameObject * human, Terrain * terrain) : Human(human), enemyFactory(human, terrain){}
 
     void start() override;
     void update() override;

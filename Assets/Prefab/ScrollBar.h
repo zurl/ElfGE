@@ -66,12 +66,10 @@ namespace Prefabs {
             }
 
             void sleep() override {
-                printf("sleep");
                 Input::detachOnMouseClick(&onenter);
             }
 
             void awake() override {
-                printf("awake");
                 Input::attachOnMouseClick(xl, xr, yl, yr, 10, &onenter, &onexit);
             }
 

@@ -15,7 +15,7 @@ class UIManager : public Prefab{
     Image * AIMScreen, * AIMCross;
 
     GameObject * standardUI, *developerUI;
-    Text * devText1, *devText2, *devText3;
+    Text * devText1, *devText2, *devText3, *stdText1;
 
     GameObject * createText(Scene *scene, glm::vec3 pos){
         auto textGO = scene
@@ -44,6 +44,7 @@ public:
         standardUI = scene->createGameObject("standard_ui");
         standardUI->setParent(canvasGO);
 
+
         auto AIMCrossGO = scene->createGameObject()
                 ->createComponent<Image>(TextureManager::loadTexture2D(
                         Utility::RESOURCE_PREFIX + "Textures/fuck.png"
@@ -71,6 +72,9 @@ public:
         devText1 = devText1GO->getComponent<Text>();
         devText2 = devText2GO->getComponent<Text>();
         devText3 = devText3GO->getComponent<Text>();
+        auto stdText1GO = createText(scene, glm::vec3(20, 200, 0));
+        stdText1 = stdText1GO->getComponent<Text>();
+        stdText1GO->setParent(standardUI);
 
 
         return canvasGO;
@@ -102,6 +106,10 @@ public:
 
     GameObject *getDeveloperUI() const {
         return developerUI;
+    }
+
+    Text *getStdText1() const {
+        return stdText1;
     }
 
 };

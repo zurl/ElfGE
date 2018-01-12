@@ -52,7 +52,6 @@ unsigned int AnimatedModel::FindPosition(double AnimationTime, const aiNodeAnim 
             return i;
         }
     }
-    assert(0);
     return 0;
 }
 
@@ -63,7 +62,6 @@ unsigned int AnimatedModel::FindRotation(double AnimationTime, const aiNodeAnim 
             return i;
         }
     }
-    assert(0);
     return 0;
 }
 
@@ -74,7 +72,6 @@ unsigned int AnimatedModel::FindScaling(double AnimationTime, const aiNodeAnim *
             return i;
         }
     }
-    assert(0);
     return 0;
 }
 

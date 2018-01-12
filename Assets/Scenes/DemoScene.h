@@ -18,11 +18,14 @@
 #include "../Scripts/FuckScript.h"
 #include "../LJK/AnimationCond.h"
 #include "../Game/Human.h"
-#include "../Prefab/BasicObject.h"
+#include "../Game/BasicObject.h"
 #include "../Game/Land.h"
 #include "../LJK/EnemyCond.h"
 #include "../Game/UIManager.h"
 #include "../Scripts/ModeSwitch.h"
+#include "../Scripts/FollowHuman.h"
+#include "../Game/LandLight.h"
+#include "../Scripts/EnemyScript.h"
 
 using namespace Prefabs;
 
@@ -30,31 +33,28 @@ class DemoScene : public Scene {
 
 public:
 
-    GameObject  *ib, *dt1, *human, *realhuman, *camera,*house, *door,*cube1, *cube2, *cube3, *cube4, *cube5, *light, *foller;
+
+    UIManager ui;
+    GameObject *camera, *light, *human;
 
     DemoScene() {}
 
-
-    UIManager ui;
 
     void start() override {
         auto skybox = createGameObject()
                 ->createComponent<SkyBox>("Textures/skybox/", "jpg");
 
-        light = set<DirLight>(glm::vec3(0, 0, 60));
-        light->transform.setPosition(glm::vec3(0, 15.0f, 0));
-        setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
-        getShadowMappingManager()->initialize();
-
         auto terrain = set<Land>();
 
-        auto human = set<Human>(
+        human = set<Human>(
                 Utility::RESOURCE_PREFIX + "Models/elitetrooper/models/human.dae",
                 terrain->getComponent<Terrain>()
         );
 
+        auto light = set<LandLight>(human);
 
-        human->getComponent<AnimationCond>()->play(0);
+        auto obj = set<BasicObject>();
+        obj->transform.setPosition(glm::vec3(0, 5, 0));
 
         ui.instantiate(this);
 
@@ -65,17 +65,23 @@ public:
 
 
         auto shit = createGameObject()
-        ->createComponent<DeveloperScript>(&ui, human->getParent(), light);
+                ->createComponent<DeveloperScript>(&ui, human->getParent(), light);
 
         auto ModeSwitcher = createGameObject()
-        ->createComponent<ModeSwitch>();
+                ->createComponent<ModeSwitch>();
+
+        auto EnemyFactory = createGameObject("EnemyFactory")
+        ->createComponent<EnemyScript>(human, terrain->getComponent<Terrain>());
 
         Scene::start();
 
 
     }
-
-    void update() override {
+    char buf[256];
+    void update() override{
+        glm::vec3 pos = human->getWorldPosition();
+        sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
+        ui.getStdText1()->setText(buf);
         Scene::update();
     }
 };

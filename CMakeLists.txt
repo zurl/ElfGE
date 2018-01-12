@@ -34,7 +34,7 @@ ENDIF ()
 set(SOURCE_FILES
         Assets/Game/Human.h
         Assets/Scripts/KeepHeight.h
-        Assets/Prefab/BasicObject.h
+        Assets/Game/BasicObject.h
         GameEngine/Core/LODGameObject.cpp
         StandardAssets/Physics/CharacterController.cpp
         Assets/Scripts/FuckScript.cpp
@@ -155,7 +155,7 @@ set(SOURCE_FILES
         StandardAssets/Grass/GrassRenderer.cpp
         StandardAssets/Physics/RigidBody.cpp StandardAssets/Physics/RigidBody.h
 
-        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h StandardAssets/Cameras/ThirdPlayerCamera.cpp StandardAssets/Cameras/ThirdPlayerCamera.h Assets/Game/Land.h Assets/Game/UIManager.h Assets/Scripts/ModeSwitch.h)
+        StandardAssets/Physics/CharacterController.cpp StandardAssets/Physics/CharacterController.h StandardAssets/BoringHow/ParticleBundle.cpp StandardAssets/BoringHow/ParticleBundle.h StandardAssets/BoringHow/ParticleFactory.cpp StandardAssets/BoringHow/ParticleFactory.h StandardAssets/Models/DoorModel.cpp StandardAssets/Models/DoorModel.h StandardAssets/Cameras/ThirdPlayerCamera.cpp StandardAssets/Cameras/ThirdPlayerCamera.h Assets/Game/Land.h Assets/Game/UIManager.h Assets/Scripts/ModeSwitch.h Assets/Scripts/FollowHuman.h Assets/Game/LandLight.h Assets/Scripts/EnemyScript.cpp Assets/Scripts/EnemyScript.h Assets/Game/Enemy.h)
 
 
 add_executable(elfge ${SOURCE_FILES})

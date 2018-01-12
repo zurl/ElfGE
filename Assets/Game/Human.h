@@ -30,7 +30,7 @@ public:
 
         auto realHuman = scene->createGameObject("realHuman")
                 ->createComponent<KeepHeight>(terrain)
-                ->createComponent<CharacterController>(human)
+                ->createComponent<CharacterController>(human, 0.002f, 0.3)
                 ->createComponent<RigidBody>()
                 ->createComponent<AABBCollider>(glm::vec3(0.6f, 2.1f, 0.6f) / 2.0f,
                                                 glm::vec3(0.0f, 1.0f, 0.0f), false);
@@ -48,6 +48,8 @@ public:
         humanModel->registerAnimation("DIE", 685, 705);
 
         human->transform.rotate(glm::vec3(0, 1, 0), glm::half_pi<float>());
+
+        human->getComponent<AnimationCond>()->play(0);
 
         Config::Hack = 0;
         return human;

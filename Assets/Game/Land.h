@@ -9,12 +9,12 @@
 #include "StandardAssets.h"
 class Land: public Prefab{
     std::vector<std::string> names = {
-            "rTex.jpg",
-            "gTex.jpg",
+            "GR_1_UV.png",
+            "GR_2_UV.png",
             "bTex.jpg",
             "aTex.jpg",
-            "Normal.jpg",
-            "Normal.jpg",
+            "GR_1_Normal.png",
+            "GR_2_Normal.png",
             "Normal.jpg",
             "Normal.jpg",
             "heightmap.jpg"
@@ -23,6 +23,19 @@ class Land: public Prefab{
     static float myrand(float min, float max){
         float seed = rand() * 1.0f / RAND_MAX; // 0-1
         return min + seed * (max - min);
+    }
+
+    void createCollider(GameObject * parent, glm::vec3 size, glm::vec3 offset){
+        auto obj = new GameObject("colliderwall");
+        obj->createComponent<DefaultModel>(
+                new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+            ->createComponent<Renderer>(
+                    &material, ShaderManager::getShader("light_ds_pm"))
+            ->createComponent<AABBCollider>(true);
+        obj->transform.setPosition(offset);
+        obj->transform.setScale(size);
+        //obj->createComponent<AABBCollider>(size, offset, true, false);
+        obj->setParent(parent);
     }
 
 public:
@@ -62,21 +75,21 @@ public:
         door->setParent(house);
         door->transform.setScale(glm::vec3(1.1f,1.05f,1.0f));
         door->transform.setPosition(glm::vec3(2.6f,1.0f,2.2f));
+        house->transform.setPosition(glm::vec3(0, terrain->getHeight(0, 0), 0));
+        createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(6.2f,3.0f,1.0f));
+        createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(-6.2f,3.0f,-1.0f));
+        createCollider(house, glm::vec3(13.2f,4.6f,1.2f),glm::vec3(0,3.0f,-4.0f));
+        createCollider(house, glm::vec3(1.7f,4.6f,1.2f),glm::vec3(-3.8,3.0f,1.9f));
+        createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
 
-        house->transform.setPosition(glm::vec3(10000, terrain->getHeight(0, 0), 0));
 
-        auto water = scene->createGameObject()
-                ->createComponent<WaterRenderer>();
-
-        water->transform.translate(glm::vec3(0, 7, 0 ));
-
-
-        for(int i = 0; i < 10; i ++){
-            float x = myrand(-10, 10);
-            float z = myrand(-10, 10);
+        for(int i = 0; i < 50; i ++){
+            float x = myrand(-50, 50);
+            float z = myrand(-50, 50);
             float y = terrain->getHeight(x, z);
 
             auto tree = scene->createLODGameObject()
+                    ->createComponent<AABBCollider>(true, true)
             ->createComponent<DefaultModel>(
                     Utility::RESOURCE_PREFIX + "Models/tree/Tree.obj")
             ->createComponent<Renderer>(
