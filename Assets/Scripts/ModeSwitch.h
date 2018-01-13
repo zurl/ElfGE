@@ -18,12 +18,12 @@ public:
             if(mode_timer == 0){
                 if (mode == 0) {
                     mode = 1;
-                    mode_timer = 50;
+                    mode_timer = 20;
                     glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 }
                 else{
                     mode = 0;
-                    mode_timer = 50;
+                    mode_timer = 20;
                     glfwSetInputMode(Utility::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
                 }
             }

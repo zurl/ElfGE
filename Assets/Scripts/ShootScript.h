@@ -8,7 +8,7 @@
 #include "GameEngine.h"
 #include "UI/UI.h"
 
-class FuckScript : public GameScript {
+class ShootScript : public GameScript {
     //int cnt = 0;
     //Text *text;
     GameObject *human;
@@ -17,11 +17,14 @@ public:
 
     void onClick();
 
-    FuckScript(GameObject *human);
+    ShootScript(GameObject *human);
 
     void start() override;
 
-    void update() override;
+    void sleep() override;
+
+    void awake() override;
+
 
 };
 

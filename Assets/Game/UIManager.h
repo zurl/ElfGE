@@ -15,7 +15,7 @@ class UIManager : public Prefab{
     Image * AIMScreen, * AIMCross;
 
     GameObject * standardUI, *developerUI;
-    Text * devText1, *devText2, *devText3, *stdText1;
+    Text * devText1, *devText2, *devText3, *stdText1, *centerText;
 
     GameObject * createText(Scene *scene, glm::vec3 pos){
         auto textGO = scene
@@ -61,6 +61,7 @@ public:
         AIMScreen = AIMScreenGO->getComponent<Image>();
         AIMScreenGO->setParent(standardUI);
 
+
         // developer ui
 
         developerUI = scene->createGameObject("developer_ui");
@@ -75,6 +76,13 @@ public:
         auto stdText1GO = createText(scene, glm::vec3(20, 200, 0));
         stdText1 = stdText1GO->getComponent<Text>();
         stdText1GO->setParent(standardUI);
+
+
+        auto centerText1GO = createText(scene,
+                                        glm::vec3(Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT / 2, 0));
+        centerText = centerText1GO->getComponent<Text>();
+        centerText->setText("");
+        centerText1GO->setParent(standardUI);
 
 
         return canvasGO;
@@ -110,6 +118,10 @@ public:
 
     Text *getStdText1() const {
         return stdText1;
+    }
+
+    Text *getCenterText() const {
+        return centerText;
     }
 
 };

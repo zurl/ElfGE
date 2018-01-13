@@ -22,7 +22,9 @@ public:
                 );
         light->transform.setRotation(glm::vec3(0, 0, 60));
         light->createComponent<FollowHuman>(human, glm::vec3(2, 5, 2));
-        scene->setShadowMappingManager(new DirectionalShadowMappingManager(light->getComponent<DirectLighting>()));
+        scene->setShadowMappingManager(new DirectionalShadowMappingManager(
+                light->getComponent<DirectLighting>(), Config::ShadowResolution
+        ));
         scene->getShadowMappingManager()->initialize();
         return light;
     }

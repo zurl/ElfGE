@@ -15,7 +15,7 @@
 #include "../Prefabs.h"
 #include "../Prefab/PlainText.h"
 #include "../Scripts/DeveloperScript.h"
-#include "../Scripts/FuckScript.h"
+#include "../Scripts/ShootScript.h"
 #include "../LJK/AnimationCond.h"
 #include "../Game/Human.h"
 #include "../Game/BasicObject.h"
@@ -26,6 +26,7 @@
 #include "../Scripts/FollowHuman.h"
 #include "../Game/LandLight.h"
 #include "../Scripts/EnemyScript.h"
+#include "../Scripts/BoomScript.h"
 
 using namespace Prefabs;
 
@@ -35,7 +36,7 @@ public:
 
 
     UIManager ui;
-    GameObject *camera, *light, *human;
+    GameObject *camera, *human;
 
     DemoScene() {}
 
@@ -63,25 +64,36 @@ public:
         setCamera(camera->getComponent<ThirdPlayerCamera>());
         camera->setParent(human->getParent());
 
+        auto enemy = createGameObject()
+                ->createComponent<EnemyScript>(human, terrain->getComponent<Terrain>());
 
-        auto shit = createGameObject()
-                ->createComponent<DeveloperScript>(&ui, human->getParent(), light);
-
-        auto ModeSwitcher = createGameObject()
-                ->createComponent<ModeSwitch>();
-
-        auto EnemyFactory = createGameObject("EnemyFactory")
-        ->createComponent<EnemyScript>(human, terrain->getComponent<Terrain>());
+        auto GlobalObject = createGameObject()
+                ->createComponent<DeveloperScript>(&ui, human->getParent(), light)
+                ->createComponent<ModeSwitch>()
+                ->createComponent<ShootScript>(human->getParent())
+                ->createComponent<BoomScript>(enemy, human, ui.getCenterText());
 
         Scene::start();
 
 
     }
-    char buf[256];
-    void update() override{
-        glm::vec3 pos = human->getWorldPosition();
-        sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
-        ui.getStdText1()->setText(buf);
+
+    //char buf[256];
+
+    int cnt = 0;
+    float all = 0;
+
+
+    void update() override {
+        if (cnt == 30) {
+            cnt = 0;
+            ui.getStdText1()->setText("FPS:" + std::to_string(30.0f / all));
+            all = 0;
+        }
+        cnt++;
+        all += Utility::deltaTime;
+        //glm::vec3 pos = human->getWorldPosition();
+        //sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
         Scene::update();
     }
 };

@@ -50,6 +50,26 @@ namespace Prefabs {
         }
     };
 
+    class Bomb : public Prefab {
+        glm::vec3 position;
+    public:
+        Bomb(const glm::vec3 &position) : position(position) {}
+
+        GameObject *instantiate(Scene *scene) override {
+            static int num = 0;
+            auto result = scene->createGameObject("cube" + std::to_string(num++))
+                    ->createComponent<DefaultModel>(
+                            Utility::RESOURCE_PREFIX + "Models/bomb/dynamite.obj"
+                    )
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_with_directional_shadow"));
+            result->transform.setScale(glm::vec3(0.005f));
+            result->transform.rotate(Transform::forward, -glm::half_pi<float>());
+            result->transform.setPosition(position);
+            return result;
+        }
+    };
+
     class Plane : public Prefab {
         glm::vec3 position;
     public:

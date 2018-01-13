@@ -33,6 +33,8 @@ class DeveloperScript: public GameScript {
     GameObject * MetalButton;
     GameObject * StoneButton;
 
+    Component * shootScript;
+
     void updateText();
 
     void updateState();

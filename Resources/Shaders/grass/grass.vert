@@ -34,7 +34,7 @@ uniform vec3 heightMapScale;
 uniform vec3 grassColor;
 uniform float windIntensity;
 
-layout  (location = 0) in float vindex ; // Which vertex are we drawing - the main thing we need to know
+layout (location = 0) in float vindex ; // Which vertex are we drawing - the main thing we need to know
 layout (location = 1) in vec4 shape ; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
 layout (location = 2) in vec4 offset ; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
 

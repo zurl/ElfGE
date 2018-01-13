@@ -26,16 +26,62 @@ class Land: public Prefab{
     }
 
     void createCollider(GameObject * parent, glm::vec3 size, glm::vec3 offset){
-        auto obj = new GameObject("colliderwall");
+        static int i = 0;
+
+        auto obj = new GameObject("collider_wall" + std::to_string(i));
         obj->createComponent<DefaultModel>(
-                new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
-            ->createComponent<Renderer>(
-                    &material, ShaderManager::getShader("light_ds_pm"))
-            ->createComponent<AABBCollider>(true);
+                new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"));
+    //            ->createComponent<Renderer>(
+    //                    &material, ShaderManager::getShader("light_ds_pm"))
+        obj ->createComponent<AABBCollider>(true);
         obj->transform.setPosition(offset);
         obj->transform.setScale(size);
-        //obj->createComponent<AABBCollider>(size, offset, true, false);
+    // obj->createComponent<AABBCollider>(size, offset, true, false);
         obj->setParent(parent);
+    }
+
+    Component * tree1 = new DefaultModel(
+            Utility::RESOURCE_PREFIX + "Models/tree2/OC41_4.obj"
+    );
+
+    Component * tree2 = new DefaultModel(
+            Utility::RESOURCE_PREFIX + "Models/tree/Tree.obj"
+    );
+
+    void getRndResource(GameObject * gameObject){
+        int type = (int) myrand(0, 3.5);
+        switch (type){
+            case 0:
+                gameObject->addComponent(tree1);
+                gameObject->transform.rotate(Transform::forward, -glm::half_pi<float>());
+                break;
+            case 1:
+                gameObject->addComponent(tree2);
+                break;
+            case 2: {
+                gameObject->createComponent<DefaultModel>(
+                        Utility::RESOURCE_PREFIX + "Models/stones/stone1.obj"
+                );
+                auto model = gameObject->getComponent<DefaultModel>();
+                auto mesh = model->meshes[0];
+                mesh->textures.emplace_back(
+                        TextureManager::loadTexture2D(
+                                Utility::RESOURCE_PREFIX + "Models/stones/stone.png"
+                        ),
+                        "diffuse"
+                );
+                mesh->textures.emplace_back(
+                        TextureManager::loadTexture2D(
+                                Utility::RESOURCE_PREFIX + "Models/stones/stone.png"
+                        ),
+                        "specular"
+                );
+                break;
+            }
+            default:
+                gameObject->addComponent(tree1);
+                gameObject->transform.rotate(Transform::forward, -glm::half_pi<float>());
+        }
     }
 
 public:
@@ -51,7 +97,6 @@ public:
         auto grass = scene->createGameObject("grass")
                 ->createComponent<GrassRenderer>(
                         Utility::RESOURCE_PREFIX + "Textures/grass/grass.jpg",
-//                        Utility::RESOURCE_PREFIX + "Textures/grass/heightmap.jpg"
                         Utility::RESOURCE_PREFIX + "Textures/heightMap.png"
                 );
 
@@ -60,11 +105,11 @@ public:
 
         auto house = scene->createGameObject()
                 ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj")
-                ->createComponent<Renderer>(
-                        &material,
-                        ShaderManager::getShader("house/light_with_directional_shadow")
-                );
-
+//                ->createComponent<Renderer>(
+//                        &material,
+//                        ShaderManager::getShader("house/light_with_directional_shadow")
+//                );
+;
         auto door = scene->createGameObject()
                 ->createComponent<DoorModel>(Utility::RESOURCE_PREFIX + "Models/house/door.obj")
                 ->createComponent<Renderer>(
@@ -79,24 +124,24 @@ public:
         createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(6.2f,3.0f,1.0f));
         createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(-6.2f,3.0f,-1.0f));
         createCollider(house, glm::vec3(13.2f,4.6f,1.2f),glm::vec3(0,3.0f,-4.0f));
-        createCollider(house, glm::vec3(1.7f,4.6f,1.2f),glm::vec3(-3.8,3.0f,1.9f));
+        createCollider(house, glm::vec3(5.2f,4.6f,1.2f),glm::vec3(-3.7,3.0f,1.9f));
         createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
 
+        house->transform.translate(glm::vec3(0, -1, 0));
 
         for(int i = 0; i < 50; i ++){
             float x = myrand(-50, 50);
             float z = myrand(-50, 50);
             float y = terrain->getHeight(x, z);
+            int type = (int) myrand(0, 2);
 
             auto tree = scene->createLODGameObject()
                     ->createComponent<AABBCollider>(true, true)
-            ->createComponent<DefaultModel>(
-                    Utility::RESOURCE_PREFIX + "Models/tree/Tree.obj")
             ->createComponent<Renderer>(
                     StandardMaterial::getInstance(),
                     ShaderManager::getShader("light_with_directional_shadow")
             );
-
+            getRndResource(tree);
             tree->transform.setPosition(glm::vec3(x, y, z));
 
         }

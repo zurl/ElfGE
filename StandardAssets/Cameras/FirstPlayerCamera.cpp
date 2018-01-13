@@ -20,6 +20,8 @@ void FirstPlayerCamera::onMouseMove(double xpos, double ypos) {
 
     yoffset *= mouseSensitivity ;
 
+    glm::vec3 rot = getGameObject()->getWorldRotation();
+
     getGameObject()->transform.rotate(Transform::right, yoffset);
 }
 

@@ -26,6 +26,7 @@ public:
             if(die){
                 printf("hello!");
                 GameObject::destroy(getGameObject());
+                return;
             }
             previous = now;
             now = state;

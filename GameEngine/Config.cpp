@@ -6,9 +6,10 @@
 
 namespace Config {
 
+    int Hack = 0;
+    int ShadowResolution = 64;
     float HideDistance = 30;
     float FogDensity = 0.03;
     float FogGradient = 1.5;
-    int Hack = 0;
 
 };

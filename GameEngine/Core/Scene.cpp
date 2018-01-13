@@ -43,8 +43,17 @@ void Scene::destroy() {
     rootGameObject->destroy();
 }
 
+
+extern std::set<GameObject *> DestroyQueue;
+
 void Scene::update() {
     rootGameObject->update();
+    if(!DestroyQueue.empty()){
+        for(GameObject * obj : DestroyQueue){
+            obj->setParent(nullptr);
+        }
+        DestroyQueue.clear();
+    }
 }
 
 void Scene::updateGraphics(RenderLayer renderLayer) {

@@ -26,7 +26,14 @@ public:
         stopped = false;
         getGameObject()->getComponent<AABBCollider>()->setWall(true);
     }
+    bool open = true;
     void update(){
+        if(glfwGetKey(Utility::window, GLFW_KEY_Q) == GLFW_PRESS){
+            if(open) openDoor();
+            else closeDoor();
+            open = !open;
+        }
+
         static double rot;
         if(!stopped){
             rot = angularSpeed*Utility::deltaTime;

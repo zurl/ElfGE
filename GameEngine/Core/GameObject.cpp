@@ -84,6 +84,8 @@ void GameObject::awake() {
 void GameObject::destroy() {
     for (auto &x : components) {
         x->destroy();
+    }
+    for (auto &x : components) {
         detachComponent(x);
     }
     for (auto &x : children) {
@@ -94,14 +96,14 @@ void GameObject::destroy() {
     }
 }
 
+std::set<GameObject *> DestroyQueue;
+
 void GameObject::destroy(GameObject *gameObject) {
-    gameObject->destroy();
-    delete gameObject;
+    DestroyQueue.insert(gameObject);
 }
 
 void GameObject::destroy(Component *component) {
-    component->destroy();
-    delete component;
+    assert(0);
 }
 
 glm::mat4 GameObject::getModelMatrix() {
