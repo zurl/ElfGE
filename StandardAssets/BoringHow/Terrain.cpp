@@ -89,23 +89,23 @@ Terrain::Terrain(const std::string &heightMapPath, const std::string &texturePat
             "aTex"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[3]),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[4]),
             "rNormal"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[4]),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[5]),
             "gNormal"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[5]),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[6]),
             "bNormal"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[6]),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[7]),
             "aNormal"
     );
     textures.emplace_back(
-            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[7]),
+            TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/" + texturePath + textureNames[8]),
             "mix"
     );
     bindVertice();

@@ -49,6 +49,7 @@ public:
 
         human->transform.rotate(glm::vec3(0, 1, 0), glm::half_pi<float>());
 
+        human->getComponent<AnimationCond>()->play(1);
         human->getComponent<AnimationCond>()->play(0);
 
         Config::Hack = 0;

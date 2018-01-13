@@ -10,13 +10,13 @@
 class FollowHuman: public GameScript{
 
     GameObject * human;
-    glm::vec3 pos;
 public:
-    FollowHuman(GameObject *human, glm::vec3 pos) : human(human), pos(pos) {}
+
+    FollowHuman(GameObject *human) : human(human) {}
 
     void update() override {
         glm::vec3 now = human->getWorldPosition();
-        getGameObject()->transform.setPosition( now + pos);
+        getGameObject()->transform.setPosition( now - 3.0f * getGameObject()->getWorldForward());
     }
 
 };

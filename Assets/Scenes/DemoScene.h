@@ -73,6 +73,8 @@ public:
                 ->createComponent<ShootScript>(human->getParent())
                 ->createComponent<BoomScript>(enemy, human, ui.getCenterText());
 
+        auto Basics = set<BasicObject>();
+
         Scene::start();
 
 

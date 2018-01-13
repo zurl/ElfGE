@@ -7,6 +7,7 @@
 
 #include "GameEngine.h"
 #include "StandardAssets.h"
+#include "../Scripts/DefaultTexture.h"
 
 
 namespace Prefabs {
@@ -33,13 +34,19 @@ namespace Prefabs {
             go[5] = scene->createGameObject("torus.FBX")->createComponent<DefaultModel>(
                     Utility::RESOURCE_PREFIX + "Models/basic/torus.FBX");
 
+            unsigned int defaultTexture = TextureManager::loadTexture2D(
+                    Utility::RESOURCE_PREFIX + "Textures/wood.jpg");
+
             for (int i = 0; i < 6; i++) {
                 go[i]->setParent(group);
                 go[i]->createComponent<AABBCollider>(true);
-                go[i]->transform.setScale(glm::vec3(0.03f * i + 0.03f));
-                go[i]->createComponent<Renderer>(&material,
-                                                 ShaderManager::getShader("light_with_directional_shadow"));
-                go[i]->transform.setPosition(glm::vec3(i * 3, 0, 0));
+                go[i]->createComponent<Renderer>(&material, ShaderManager::getShader("light_with_directional_shadow"));
+//                go[i]->transform.setScale(glm::vec3(0.03f * i + 0.03f));
+                go[i]->createComponent<DefaultTexture>();
+                go[i]->transform.setScale(glm::vec3(0.05f));
+                go[i]->transform.setPosition(glm::vec3(i * 5, 3, 50));
+
+
             }
             return group;
         }

@@ -14,6 +14,8 @@ void DeveloperScript::start() {
     //add by ljk
     auto arialFont = FontManager::loadFont("Arial");
 
+    auto TextDev = instantiate<PlainText>(UIRoot, arialFont, "Develop Mode", glm::vec3(50, 640, 0), 2);
+
     auto textAngle = instantiate<PlainText>(UIRoot, arialFont, "Light Angle", glm::vec3(50, 540, 0), 0.5);
     auto img = TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/cube_specular.png");
 
@@ -29,9 +31,9 @@ void DeveloperScript::start() {
                                              glm::vec3(300, 300, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg3);
 
 
-    oncg1 = [this](double x) { light->transform.setRotation(glm::vec3(0, 0, x * 1.0 - 1.0)); };
+    oncg1 = [this](double x) { light->transform.setRotation(glm::vec3(0,  x * 1.0 - 1.0, 60)); };
     oncg2 = [this](double x) {
-        light->getComponent<DirectLighting>()->diffuse = glm::vec3(1.0f * x, 1.0f * x, 1.0f * x);
+        light->getComponent<DirectLighting>()->diffuse = glm::vec3(0.8f * x, 0.8f * x, 0.8f * x);
     };
     oncg3 = [this](double x) {
         light->getComponent<DirectLighting>()->specular = glm::vec3(0.4f * x, 0.4f * x, 0.4f * x);
@@ -39,16 +41,17 @@ void DeveloperScript::start() {
 
 
     // add text button here
-    auto textTexture = instantiate<PlainText>(UIRoot, arialFont, "Textures", glm::vec3(100, 50, 0), 0.5);
+    auto textTexture = instantiate<PlainText>(UIRoot, arialFont, "Textures", glm::vec3(100, 200, 0), 0.5);
 
     unsigned int newImage1 = TextureManager::loadTexture2D(
             Utility::RESOURCE_PREFIX + "Textures/wood.jpg");
     unsigned int newImage2 = TextureManager::loadTexture2D(
             Utility::RESOURCE_PREFIX + "Textures/bricks2.jpg");
     unsigned int newImage3 = TextureManager::loadTexture2D(
-            Utility::RESOURCE_PREFIX + "Textures/dalishi.jpg");
-    unsigned int newImage4 = TextureManager::loadTexture2D(
             Utility::RESOURCE_PREFIX + "Textures/metal.jpg");
+    unsigned int newImage4 = TextureManager::loadTexture2D(
+            Utility::RESOURCE_PREFIX + "Textures/dalishi.jpg");
+
 
     woodButton = instantiate<ImageButton>(
             UIRoot,

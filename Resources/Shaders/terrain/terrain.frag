@@ -194,22 +194,23 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
 }
 
 vec4 CalcTexture(vec2 TexCoords){
-    float mA = clamp(height-5, 0, 1);
-    float mB = clamp(6-height, 0, 1);
-
+    float mA = clamp(height-6, 0, 1);
+    float mC = clamp(6-height, 0, 1);
+    float mB = clamp(-abs(6-height)+1, 0, 1);
     vec4 textureR = texture(material.rTex,TexCoords);
     vec4 textureG = texture(material.gTex,TexCoords);
     vec4 textureB = texture(material.bTex,TexCoords);
     vec4 textureA = texture(material.aTex,TexCoords);
 
-    return mA * textureR + mB * textureG;
+    return mA * textureR + mB * textureG + mC * textureB;
 }
 vec4 CalcNormal(vec2 TexCoords){
-   float mA = clamp(height-5, 0, 1);
-   float mB = clamp(6-height, 0, 1);
+   float mA = clamp(height-6, 0, 1);
+   float mC = clamp(6-height, 0, 1);
+   float mB = clamp(-abs(6-height)+1, 0, 1);
     vec4 normalR = texture(material.rNormal,TexCoords);
     vec4 normalG = texture(material.gNormal,TexCoords);
     vec4 normalB = texture(material.bNormal,TexCoords);
     vec4 normalA = texture(material.aNormal,TexCoords);
-    return mA * normalR + mB * normalG;
+    return mA * normalR + mB * normalG + mC * normalB;
 }

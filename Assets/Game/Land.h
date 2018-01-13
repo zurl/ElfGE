@@ -12,11 +12,11 @@ class Land: public Prefab{
     std::vector<std::string> names = {
             "GR_1_UV.png",
             "GR_2_UV.png",
-            "bTex.jpg",
+            "GR_3_UV.png",
             "aTex.jpg",
             "GR_1_Normal.png",
             "GR_2_Normal.png",
-            "Normal.jpg",
+            "GR_3_Normal.png",
             "Normal.jpg",
             "heightmap.jpg"
     };
@@ -102,6 +102,8 @@ public:
                         Utility::RESOURCE_PREFIX + "Textures/heightMap.png"
                 );
 
+//        grass->transform.translate(glm::vec3(20.0f,0,0));
+
         auto terrain = terrainGO->getComponent<Terrain>();
 
 
@@ -130,6 +132,28 @@ public:
         createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
 
         house->transform.translate(glm::vec3(20, -1, 0));
+
+
+        auto BigStone = scene->createGameObject()->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/stones/stone1.obj")
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("house/light_with_directional_shadow")
+                )->createComponent<RigidBody>()->createComponent<AABBCollider>();
+
+        BigStone->transform.setPosition(glm::vec3(-20, terrain->getHeight(-25,-100), -100));
+
+        BigStone->transform.setScale(glm::vec3(30.0,30.0,30.0));
+
+
+
+//        auto Cube = scene->createGameObject()->createComponent<DefaultModel>(
+//                new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+//                ->createComponent<Renderer>(
+//                        &material, ShaderManager::getShader("light_ds_pm"))
+//                ->createComponent<RigidBody>()->createComponent<AABBCollider>();
+//        Cube->transform.setPosition(glm::vec3(10.0f, terrain->getHeight(10.0f,0) + 2, 0));
+
+
 
         for(int i = 0; i < 50; i ++){
             float x = myrand(-50, 50);

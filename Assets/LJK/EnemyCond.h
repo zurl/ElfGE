@@ -27,7 +27,7 @@ public:
         randX = (double)(rand()%100-50)/50;
         randY = (double)(rand()%100-50)/50;
         timeCnt = 0;
-        movespeed = 0.02;
+        movespeed = 0.1;
 
 
     }
@@ -48,7 +48,7 @@ public:
                          (sqrt(forward.x * forward.x + forward.y * forward.y + forward.z * forward.z) *
                           sqrt(ToHuman.x * ToHuman.x + ToHuman.y * ToHuman.y + ToHuman.z * ToHuman.z));
 
-            if (ToHuman.x * ToHuman.x + ToHuman.z * ToHuman.z < 20) {
+            if (ToHuman.x * ToHuman.x + ToHuman.z * ToHuman.z < 80) {
                 getGameObject()->getComponent<AnimationCond>()->play(1);
                 if (cos > 0.1) {
                     getGameObject()->transform.rotate(getGameObject()->getWorldUp(), 0.05);

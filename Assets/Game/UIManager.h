@@ -73,7 +73,7 @@ public:
         devText1 = devText1GO->getComponent<Text>();
         devText2 = devText2GO->getComponent<Text>();
         devText3 = devText3GO->getComponent<Text>();
-        auto stdText1GO = createText(scene, glm::vec3(20, 200, 0));
+        auto stdText1GO = createText(scene, glm::vec3(500, 100, 0));
         stdText1 = stdText1GO->getComponent<Text>();
         stdText1GO->setParent(standardUI);
 

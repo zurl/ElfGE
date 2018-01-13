@@ -17,11 +17,14 @@ public:
         auto light = scene->createGameObject("light")
                 ->createComponent<DirectLighting>(
                         glm::vec3(0.5f, 0.5f, 0.5f),
-                        glm::vec3(1.0f, 1.0f, 1.0f),
+                        glm::vec3(0.8f, 0.8f, 0.8f),
                         glm::vec3(0.4f, 0.4f, 0.4f)
                 );
         light->transform.setRotation(glm::vec3(0, 0, 60));
-        light->createComponent<FollowHuman>(human, glm::vec3(2, 5, 2));
+            glm::vec3 frd = light->getWorldForward();
+            printf("%f %f %f\n", frd.x, frd.y, frd.z);
+//            exit(0);
+        light->createComponent<FollowHuman>(human);
         scene->setShadowMappingManager(new DirectionalShadowMappingManager(
                 light->getComponent<DirectLighting>(), Config::ShadowResolution
         ));

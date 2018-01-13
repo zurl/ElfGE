@@ -31,17 +31,17 @@ void CharacterController::update() {
 
                 Human->getComponent<AnimationCond>()->play(5);
                 if (glfwGetKey(Utility::window, GLFW_KEY_W) == GLFW_PRESS){
-                    rigidBody->translate(speed * getGameObject()->transform.getLocalForward());
+                    rigidBody->translate(speed / 2.0f * getGameObject()->transform.getLocalForward());
                 }
                 if (glfwGetKey(Utility::window, GLFW_KEY_S) == GLFW_PRESS){
-                    rigidBody->translate(-speed * getGameObject()->transform.getLocalForward());
+                    rigidBody->translate(-speed/ 2.0f * getGameObject()->transform.getLocalForward());
                }
 
                 if (glfwGetKey(Utility::window, GLFW_KEY_A) == GLFW_PRESS){
-                    rigidBody->translate(-speed * getGameObject()->transform.getLocalRight());
+                    rigidBody->translate(-speed/ 2.0f * getGameObject()->transform.getLocalRight());
                 }
                 if (glfwGetKey(Utility::window, GLFW_KEY_D) == GLFW_PRESS){
-                    rigidBody->translate(speed * getGameObject()->transform.getLocalRight());
+                    rigidBody->translate(speed / 2.0f* getGameObject()->transform.getLocalRight());
                 }
             }
             else{
