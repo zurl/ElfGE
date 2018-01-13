@@ -43,7 +43,7 @@ public:
 
     void start() override {
         auto skybox = createGameObject()
-                ->createComponent<SkyBox>("Textures/skybox/", "jpg");
+                ->createComponent<SkyBox>("Textures/ame_siege/", "png");
 
         auto terrain = set<Land>();
 
@@ -90,7 +90,7 @@ public:
         if (cnt == 30) {
             cnt = 0;
             glm::vec3 pos = human->getWorldPosition();
-            sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
+            sprintf(buf, "pos: %.2f,%.2f,%.2f", pos.x, pos.y, pos.z);
             ui.getStdText1()->setText("FPS:" + std::to_string(30.0f / all) + "," + buf);
             all = 0;
         }
