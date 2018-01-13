@@ -25,7 +25,7 @@ uniform float TRANSITION_LOW;
 uniform float TRANSITION_HIGH;
 
 //uniform vec3 lightDir;
-const vec3 lightDir = normalize(vec3(0,0,100));
+//const vec3 lightDir = normalize(vec3(0,0,100));
 uniform vec3 camDir; // direction cam is looking at
 uniform vec2 drawPos; // centre of where we want to draw
 uniform float time;  // used to animate blades
@@ -33,7 +33,13 @@ uniform sampler2D heightMap;
 uniform vec3 heightMapScale;
 uniform vec3 grassColor;
 uniform float windIntensity;
-
+struct DirLight {
+    vec3 direction;
+    vec3 ambient;
+     vec3 diffuse;
+     vec3 specular;
+ };
+ uniform DirLight dirLight[1];
 layout (location = 0) in float vindex ; // Which vertex are we drawing - the main thing we need to know
 layout (location = 1) in vec4 shape ; // {x:width, y:height, z:lean, w:curve} (blade's shape properties)
 layout (location = 2) in vec4 offset ; // {x:x, y:y, z:z, w:rot} (blade's position & rotation)
@@ -55,6 +61,7 @@ vec2 rotate (float x, float y, vec2 r) {
 }
 
 void main() {
+    vec3 lightDir = dirLight[0].direction;
     float BLADE_DIVS  = (BLADE_SEGS + 1.0);  // # of divisions
     float BLADE_VERTS = (BLADE_DIVS * 2.0);// # of vertices (per side, so 1/2 total)
 	float vi = mod(vindex, BLADE_VERTS); // vertex index for this side of the blade

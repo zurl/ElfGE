@@ -130,6 +130,7 @@ public:
         createCollider(house, glm::vec3(13.2f,4.6f,1.2f),glm::vec3(0,3.0f,-4.0f));
         createCollider(house, glm::vec3(5.2f,4.6f,1.2f),glm::vec3(-3.7,3.0f,1.9f));
         createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
+        createCollider(house, glm::vec3(1.7f,4.6f,1.2f),glm::vec3(1.5f,3.0f,1.9f));
 
         house->transform.translate(glm::vec3(20, -1, 0));
 
@@ -155,9 +156,9 @@ public:
 
 
 
-        for(int i = 0; i < 50; i ++){
-            float x = myrand(-50, 50);
-            float z = myrand(-50, 50);
+        for(int i = 0; i < 70; i ++){
+            float x = myrand(-70, 70);
+            float z = myrand(-70, 70);
             float y = terrain->getHeight(x, z);
             int type = (int) myrand(0, 2);
 

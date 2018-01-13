@@ -75,6 +75,9 @@ public:
 
         auto Basics = set<BasicObject>();
 
+
+        auto cube = set<Cube>(glm::vec3(10.0f, -20.0f , 0));
+
         Scene::start();
 
 

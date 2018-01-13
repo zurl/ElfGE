@@ -93,7 +93,7 @@ void GrassRenderer::prepare() {
     shader->setMat4("projectionMatrix",Runtime::getCamera()->getProjectionMatrix());
     shader->setInt("map",0);
     shader->setInt("heightMap",1);
-
+    LightingManager::update(shader);
     shader->setFloat("BLADE_HEIGHT_TALL",BLADE_HEIGHT_MAX*1.5);
     shader->setFloat("BLADE_SEGS",BLADE_SEGS);
     shader->setFloat("PATCH_SIZE",radius*2);
