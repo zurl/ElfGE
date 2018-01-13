@@ -34,10 +34,10 @@ void main() {
 //	color.a = 1.0;
 
 	// apply terrain lightmap
-	float light = hdata.g;
-	color.r *= light;
-	color.g *= light;
-	color.b *= light;
+//	float light = hdata.g;
+//	color.r *= light;
+//	color.g *= light;
+//	color.b *= light;
 
 	// then apply atmosphere fog
 	float fogFactor = smoothstep(fogNear, fogFar, depth);

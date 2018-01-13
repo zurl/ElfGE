@@ -90,6 +90,7 @@ void GrassRenderer::prepare() {
     shader->setMat4("modelMatrix",getGameObject()->getModelMatrix());
     shader->setMat4("viewMatrix",Runtime::getCamera()->getViewMatrix());
 
+    LightingManager::update(shader);
     shader->setMat4("projectionMatrix",Runtime::getCamera()->getProjectionMatrix());
     shader->setInt("map",0);
     shader->setInt("heightMap",1);

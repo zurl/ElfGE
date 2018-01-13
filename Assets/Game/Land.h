@@ -7,6 +7,7 @@
 
 #include "GameEngine.h"
 #include "StandardAssets.h"
+#include <ctime>
 class Land: public Prefab{
     std::vector<std::string> names = {
             "GR_1_UV.png",
@@ -101,14 +102,14 @@ public:
                 );
 
         auto terrain = terrainGO->getComponent<Terrain>();
-
+        auto water = scene->createGameObject()->createComponent<WaterRenderer>();
 
         auto house = scene->createGameObject()
                 ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj")
-//                ->createComponent<Renderer>(
-//                        &material,
-//                        ShaderManager::getShader("house/light_with_directional_shadow")
-//                );
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("house/light_with_directional_shadow")
+                );
 ;
         auto door = scene->createGameObject()
                 ->createComponent<DoorModel>(Utility::RESOURCE_PREFIX + "Models/house/door.obj")
@@ -124,6 +125,7 @@ public:
         createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(6.2f,3.0f,1.0f));
         createCollider(house, glm::vec3(1.5f,5.0f,6.5f),glm::vec3(-6.2f,3.0f,-1.0f));
         createCollider(house, glm::vec3(13.2f,4.6f,1.2f),glm::vec3(0,3.0f,-4.0f));
+        createCollider(house, glm::vec3(1.7f,4.6f,1.2f),glm::vec3(1.5f,3.0f,1.9f));
         createCollider(house, glm::vec3(5.2f,4.6f,1.2f),glm::vec3(-3.7,3.0f,1.9f));
         createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
 

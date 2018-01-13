@@ -31,7 +31,8 @@ public:
         shader = ShaderManager::getShader("water/water");
         quad = new PlaneMesh();
         water = new WaterTile(0,0,0);
-        skybox = new SkyBox("Textures/water/ame_darkgloom/","tga");
+//        skybox = new SkyBox("Textures/water/ame_darkgloom/","tga");
+        skybox = new SkyBox("Textures/skybox/","jpg");
         skybox->start();
         fbo = new WaterFrameBuffer();
         dudv = TextureManager::loadTexture2D(
@@ -58,6 +59,7 @@ public:
 
     void prepareRender(){
         shader->use();
+        LightingManager::update(shader);
         shader->setMat4("view", Runtime::getCamera()->getViewMatrix());
         shader->setMat4("projection", Runtime::getCamera()->getProjectionMatrix());
         shader->setInt("reflectionTexture",0);
