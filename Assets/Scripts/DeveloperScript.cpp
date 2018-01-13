@@ -14,26 +14,27 @@ void DeveloperScript::start() {
     //add by ljk
     auto arialFont = FontManager::loadFont("Arial");
 
-    auto textAngle = instantiate<PlainText>(UIRoot, arialFont, "Light Angle", glm::vec3(50, 440, 0), 0.5);
+    auto textAngle = instantiate<PlainText>(UIRoot, arialFont, "Light Angle", glm::vec3(50, 540, 0), 0.5);
     auto img = TextureManager::loadTexture2D(Utility::RESOURCE_PREFIX + "Textures/cube_specular.png");
 
     auto scrollbar = instantiate<ScrollBar>(UIRoot, img, img,
                                             glm::vec3(300, 500, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg1);
 
-    auto textDiffuse = instantiate<PlainText>(UIRoot, arialFont, "Diffuse Luminance", glm::vec3(50, 340, 0), 0.5);
+    auto textDiffuse = instantiate<PlainText>(UIRoot, arialFont, "Diffuse Luminance", glm::vec3(50, 440, 0), 0.5);
     auto scrollbar2 = instantiate<ScrollBar>(UIRoot, img, img,
                                              glm::vec3(300, 400, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg2);
 
-    auto textSpecular = instantiate<PlainText>(UIRoot, arialFont, "Specular Luminance", glm::vec3(50, 240, 0), 0.5);
+    auto textSpecular = instantiate<PlainText>(UIRoot, arialFont, "Specular Luminance", glm::vec3(50, 340, 0), 0.5);
     auto scrollbar3 = instantiate<ScrollBar>(UIRoot, img, img,
                                              glm::vec3(300, 300, 0), glm::vec2(500, 40), glm::vec2(20, 50), &oncg3);
 
+
     oncg1 = [this](double x) { light->transform.setRotation(glm::vec3(0, 0, x * 1.0 - 1.0)); };
     oncg2 = [this](double x) {
-        light->getComponent<DirectLighting>()->diffuse = glm::vec3(10.0f * x, 10.0f * x, 10.0f * x);
+        light->getComponent<DirectLighting>()->diffuse = glm::vec3(1.0f * x, 1.0f * x, 1.0f * x);
     };
     oncg3 = [this](double x) {
-        light->getComponent<DirectLighting>()->specular = glm::vec3(2.0f * x, 2.0f * x, 2.0f * x);
+        light->getComponent<DirectLighting>()->specular = glm::vec3(0.4f * x, 0.4f * x, 0.4f * x);
     };
 
 

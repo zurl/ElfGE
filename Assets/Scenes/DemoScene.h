@@ -60,7 +60,7 @@ public:
         ui.instantiate(this);
 
         camera = createGameObject()
-                ->createComponent<ThirdPlayerCamera>(human->getParent(), ui.getAIMScreen()->getGameObject());
+                ->createComponent<ThirdPlayerCamera>(human->getParent(), ui.getAIMScreen()->getGameObject(), ui.getAIMCross()->getGameObject());
         setCamera(camera->getComponent<ThirdPlayerCamera>());
         camera->setParent(human->getParent());
 
@@ -78,7 +78,7 @@ public:
 
     }
 
-    //char buf[256];
+    char buf[256];
 
     int cnt = 0;
     float all = 0;
@@ -87,13 +87,14 @@ public:
     void update() override {
         if (cnt == 30) {
             cnt = 0;
-            ui.getStdText1()->setText("FPS:" + std::to_string(30.0f / all));
+            glm::vec3 pos = human->getWorldPosition();
+            sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
+            ui.getStdText1()->setText("FPS:" + std::to_string(30.0f / all) + "," + buf);
             all = 0;
         }
         cnt++;
         all += Utility::deltaTime;
-        //glm::vec3 pos = human->getWorldPosition();
-        //sprintf(buf, "%f,%f,%f", pos.x, pos.y, pos.z);
+
         Scene::update();
     }
 };

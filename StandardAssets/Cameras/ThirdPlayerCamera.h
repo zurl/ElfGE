@@ -12,10 +12,11 @@ class ThirdPlayerCamera : public FirstPlayerCamera {
 public:
     GameObject *Player;
     GameObject *Image;
+    GameObject * ImageSmall;
     bool isAim = false;
     int delay = 0;
 
-    ThirdPlayerCamera(GameObject *Player, GameObject *Image);
+    ThirdPlayerCamera(GameObject *Player, GameObject *Image, GameObject * ImageSmall);
 
 
     void update() override;

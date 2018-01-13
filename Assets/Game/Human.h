@@ -39,7 +39,7 @@ public:
         human->setParent(realHuman);
 
         auto humanModel = human->getComponent<AnimatedModel>();
-        humanModel->registerAnimation("IDLE", 50, 90);
+        humanModel->registerAnimation("IDLE", 60, 90);
         humanModel->registerAnimation("RUN", 600, 614);
         humanModel->registerAnimation("JUMP", 301, 313);
         humanModel->registerAnimation("SHOOT", 375, 460);

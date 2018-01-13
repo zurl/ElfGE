@@ -32,6 +32,9 @@ public:
 
     void render(Shader *shader, RenderLayer renderLayer);
     virtual ~Terrain();
+
+
+    void update() override;
 };
 
 

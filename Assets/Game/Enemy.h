@@ -11,6 +11,7 @@
 #include "../Scripts/KeepHeight.h"
 
 class Enemy : public Prefab {
+public:
     GameObject *Human;
     Terrain *terrain;
 public:

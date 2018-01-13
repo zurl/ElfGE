@@ -25,5 +25,5 @@ void main()
     ori = position+anchor;
     v = projection * view * vec4(position+anchor-velocity,1.0);
     v = v-gl_Position;
-    zoom = zoomA * 0.03;
+    zoom = zoomA * 0.06;
 }

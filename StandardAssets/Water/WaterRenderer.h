@@ -47,7 +47,10 @@ public:
         glm::mat4 model = glm::translate(glm::mat4(1),glm::vec3(
                 water->getX(),water->getHeight(),water->getZ()))
                           * glm::scale(glm::mat4(1),glm::vec3(water->TILE_SIZE,1,water->TILE_SIZE));
-//        glm::mat4 model = getGameObject()->getModelMatrix();
+        model = glm::translate(model, getGameObject()->getWorldPosition());
+
+//
+        //glm::mat4 model = getGameObject()->getModelMatrix();
 //            shader->setMat4("model",getGameObject()->getModelMatrix());
         shader->setMat4("model",model);
 

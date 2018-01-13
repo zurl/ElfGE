@@ -25,6 +25,7 @@ public:
 public:
     EnemyScript(GameObject * human, Terrain * terrain) : Human(human), enemyFactory(human, terrain){}
 
+    float myrand(float min, float max);
     void start() override;
     void update() override;
 };

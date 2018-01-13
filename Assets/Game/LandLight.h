@@ -16,9 +16,9 @@ public:
     GameObject *instantiate(Scene *scene) override {
         auto light = scene->createGameObject("light")
                 ->createComponent<DirectLighting>(
-                        glm::vec3(0.2f, 0.2f, 0.2f),
-                        glm::vec3(0.2f, 0.2f, 0.2f),
-                        glm::vec3(0.2f, 0.2f, 0.2f)
+                        glm::vec3(0.5f, 0.5f, 0.5f),
+                        glm::vec3(1.0f, 1.0f, 1.0f),
+                        glm::vec3(0.4f, 0.4f, 0.4f)
                 );
         light->transform.setRotation(glm::vec3(0, 0, 60));
         light->createComponent<FollowHuman>(human, glm::vec3(2, 5, 2));

@@ -139,3 +139,20 @@ float Terrain::getHeight(float x, float y) {
     float _yB = heightMap[pos * 3 + 3] * (1 - frac) + heightMap[pos * 3 + 1025 * 3] * (frac);
     return nlz(_yA * (1 - frac) + _yB * frac); // 20.0这里是scale大小, -2.75有Translation,这里可以加参数
 }
+
+int ok = 1;
+void Terrain::update() {
+    if (glfwGetKey(Utility::window, GLFW_KEY_O) == GLFW_PRESS) {
+        if(ok){
+            ok = 0;
+            getGameObject()->setStatus(STATUS_STOP_RENDER |STATUS_STOP_UPDATE);
+        }
+        else{
+            ok = 1;
+            getGameObject()->setStatus(STATUS_NORMAL);
+        }
+    }
+
+
+    Component::update();
+}

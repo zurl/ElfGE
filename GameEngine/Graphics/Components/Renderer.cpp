@@ -21,7 +21,7 @@ void Renderer::updateGraphics(RenderLayer renderLayer) {
         model->render(shadowShader, renderLayer);
     }
     if (renderLayer == RenderLayer::WORLD) {
-        if (!ShaderManager::useShader(shader)) {
+        if (true || !ShaderManager::useShader(shader)) {
             shader->use();
             auto smm = Runtime::getScene()->getShadowMappingManager();
             if (smm != nullptr) smm->applyMapping(shader);

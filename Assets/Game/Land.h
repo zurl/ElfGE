@@ -7,6 +7,7 @@
 
 #include "GameEngine.h"
 #include "StandardAssets.h"
+#include <time.h>
 class Land: public Prefab{
     std::vector<std::string> names = {
             "GR_1_UV.png",
@@ -93,6 +94,7 @@ public:
                 &material,
                 ShaderManager::getShader("terrain/terrain")
         );
+        ;
 
         auto grass = scene->createGameObject("grass")
                 ->createComponent<GrassRenderer>(
@@ -105,11 +107,11 @@ public:
 
         auto house = scene->createGameObject()
                 ->createComponent<DefaultModel>(Utility::RESOURCE_PREFIX + "Models/house/cabin.obj")
-//                ->createComponent<Renderer>(
-//                        &material,
-//                        ShaderManager::getShader("house/light_with_directional_shadow")
-//                );
-;
+                ->createComponent<Renderer>(
+                        &material,
+                        ShaderManager::getShader("house/light_with_directional_shadow")
+                );
+
         auto door = scene->createGameObject()
                 ->createComponent<DoorModel>(Utility::RESOURCE_PREFIX + "Models/house/door.obj")
                 ->createComponent<Renderer>(
@@ -127,7 +129,7 @@ public:
         createCollider(house, glm::vec3(5.2f,4.6f,1.2f),glm::vec3(-3.7,3.0f,1.9f));
         createCollider(house, glm::vec3(2.5f,4.6f,1.2f),glm::vec3(5.4f,3.0f,1.9f));
 
-        house->transform.translate(glm::vec3(0, -1, 0));
+        house->transform.translate(glm::vec3(20, -1, 0));
 
         for(int i = 0; i < 50; i ++){
             float x = myrand(-50, 50);
@@ -145,6 +147,16 @@ public:
             tree->transform.setPosition(glm::vec3(x, y, z));
 
         }
+
+
+        auto water = scene->createGameObject()->createComponent<WaterRenderer>();
+        water->transform.translate(glm::vec3(0, -1.5f, -2.0f));
+        water ->createComponent<AABBCollider>(true);
+        water->createComponent<DefaultModel>(
+                new CubeMesh("bricks2.jpg", "bricks2.jpg", "bricks2_normal.jpg", "bricks2_disp.jpg"))
+                    ->createComponent<Renderer>(
+                            &material, ShaderManager::getShader("light_ds_pm"));
+       // water ->createComponent<AABBCollider>(true);
 
         return terrainGO;
     }

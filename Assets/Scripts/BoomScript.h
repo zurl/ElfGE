@@ -35,6 +35,8 @@ public:
         pfobj->setParent(getGameObject());
         pfobj->start();
         pf = pfobj->getComponent<ParticleFactory>();
+
+
     }
 
     void update() override {

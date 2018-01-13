@@ -4,7 +4,7 @@
 
 #include "ThirdPlayerCamera.h"
 
-ThirdPlayerCamera::ThirdPlayerCamera(GameObject *Player, GameObject *Image) : Player(Player), Image(Image) {}
+ThirdPlayerCamera::ThirdPlayerCamera(GameObject *Player, GameObject *Image, GameObject * small) : Player(Player), Image(Image) , ImageSmall(small){}
 
 void ThirdPlayerCamera::update() {
 
@@ -13,16 +13,18 @@ void ThirdPlayerCamera::update() {
             if (isAim) {
                 zoom = 45.0f;
                 Image->transform.translate(glm::vec3(10000, 0, 0));
+                ImageSmall->transform.translate(glm::vec3(10000, 0, 0));
             } else {
                 zoom = 10.0f;
                 Image->transform.translate(glm::vec3(-10000, 0, 0));
+                ImageSmall->transform.translate(glm::vec3(-10000, 0, 0));
             }
             isAim = !isAim;
             delay = 0;
         }
-
-
     }
+
+
     delay++;
 
     float k = isAim ? 1.0f : -5.0f;
