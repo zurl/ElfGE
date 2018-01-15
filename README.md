@@ -1,6 +1,13 @@
 The Elf Game Engine
 ========================
 
+2017-2018秋冬 计算机图形学 课程设计
+
+README.md正在施工中= =
+期末考完再整理一下
+
+
+
 依赖：
 stb_image.h(include)  
 glfw,glew,assimp(include自行,lib自行)  

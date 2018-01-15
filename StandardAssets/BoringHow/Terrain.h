@@ -30,7 +30,7 @@ public:
 
     float getHeight(float x, float y);
 
-    void render(Shader *shader, RenderLayer renderLayer);
+    void render(Shader *shader, RenderLayer renderLayer) override;
     virtual ~Terrain();
 
 
