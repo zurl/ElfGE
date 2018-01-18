@@ -20,11 +20,13 @@ public:
     GameObject *instantiate(Scene *scene) override {
         static int num = 0;
         auto result = scene->createGameObject("enemy" + std::to_string(num++))
-                ->createComponent<AnimatedModel>(Utility::RESOURCE_PREFIX + "Models/fhe/Assets/sb.dae")
+                ->createComponent<AnimatedModel>(
+                        Utility::RESOURCE_PREFIX + "Models/fhe/Assets/sb.dae")
                 ->createComponent<AnimationCond>()
                 ->createComponent<Renderer>(
                         StandardMaterial::getInstance(),
-                        ShaderManager::getShader("light_with_directional_shadow_anim")
+                        ShaderManager::getShader(
+                                "light_with_directional_shadow_anim")
                 )
                 ->createComponent<KeepHeight>(terrain)
                 ->createComponent<RigidBody>()

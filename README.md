@@ -3,8 +3,12 @@ The Elf Game Engine
 
 2017-2018秋冬 计算机图形学 课程设计
 
-# README.md正在施工中= = 期末考完再整理一下
+![eg1](static/eg1.png)
+![eg2](static/eg2.png)
+![eg3](static/eg3.png)
+![class](static/class.png)
 
+# README.md正在施工中= = 期末考完再整理一下
 
 
 依赖：
