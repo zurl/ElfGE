@@ -2,7 +2,6 @@ cmake-build-debug/
 .idea/
 Resources/Textures
 Resources/Models
-*.png
 *.blend
 *.obj
 *.jpg
