@@ -24,7 +24,6 @@ screenshots.
 ![eg1](Static/eg1.png)
 ![eg2](Static/eg2.png)
 ![eg3](Static/eg3.png)
-![class](Static/class.png)
 
 # How to Use
 
@@ -34,19 +33,19 @@ Requirement: cmake(>=3.6), gcc(>=5), glew, glfw3, assimp, freetype
 
 we recommend use `homebrew` to install all dependencies
 
-"""bash
+```bash
 brew update
 brew install cmake gcc glew glfw assimp freetype
-"""
+```
 
 ## for linux users
 
 linux users could use apt-get or yum or pacman to install package.
 for example, ubuntu users could use the following commands:
-"""bash
+```bash
 sudo apt-get update
 sudo apt-get install cmake libglew-dev libglfw3 libassimp-dev libfreetype6 libfreetype6-dev
-"""
+```
 
 After installation of all requirement packages, you can use cmake
 to compile our project according to our CMakeList.txt
@@ -77,6 +76,11 @@ For any scene object, it should implement `start()`, `update()` and
 `createGameObject()` or `createComponent()`, in `update()` function,
 you could translate your object using statements like 
 `obj.transform.translate(glm::vec3(1,0,0))`.
+
+## The hierarchy of our components
+
+The following graph introduce the base inheritance relation of ElfGE
+![class](Static/class.png)
 
 # Miscellaneous
 This project is a course project for Computer Graphics (Fall 2017)
